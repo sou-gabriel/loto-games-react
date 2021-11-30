@@ -1,26 +1,26 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import { Routes, Route } from 'react-router-dom'
 
-function App() {
+import { Footer } from 'components/Footer'
+
+import { Login } from 'pages/Login'
+import { ResetPassword } from 'pages/ResetPassword'
+import { Registration } from 'pages/Registration'
+import { Game } from 'pages/Game' // Essa rota deve ser privada!
+
+export const App = () => {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
-}
+    <>
+      <Routes>
+        <Route path='/' element={<Login />} />
+        <Route path='/login' element={<Login />} />
+        <Route path='/reset-password' element={<ResetPassword />} />
+        <Route path='/registration' element={<Registration />} />
+        <Route path='/game' element={<Game />}>
+          <Route path='/game/:gameType' />
+        </Route>
+      </Routes>
 
-export default App;
+      <Footer />
+    </>
+  )
+}
