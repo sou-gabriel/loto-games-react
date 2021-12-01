@@ -7,7 +7,7 @@ import { Button } from 'components/Button'
 
 import { Container, Content } from './styles'
 
-export const ResetPassword = () => {
+export const Registration = () => {
   const navigate = useNavigate()
 
   const goToLoginPage = () => {
@@ -19,16 +19,18 @@ export const ResetPassword = () => {
       <Banner />
 
       <Content>
-        <h2>Reset password</h2>
+        <h2>Registration</h2>
         <form>
+          <Input type='text' placeholder='Name' required aria-required />
+          <Input type='email' placeholder='E-mail' required aria-required />
           <Input
-            type='email'
-            placeholder='E-mail'
+            type='password'
+            placeholder='Password'
             required
             aria-required
           />
           <Button type='submit' color='#B5C401'>
-            Send Link
+            Register
             <AiOutlineArrowRight />
           </Button>
         </form>
