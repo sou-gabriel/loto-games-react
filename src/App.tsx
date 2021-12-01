@@ -1,8 +1,8 @@
 import { Routes, Route } from 'react-router-dom'
 
-import { Authentication } from 'pages/Authentication'
-import { ResetPassword } from 'pages/ResetPassword'
-import { Registration } from 'pages/Registration'
+import { AuthPage } from 'pages/AuthPage'
+import { ResetPasswordPage } from 'pages/ResetPasswordPage'
+import { RegistrationPage } from 'pages/RegistrationPage'
 import { Dashboard } from 'pages/Dashboard'
 import { NewBet } from 'pages/NewBet'
 
@@ -12,9 +12,9 @@ export const App = () => {
   return (
     <>
       <Routes>
-        <Route path='/' element={<Authentication />} />
-        <Route path='/reset-password' element={<ResetPassword />} />
-        <Route path='/register' element={<Registration />} />
+        <Route path='/' element={<AuthPage />} />
+        <Route path='/reset-password' element={<ResetPasswordPage />} />
+        <Route path='/register' element={<RegistrationPage />} />
         <Route path='/dashboard' element={<Dashboard />} />
         <Route path='/new-bet' element={<NewBet />} />
       </Routes>
