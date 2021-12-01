@@ -4,6 +4,7 @@ import { Authentication } from 'pages/Authentication'
 import { ResetPassword } from 'pages/ResetPassword'
 import { Registration } from 'pages/Registration'
 import { Dashboard } from 'pages/Dashboard'
+import { NewBet } from 'pages/NewBet'
 
 import { Footer } from 'components/Footer'
 
@@ -15,6 +16,7 @@ export const App = () => {
         <Route path='/reset-password' element={<ResetPassword />} />
         <Route path='/register' element={<Registration />} />
         <Route path='/dashboard' element={<Dashboard />} />
+        <Route path='/new-bet' element={<NewBet />} />
       </Routes>
 
       <Footer />
