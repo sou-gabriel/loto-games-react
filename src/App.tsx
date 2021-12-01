@@ -1,23 +1,20 @@
 import { Routes, Route } from 'react-router-dom'
 
-import { Footer } from 'components/Footer'
-
-import { Login } from 'pages/Login'
+import { Authentication } from 'pages/Authentication'
 import { ResetPassword } from 'pages/ResetPassword'
 import { Registration } from 'pages/Registration'
-import { Game } from 'pages/Game' // Essa rota deve ser privada!
+import { Dashboard } from 'pages/Dashboard'
+
+import { Footer } from 'components/Footer'
 
 export const App = () => {
   return (
     <>
       <Routes>
-        <Route path='/' element={<Login />} />
-        <Route path='/login' element={<Login />} />
+        <Route path='/' element={<Authentication />} />
         <Route path='/reset-password' element={<ResetPassword />} />
-        <Route path='/registration' element={<Registration />} />
-        <Route path='/game' element={<Game />}>
-          <Route path='/game/:gameType' />
-        </Route>
+        <Route path='/register' element={<Registration />} />
+        <Route path='/dashboard' element={<Dashboard />} />
       </Routes>
 
       <Footer />
