@@ -1,13 +1,12 @@
+import { Wrapper } from 'components/Wrapper'
 import { Banner } from 'components/Banner'
 import { RegistrationForm } from 'components/Forms'
 
-import * as S from './styles'
-
 export const RegistrationPage = () => {
   return (
-    <S.Container>
+    <Wrapper>
       <Banner />
       <RegistrationForm />
-    </S.Container>
+    </Wrapper>
   )
 }

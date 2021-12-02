@@ -1,15 +1,12 @@
-import { Container } from './styles'
-
+import * as S from './styles'
 interface GameTypeButtonProps {
-  type: 'Lotofácil' | 'Mega-Sena' | 'Lotomania'
+  gameType: 'Lotofácil' | 'Mega-Sena' | 'Lotomania'
   color: string
   isActive: boolean
 }
 
-export const GameTypeButton = (props: GameTypeButtonProps) => {
+export const GameTypeButton = ({ gameType, isActive, color }: GameTypeButtonProps) => {
   return (
-    <Container isActive={props.isActive} color={props.color}>
-      {props.type}
-    </Container>
+    <S.Container isActive={isActive} color={color}>{gameType}</S.Container>
   )
 }

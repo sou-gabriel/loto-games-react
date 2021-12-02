@@ -5,7 +5,7 @@ import * as S from './styles'
 export const RegistrationForm = () => {
   return (
     <S.Container>
-      <S.Title>Authentication</S.Title>
+      <S.Title>Registration</S.Title>
       <S.Form>
         <S.InputGroup>
           <S.Input type='text' placeholder='Name' required />
@@ -21,7 +21,7 @@ export const RegistrationForm = () => {
           <AiOutlineArrowRight />
         </S.SubmitButton>
       </S.Form>
-      <S.NavigationButton to='/registration'>
+      <S.NavigationButton to='/'>
         <AiOutlineArrowLeft />
         Back
       </S.NavigationButton>

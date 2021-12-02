@@ -1,9 +1,9 @@
-import { Container, Paragraph } from './styles'
+import * as S from './styles'
 
 export const Footer = () => {
   return (
-    <Container>
-      <Paragraph>Copyright 2020 Luby Software</Paragraph>
-    </Container>
+    <S.Container>
+      <S.Paragraph>Copyright 2020 Luby Software</S.Paragraph>
+    </S.Container>
   )
 }

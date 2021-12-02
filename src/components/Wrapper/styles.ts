@@ -8,4 +8,9 @@ export const Container = styled.main`
   padding: 9.625rem 2rem;
   display: flex;
   justify-content: space-between;
+  gap: 2rem;
+
+  @media (max-width: 768px) {
+    flex-direction: column;
+  }
 `

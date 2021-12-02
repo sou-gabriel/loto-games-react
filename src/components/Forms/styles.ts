@@ -18,7 +18,7 @@ export const Title = styled.h2`
 
 export const Form = styled.form`
   width: 22rem;
-  height: fit-content;
+  flex-shrink: 0;
   margin-bottom: 1.875rem;
   display: flex;
   flex-direction: column;

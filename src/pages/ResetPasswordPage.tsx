@@ -1,13 +1,13 @@
+import { Wrapper } from 'components/Wrapper'
+
 import { Banner } from 'components/Banner'
 import { ResetPasswordForm } from 'components/Forms'
 
-import * as S from './styles'
-
 export const ResetPasswordPage = () => {
   return (
-    <S.Container>
+    <Wrapper>
       <Banner />
       <ResetPasswordForm />
-    </S.Container>
+    </Wrapper>
   )
 }
