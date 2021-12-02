@@ -1,4 +1,3 @@
-import { useState } from 'react'
 import { AiOutlineArrowRight } from 'react-icons/ai'
 
 import * as S from './styles'

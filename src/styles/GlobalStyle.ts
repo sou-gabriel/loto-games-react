@@ -28,11 +28,6 @@ export const GlobalStyle = createGlobalStyle`
     background-color: #F7F7F7;
   }
 
-  div#root {
-    display: flex;
-    flex-direction: column;
-  }
-
   button {
     cursor: pointer;
   }
