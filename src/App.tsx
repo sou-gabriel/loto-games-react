@@ -1,9 +1,10 @@
 import { Routes, Route } from 'react-router-dom'
 
-import { Authentication } from 'pages/Authentication'
-import { ResetPassword } from 'pages/ResetPassword'
-import { Registration } from 'pages/Registration'
-import { Dashboard } from 'pages/Dashboard'
+import { AuthPage } from 'pages/AuthPage'
+import { ResetPasswordPage } from 'pages/ResetPasswordPage'
+import { RegistrationPage } from 'pages/RegistrationPage'
+import { DashboardPage } from 'pages/DashboardPage'
+import { BetPage } from 'pages/BetPage'
 
 import { Footer } from 'components/Footer'
 
@@ -11,10 +12,13 @@ export const App = () => {
   return (
     <>
       <Routes>
-        <Route path='/' element={<Authentication />} />
-        <Route path='/reset-password' element={<ResetPassword />} />
-        <Route path='/register' element={<Registration />} />
-        <Route path='/dashboard' element={<Dashboard />} />
+        <Route path='/' element={<AuthPage />} />
+        <Route path='/reset-password' element={<ResetPasswordPage />} />
+        <Route path='/registration' element={<RegistrationPage />} />
+        <Route path='/dashboard' element={<DashboardPage />} />
+        <Route path='/new-bet' element={<BetPage />}>
+          <Route path='/new-bet/:gameType' element={<BetPage />} />
+        </Route>
       </Routes>
 
       <Footer />

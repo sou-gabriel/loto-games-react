@@ -1,43 +1,35 @@
 import { useLocation } from 'react-router-dom'
 import { AiOutlineArrowRight } from 'react-icons/ai'
 
-import {
-  Container,
-  Row,
-  Logo,
-  Navigation,
-  List,
-  ListItem,
-  NavigationLink,
-} from './styles'
+import * as S from './styles'
 
 export const Header = () => {
   const { pathname } = useLocation()
 
   return (
-    <Container>
-      <Row>
-        <Logo>TGL</Logo>
+    <S.Container>
+      <S.Row>
+        <S.Logo>TGL</S.Logo>
 
-        <Navigation>
-          <List>
+        <S.Navigation>
+          <S.List>
             {pathname === '/dashboard' || (
-              <ListItem style={{ marginRight: 'auto' }}>
-                <NavigationLink to='/'>Home</NavigationLink>
-              </ListItem>
+              <S.ListItem style={{ marginRight: 'auto' }}>
+                <S.NavigationLink to='/'>Home</S.NavigationLink>
+              </S.ListItem>
             )}
-            <ListItem>
-              <NavigationLink to='/'>Account</NavigationLink>
-            </ListItem>
-            <ListItem>
-              <NavigationLink to='/'>
+            <S.ListItem>
+              <S.NavigationLink to='/'>Account</S.NavigationLink>
+            </S.ListItem>
+            <S.ListItem>
+              <S.NavigationLink to='/'>
                 Exit
                 <AiOutlineArrowRight />
-              </NavigationLink>
-            </ListItem>
-          </List>
-        </Navigation>
-      </Row>
-    </Container>
+              </S.NavigationLink>
+            </S.ListItem>
+          </S.List>
+        </S.Navigation>
+      </S.Row>
+    </S.Container>
   )
 }
