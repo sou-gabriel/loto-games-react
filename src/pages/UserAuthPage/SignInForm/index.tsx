@@ -8,6 +8,11 @@ import * as S from '../styles'
 export const SignInForm = () => {
   const navigate = useNavigate()
 
+  useEffect(() => {
+    localStorage.removeItem('token')
+    localStorage.removeItem('userData')
+  }, [])
+
   const handleUserLogin = (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault()
 
