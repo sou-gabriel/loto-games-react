@@ -14,7 +14,7 @@ export const Header = () => {
         <S.Navigation>
           <S.List>
             {pathname === '/dashboard' || (
-              <S.ListItem style={{ marginRight: 'auto' }}>
+              <S.ListItem isIsolated>
                 <S.NavigationLink to='/'>Home</S.NavigationLink>
               </S.ListItem>
             )}
