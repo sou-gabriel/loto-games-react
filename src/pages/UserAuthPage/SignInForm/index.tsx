@@ -53,7 +53,7 @@ export const SignInForm = () => {
           <AiOutlineArrowRight />
         </S.SubmitButton>
       </S.Form>
-      <S.NavigationButton to='/'>
+      <S.NavigationButton to='/sign-up'>
         Sign Up
         <AiOutlineArrowRight />
       </S.NavigationButton>
