@@ -11,19 +11,10 @@ export const App = () => {
     <>
       <Routes>
         <Route path='/*' element={<UserAuthPage />} />
-        <Route
-          path='/home/*'
-          element={true ? <Home /> : <h1>O usuário não está autenticado!</h1>}
-        />
-        <Route
-          path='/dashboard'
-          element={
-            true ? <Dashboard /> : <h1>O usuário não está autenticado!</h1>
-          }
-        />
+        <Route path='/home/*' element={<Home />} />
+        <Route path='/dashboard' element={<Dashboard />} />
       </Routes>
       <Footer />
     </>
   )
 }
-  
