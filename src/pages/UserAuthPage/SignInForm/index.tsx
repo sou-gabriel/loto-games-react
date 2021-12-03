@@ -1,4 +1,4 @@
-import { AiOutlineArrowRight, AiOutlineArrowLeft } from 'react-icons/ai'
+import { AiOutlineArrowRight } from 'react-icons/ai'
 
 import * as S from '../styles'
 
@@ -16,13 +16,13 @@ export const SignInForm = () => {
           {false && <S.ErrorMessage>...</S.ErrorMessage>}
         </S.InputGroup>
         <S.SubmitButton type='submit'>
-          Send Link
+          Login
           <AiOutlineArrowRight />
         </S.SubmitButton>
       </S.Form>
       <S.NavigationButton to='/'>
-        <AiOutlineArrowLeft />
-        Back
+        Sign Up
+        <AiOutlineArrowRight />
       </S.NavigationButton>
     </>
   )
