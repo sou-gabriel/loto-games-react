@@ -1,7 +1,8 @@
-import { FormEvent } from 'react'
+import { FormEvent, useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { AiOutlineArrowRight } from 'react-icons/ai'
 import axios from 'axios'
+import toast, { Toaster } from 'react-hot-toast'
 
 import * as S from '../styles'
 
@@ -18,19 +19,25 @@ export const SignInForm = () => {
 
     const form = event.target as HTMLFormElement
 
-    axios.post('http://127.0.0.1:3333/login', {
-      email: form.email.value.trim(),
-      password: form.password.value.trim(),
-    }).then(({ data }) => {
-      localStorage.setItem('userData', JSON.stringify(data.user))
-      localStorage.setItem('token', data.token.token)
+    axios
+      .post('http://127.0.0.1:3333/login', {
+        email: form.email.value.trim(),
+        password: form.password.value.trim(),
+      })
+      .then(({ data }) => {
+        localStorage.setItem('userData', JSON.stringify(data.user))
+        localStorage.setItem('token', data.token.token)
 
-      navigate('/dashboard')
-    })
+        navigate('/dashboard')
+      })
+      .catch(({ response }) => {
+        toast.error(response.data.message)
+      })
   }
 
   return (
     <>
+      <Toaster />
       <S.H2>Authentication</S.H2>
       <S.Form onSubmit={handleUserLogin}>
         <S.InputGroup>
