@@ -30,8 +30,6 @@ export const Subtitle = styled.h3`
 `
 
 export const NavigationContainer = styled.div`
-  /* display: grid; */
-
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(117px, 1fr));
   gap: 1rem 1.5625rem;
