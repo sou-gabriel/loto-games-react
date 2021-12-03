@@ -2,7 +2,7 @@ import styled from 'styled-components/macro'
 
 import { Link } from 'react-router-dom'
 
-export const Container = styled.div`
+export const Section = styled.section`
   height: 100%;
 
   display: flex;
@@ -11,7 +11,8 @@ export const Container = styled.div`
 
   @media (max-width: 768px) {
     flex-direction: column;
-    justify-content: space-around;
+    justify-content: center;
+    gap: 4rem;
   }
 `
 
@@ -45,7 +46,7 @@ export const H1 = styled.h1`
   }
 `
 
-export const Section = styled.section`
+export const AuthContainer = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;

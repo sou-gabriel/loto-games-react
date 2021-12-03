@@ -4,22 +4,26 @@ import { SignInForm } from './SignInForm'
 import { ResetPasswordForm } from './ResetPasswordForm'
 import { SignUpForm } from './SignUpForm'
 
+import { MainContent } from 'components/MainContent'
+
 import * as S from './styles'
 
 export const UserAuthPage = () => {
   return (
-    <S.Container>
-      <S.H1>
-        The <br /> Greatest <br /> App <br /> <span>for</span> <br />{' '}
-        <span>lottery</span>
-      </S.H1>
+    <MainContent>
       <S.Section>
-        <Routes>
-          <Route path='/' element={<SignInForm />} />
-          <Route path='/reset-password' element={<ResetPasswordForm />} />
-          <Route path='/sign-up' element={<SignUpForm />} />
-        </Routes>
+        <S.H1>
+          The <br /> Greatest <br /> App <br /> <span>for</span> <br />{' '}
+          <span>lottery</span>
+        </S.H1>
+        <S.AuthContainer>
+          <Routes>
+            <Route path='/' element={<SignInForm />} />
+            <Route path='/reset-password' element={<ResetPasswordForm />} />
+            <Route path='/sign-up' element={<SignUpForm />} />
+          </Routes>
+        </S.AuthContainer>
       </S.Section>
-    </S.Container>
+    </MainContent>
   )
 }
