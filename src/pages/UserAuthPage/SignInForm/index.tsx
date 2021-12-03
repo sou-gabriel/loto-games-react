@@ -33,6 +33,9 @@ export const SignInForm = () => {
       .catch(({ response }) => {
         toast.error(response.data.message)
       })
+
+    form.email.value = ''
+    form.password.value = ''
   }
 
   return (
