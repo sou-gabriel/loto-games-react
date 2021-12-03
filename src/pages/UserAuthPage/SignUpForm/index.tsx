@@ -20,7 +20,7 @@ export const SignUpForm = () => {
           {false && <S.ErrorMessage>...</S.ErrorMessage>}
         </S.InputGroup>
         <S.SubmitButton type='submit'>
-          Send Link
+          Register
           <AiOutlineArrowRight />
         </S.SubmitButton>
       </S.Form>
