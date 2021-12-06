@@ -1,11 +1,12 @@
-import { useLocation } from 'react-router-dom'
 import { AiOutlineArrowRight } from 'react-icons/ai'
 
 import * as S from './styles'
 
-export const Header = () => {
-  const { pathname } = useLocation()
+interface HeaderProps {
+  isItToDisplayTheHomeLink: boolean
+}
 
+export const Header = ({ isItToDisplayTheHomeLink }: HeaderProps) => {
   return (
     <S.Container>
       <S.Row>
@@ -13,7 +14,7 @@ export const Header = () => {
 
         <S.Navigation>
           <S.List>
-            {pathname === '/dashboard' || (
+            {isItToDisplayTheHomeLink && (
               <S.ListItem isIsolated>
                 <S.NavigationLink to='/'>Home</S.NavigationLink>
               </S.ListItem>
