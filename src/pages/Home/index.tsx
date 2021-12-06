@@ -5,7 +5,6 @@ import { AiOutlineArrowRight } from 'react-icons/ai'
 import { Header } from 'components/Header'
 import { MainContent } from 'components/MainContent'
 import { RecentGames } from 'pages/Home/RecentGames'
-
 import * as S from './styles'
 
 export const Home = () => {
@@ -17,11 +16,11 @@ export const Home = () => {
     if (!userToken) {
       navigate('/login', { replace: true })
     }
-  }, [])
+  }, [navigate])
 
   return (
     <>
-      <Header />
+      <Header isItToDisplayTheHomeLink />
       <MainContent>
         <S.Container>
           <RecentGames />
