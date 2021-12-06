@@ -1,4 +1,4 @@
-import { FormEvent, useEffect, useState } from 'react'
+import { FormEvent, useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { AiOutlineArrowRight } from 'react-icons/ai'
 import axios from 'axios'
@@ -28,7 +28,7 @@ export const SignInForm = () => {
         localStorage.setItem('userData', JSON.stringify(data.user))
         localStorage.setItem('token', data.token.token)
 
-        navigate('/dashboard')
+        navigate('/home')
       })
       .catch(({ response }) => {
         toast.error(response.data.message)

@@ -24,7 +24,7 @@ export const SignUpForm = () => {
         localStorage.setItem('token', data.token.token)
         localStorage.setItem('userData', JSON.stringify(data.user))
 
-        navigate('/dashboard', { replace: true })
+        navigate('/home', { replace: true })
       })
       .catch(({ response }) => {
         toast.error(response.data.error.message)
