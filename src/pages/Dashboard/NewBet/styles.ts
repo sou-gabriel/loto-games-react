@@ -35,11 +35,15 @@ export const NavigationContainer = styled.div`
   gap: 1rem 1.5625rem;
 `
 
-export const NavigationLink = styled(NavLink)`
+interface INavigationLink {
+  theme: string
+}
+
+export const NavigationLink = styled(NavLink)<INavigationLink>`
   flex-shrink: 0;
 
   padding: 0.5625rem 1.6875rem;
-  border: 2px solid #7f3992;
+  border: 2px solid ${props => props.theme};
   border-radius: 999px;
 
   font-weight: bold;
@@ -47,9 +51,13 @@ export const NavigationLink = styled(NavLink)`
   font-size: 0.875rem;
   text-align: center;
   white-space: nowrap;
-  color: #7f3992;
+  color: ${props => props.theme};
 
   background-color: transparent;
+
+  &.isActive {
+    background:  red;
+  }
 `
 
 export const GameDescription = styled.p`

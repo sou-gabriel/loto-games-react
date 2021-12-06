@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router-dom'
 import axios from 'axios'
 import { useDispatch } from 'react-redux'
 
+import { IAvailableGames } from 'store/modules/availableGames/types'
 import { Header } from 'components/Header'
 import { MainContent } from 'components/MainContent'
 import { NewBet } from './NewBet'
@@ -23,7 +24,7 @@ export const Dashboard = () => {
   }, [navigate])
 
   useEffect(() => {
-    axios.get('http://127.0.0.1:3333/cart_games')
+    axios.get<IAvailableGames>('http://127.0.0.1:3333/cart_games')
       .then(response => {
         const availableGames = response.data
         dispatch(addAvailableGames(availableGames))
@@ -32,7 +33,7 @@ export const Dashboard = () => {
 
   return (
     <>
-      <Header />
+      <Header isItToDisplayTheHomeLink={false} />
       <MainContent>
         <S.Container>
           <NewBet />
