@@ -30,7 +30,6 @@ export const GlobalStyle = createGlobalStyle`
 
   div#root {
     height: 100%;
-    max-height: fit-content;
 
     display: flex;
     flex-direction: column;

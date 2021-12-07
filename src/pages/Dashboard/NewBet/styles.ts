@@ -35,15 +35,15 @@ export const NavigationContainer = styled.div`
   gap: 1rem 1.5625rem;
 `
 
-interface INavigationLink {
+interface INavLink {
   theme: string
 }
 
-export const NavigationLink = styled(NavLink)<INavigationLink>`
+export const NavigationLink = styled(NavLink)<INavLink>`
   flex-shrink: 0;
 
   padding: 0.5625rem 1.6875rem;
-  border: 2px solid ${props => props.theme};
+  border: 2px solid ${(props) => props.theme};
   border-radius: 999px;
 
   font-weight: bold;
@@ -51,13 +51,9 @@ export const NavigationLink = styled(NavLink)<INavigationLink>`
   font-size: 0.875rem;
   text-align: center;
   white-space: nowrap;
-  color: ${props => props.theme};
+  color: ${(props) => props.theme};
 
   background-color: transparent;
-
-  &.isActive {
-    background:  red;
-  }
 `
 
 export const GameDescription = styled.p`
@@ -77,22 +73,27 @@ export const GameOptionsContainer = styled.div`
   gap: 0.75rem;
 `
 
-export const GameNumber = styled.button`
+interface GameNumberProps {
+  isActive: boolean
+  buttonColor: string
+}
+
+export const GameNumber = styled.button<GameNumberProps>`
   width: 3.9375rem;
   height: 4.0625rem;
   border-radius: 50%;
 
+  background-color: ${(props) => props.isActive ? props.buttonColor : '#adc0c4'};
+
   font-size: 1.25rem;
   color: #fff;
-
-  background-color: #adc0c4;
 `
 
 export const GameActionsContainer = styled.div`
   display: flex;
   justify-content: space-between;
 
-  @media(max-width: 876px) {
+  @media (max-width: 876px) {
     flex-direction: column;
     gap: 1rem;
   }
@@ -101,7 +102,7 @@ export const GameActionsContainer = styled.div`
 export const GameActionsContainerInner = styled(GameActionsContainer)`
   gap: 1.5625rem;
 
-  @media(max-width: 876px) {
+  @media (max-width: 876px) {
     flex-direction: row;
     justify-content: initial;
   }
@@ -117,16 +118,16 @@ export const Button = styled.button<ButtonProps>`
   border: 1px solid #27c383;
   border-radius: 10px;
 
-  background-color: ${({ isFill }) => isFill ? '#27c383' : 'fff'};
+  background-color: ${({ isFill }) => (isFill ? '#27c383' : 'fff')};
 
   font-size: 1rem;
-  color: ${({ isFill }) => isFill ? '#fff' : '#27c383'};
+  color: ${({ isFill }) => (isFill ? '#fff' : '#27c383')};
 
   display: flex;
   align-items: center;
   gap: 1.80375rem;
 
-  @media(max-width: 876px) {
+  @media (max-width: 876px) {
     align-self: baseline;
   }
 `

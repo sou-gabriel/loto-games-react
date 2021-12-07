@@ -1,9 +1,11 @@
 import { useEffect, useState, MouseEvent } from 'react'
 import { AiOutlineShoppingCart } from 'react-icons/ai'
-import { useSelector } from 'react-redux'
+import { useSelector, useDispatch } from 'react-redux'
 import toast, { Toaster } from 'react-hot-toast'
 import { useNavigate } from 'react-router-dom'
+import { v4 as uuidv4 } from 'uuid'
 
+import { addGameToCart } from 'store/modules/cartGames/actions'
 import { IAvailableGame } from 'store/modules/availableGames/types'
 import { RootState } from 'store/modules/rootReducer'
 import * as S from './styles'
@@ -11,9 +13,10 @@ import * as S from './styles'
 export const NewBet = () => {
   const [isLoadingAvailableGames, setIsLoadingAvailableGames] = useState(true)
   const [selectedGame, setSelectedGame] = useState<IAvailableGame | null>(null)
-  const [choosenGameNumbers, setChoosenGameNumbers] = useState<number[]>([])
+  const [chosenGameNumbers, setChosenGameNumbers] = useState<number[]>([])
   const navigate = useNavigate()
   const availableGames = useSelector((state: RootState) => state.availableGames)
+  const dispatch = useDispatch()
 
   useEffect(() => {
     if (availableGames.types) {
@@ -40,17 +43,17 @@ export const NewBet = () => {
     event: MouseEvent<HTMLButtonElement>,
   ) => {
     const gameNumberButton = event.target as HTMLButtonElement
-    const newChoosenGameNumber = Number(gameNumberButton.value)
+    const newChosenGameNumber = Number(gameNumberButton.value)
     const hasTheNumberAlreadyBeenChosen =
-      choosenGameNumbers.includes(newChoosenGameNumber)
+      chosenGameNumbers.includes(newChosenGameNumber)
     const maxNumbersAllowed = selectedGame?.max_number || 0
     const hasSpaceForOneMoreNumber =
-      choosenGameNumbers.length < maxNumbersAllowed
+      chosenGameNumbers.length < maxNumbersAllowed
 
     if (hasTheNumberAlreadyBeenChosen) {
-      setChoosenGameNumbers((prevChoosenGameNumbers) =>
-        prevChoosenGameNumbers.filter(
-          (choosenGameNumber) => choosenGameNumber !== newChoosenGameNumber,
+      setChosenGameNumbers((prevChosenGameNumbers) =>
+        prevChosenGameNumbers.filter(
+          (chosenGameNumber) => chosenGameNumber !== newChosenGameNumber,
         ),
       )
 
@@ -60,8 +63,8 @@ export const NewBet = () => {
     }
 
     if (hasSpaceForOneMoreNumber) {
-      setChoosenGameNumbers((prevChoosenGameNumbers) =>
-        prevChoosenGameNumbers.concat(newChoosenGameNumber),
+      setChosenGameNumbers((prevChosenGameNumbers) =>
+        prevChosenGameNumbers.concat(newChosenGameNumber),
       )
 
       toast.remove()
@@ -88,13 +91,33 @@ export const NewBet = () => {
   }
 
   const completeGame = () => {
-    const randomNumbers =
-      getRandomNumbers(selectedGame?.max_number, selectedGame?.range)
-    setChoosenGameNumbers(randomNumbers)
+    const randomNumbers = getRandomNumbers(
+      selectedGame?.max_number,
+      selectedGame?.range,
+    )
+    setChosenGameNumbers(randomNumbers)
   }
 
   const clearGame = () => {
-    setChoosenGameNumbers([])
+    setChosenGameNumbers([])
+  }
+
+  const handleClickAddGameToCartButton = () => {
+    if (chosenGameNumbers.length === (selectedGame?.max_number || 0)) {
+      const newGame = {
+        id: uuidv4(),
+        name: selectedGame?.type || '',
+        numbers: chosenGameNumbers,
+        price: selectedGame?.price || 0,
+        color: selectedGame?.color || '#000',
+      }
+
+      dispatch(addGameToCart(newGame))
+      return
+    }
+
+    toast.remove()
+    toast.error('É necessário preencher a cartela com os números!')
   }
 
   if (isLoadingAvailableGames) {
@@ -122,7 +145,7 @@ export const NewBet = () => {
                       availableGameType.id === availableGame.id,
                   ) || null
 
-                setChoosenGameNumbers([])
+                setChosenGameNumbers([])
                 setSelectedGame(selectedGameById)
               }}
             >
@@ -139,7 +162,7 @@ export const NewBet = () => {
             key={gameNumber}
             value={gameNumber}
             onClick={handleClickGameNumberButton}
-            isActive={choosenGameNumbers.includes(gameNumber)}
+            isActive={chosenGameNumbers.includes(gameNumber)}
             buttonColor={selectedGame?.color || '#fff'}
           >
             {gameNumber}
@@ -151,7 +174,7 @@ export const NewBet = () => {
           <S.Button onClick={completeGame}>Complete Game</S.Button>
           <S.Button onClick={clearGame}>Clear Game</S.Button>
         </S.GameActionsContainerInner>
-        <S.Button isFill>
+        <S.Button isFill onClick={handleClickAddGameToCartButton}>
           <AiOutlineShoppingCart />
           Add to Cart
         </S.Button>
