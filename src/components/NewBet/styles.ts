@@ -39,6 +39,12 @@ export const Description = styled.p`
   line-height: 1.5rem;
 `
 
+export const GameChoiceButtonContainer = styled.div`
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(117px, 1fr));
+  gap: 1rem 1.5625rem;
+`
+
 export const GameNumberList = styled.div`
   margin-bottom: 2.75rem;
   display: grid;
@@ -47,8 +53,8 @@ export const GameNumberList = styled.div`
 `
 
 interface GameNumberProps {
-  isActive?: boolean
-  buttonColor?: string
+  isActive: boolean
+  buttonColor: string
 }
 
 export const GameNumber = styled.button<GameNumberProps>`

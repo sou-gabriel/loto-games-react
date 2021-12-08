@@ -1,8 +1,9 @@
 import { useEffect } from 'react'
 import { useDispatch } from 'react-redux'
 import { useNavigate } from 'react-router-dom'
-import toast from 'react-hot-toast'
 import axios from 'axios'
+
+import { showFeedbackMessage } from 'utils/functions'
 
 import {
   createNewUserAction,
@@ -15,11 +16,6 @@ interface UserData {
   password: string
 }
 
-interface Feedback {
-  type: 'success' | 'error'
-  message: string
-}
-
 export const useAuth = () => {
   const dispatch = useDispatch()
   const navigate = useNavigate()
@@ -27,7 +23,7 @@ export const useAuth = () => {
   useEffect(() => {
     localStorage.removeItem('token')
     dispatch(createRemoveUserOption(null))
-  }, [])
+  }, [dispatch])
 
   const storeUserData = (token: string, userData: UserData) => {
     localStorage.setItem('token', token)
@@ -36,17 +32,6 @@ export const useAuth = () => {
 
   const redirectUser = (route: string) => {
     navigate(route)
-  }
-
-  const showFeedbackMessage = ({ message, type }: Feedback) => {
-    toast.remove()
-
-    if (type === 'success') {
-      toast.success(message)
-      return
-    }
-
-    toast.error(message)
   }
 
   const fetchUser = async (url: string, userData: UserData) => {
