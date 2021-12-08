@@ -1,18 +1,21 @@
 import { combineReducers } from 'redux'
 
 import { userDataReducer } from './userData/reducer'
-import { availableGamesReducer } from './availableGames/reducer'
-import { IAvailableGames } from './availableGames/types'
-import { cartReducer } from './cartGames/reducer'
-import { IGame } from './cartGames/types'
+import { gameOptionsReducer } from './gameOptions/reducer'
+import { IGameOptions } from './gameOptions/types'
+import { userGameCartReducer } from './userGameCart/reducer'
+import { IGame } from './userGameCart/types'
+import { minCartValueReducer } from './minCartValue/reducer'
 
 export const rootReducer = combineReducers({
   userData: userDataReducer,
-  availableGames: availableGamesReducer,
-  cartGames: cartReducer,
+  gameOptions: gameOptionsReducer,
+  userGameCart: userGameCartReducer,
+  minCartValue: minCartValueReducer
 })
 
 export type RootState = {
-  availableGames: IAvailableGames
-  cartGames: IGame[]
+  gameOptions: IGameOptions
+  userGameCart: IGame[]
+  minCartValue: number
 }

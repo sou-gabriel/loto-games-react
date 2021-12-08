@@ -3,7 +3,7 @@ import { useSelector, useDispatch } from 'react-redux'
 import axios from 'axios'
 
 import { RootState } from 'store/modules/rootReducer'
-import { removeGameFromCart } from 'store/modules/cartGames/actions'
+import { createActionToRemoveGameFromCart } from 'store/modules/userGameCart/actions'
 import * as S from './styles'
 
 const DUMMY_VALUE = {
@@ -23,8 +23,8 @@ const DUMMY_VALUE = {
   ],
 }
 
-export const GameCart = () => {
-  const gamesCart = useSelector((state: RootState) => state.cartGames)
+export const BettingCart = () => {
+  const gamesCart = useSelector((state: RootState) => state.userGameCart)
   const dispatch = useDispatch()
 
   const getFormattedGamePrice = (gamePrice: number) => {
@@ -65,7 +65,7 @@ export const GameCart = () => {
                 gamesCart.map((game) => (
                   <S.ListItem key={game.id} themeColor={game.color}>
                     <S.TrashIcon
-                      onClick={() => dispatch(removeGameFromCart(game.id))}
+                      onClick={() => dispatch(createActionToRemoveGameFromCart(game.id))}
                       color='#888888'
                     />
                     <span />

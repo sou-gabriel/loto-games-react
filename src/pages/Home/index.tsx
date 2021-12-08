@@ -5,7 +5,7 @@ import { AiOutlineArrowRight } from 'react-icons/ai'
 import { Header } from 'components/Header'
 import { MainContent } from 'components/MainContent'
 import { GameNavigation } from 'components/GameNavigation'
-import { RecentGamesList } from './RecentGamesList'
+import { RecentGamesList } from 'components/RecentGamesList'
 import {
   Container,
   NavigationLink,

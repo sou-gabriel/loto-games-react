@@ -1,6 +1,6 @@
 import { IGame } from './types'
 
-export const addGameToCart = (game: IGame) => {
+export const createActionToAddGameToCart = (game: IGame) => {
   return {
     type: 'ADD_GAME_TO_CART',
     payload: {
@@ -9,9 +9,9 @@ export const addGameToCart = (game: IGame) => {
   }
 }
 
-export const removeGameFromCart = (id: string) => {
+export const createActionToRemoveGameFromCart = (id: string) => {
   return {
-    type: 'REMOVE_GAME',
+    type: 'REMOVE_GAME_FROM_CART',
     payload: {
       id,
     },

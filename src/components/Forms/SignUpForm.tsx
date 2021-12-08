@@ -4,13 +4,13 @@ import { AiOutlineArrowRight, AiOutlineArrowLeft } from 'react-icons/ai'
 
 import { useAuth } from 'hooks/useAuth'
 import {
-  Subtitle,
+  Title,
   Form,
   InputGroup,
   Input,
   SubmitButton,
   NavigationLink,
-} from '../styles'
+} from './styles'
 
 export const SignUpForm = () => {
   const { fetchUser, clearFormFields } = useAuth()
@@ -36,7 +36,7 @@ export const SignUpForm = () => {
   return (
     <>
       <Toaster />
-      <Subtitle>Registration</Subtitle>
+      <Title>Registration</Title>
       <Form onSubmit={handleUserRegistration}>
         <InputGroup>
           <Input type='text' placeholder='Name' name='username' required />

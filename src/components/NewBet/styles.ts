@@ -1,13 +1,11 @@
 import styled from 'styled-components'
 
-import { NavLink } from 'react-router-dom'
-
-export const Wrapper = styled.section`
+export const Container = styled.section`
   width: 37.6875rem;
   position: relative;
 `
 
-export const Title = styled.h2`
+export const Title = styled.h1`
   margin-bottom: 2.0625rem;
 
   font-style: italic;
@@ -20,21 +18,20 @@ export const Title = styled.h2`
   }
 `
 
-export const GameChoiseContainer = styled.div`
+export const GameChoiceContainer = styled.div`
   margin-bottom: 1.75rem;
-
   display: flex;
   flex-direction: column;
   gap: 1.25rem;
 `
 
-export const Subtitle = styled.h3`
+export const Subtitle = styled.h2`
   font-style: italic;
   font-size: 1.0625rem;
   color: #868686;
 `
 
-export const GameDescription = styled.p`
+export const Description = styled.p`
   margin-bottom: 1.6875rem;
   font-size: 1.0625rem;
   font-style: italic;
@@ -42,7 +39,7 @@ export const GameDescription = styled.p`
   line-height: 1.5rem;
 `
 
-export const GameOptionsContainer = styled.div`
+export const GameNumberList = styled.div`
   margin-bottom: 2.75rem;
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(50px, 1fr));
@@ -50,8 +47,8 @@ export const GameOptionsContainer = styled.div`
 `
 
 interface GameNumberProps {
-  isActive: boolean
-  buttonColor: string
+  isActive?: boolean
+  buttonColor?: string
 }
 
 export const GameNumber = styled.button<GameNumberProps>`
@@ -64,7 +61,7 @@ export const GameNumber = styled.button<GameNumberProps>`
   color: #fff;
 `
 
-export const GameActionsContainer = styled.div`
+export const ActionsContainer = styled.div`
   display: flex;
   justify-content: space-between;
 
@@ -74,7 +71,7 @@ export const GameActionsContainer = styled.div`
   }
 `
 
-export const GameActionsContainerInner = styled(GameActionsContainer)`
+export const InnerActionsContainer = styled(ActionsContainer)`
   gap: 1.5625rem;
 
   @media (max-width: 876px) {
@@ -84,7 +81,7 @@ export const GameActionsContainerInner = styled(GameActionsContainer)`
 `
 
 interface ButtonProps {
-  isFill?: boolean
+  primary?: boolean
 }
 
 export const Button = styled.button<ButtonProps>`
@@ -92,12 +89,9 @@ export const Button = styled.button<ButtonProps>`
   padding: 1rem 1.375rem;
   border: 1px solid #27c383;
   border-radius: 10px;
-
-  background-color: ${({ isFill }) => (isFill ? '#27c383' : 'fff')};
-
+  background-color: ${({ primary }) => (primary ? '#fff' : '#27c383')};
   font-size: 1rem;
-  color: ${({ isFill }) => (isFill ? '#fff' : '#27c383')};
-
+  color: ${({ primary }) => (primary ? '#27c383' : '#fff')};
   display: flex;
   align-items: center;
   gap: 1.80375rem;

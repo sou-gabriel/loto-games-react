@@ -1,8 +1,6 @@
 import { Routes, Route } from 'react-router-dom'
 
-import { SignInForm } from './SignInForm'
-import { ResetPasswordForm } from './ResetPasswordForm'
-import { SignUpForm } from './SignUpForm'
+import { SignInForm, SignUpForm, ResetPasswordForm } from 'components/Forms'
 import { MainContent } from 'components/MainContent'
 import { Container, Title, AuthContainer } from './styles'
 

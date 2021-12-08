@@ -5,13 +5,13 @@ import { Toaster } from 'react-hot-toast'
 import { useAuth } from 'hooks/useAuth'
 
 import {
-  Subtitle,
+  Title,
   Form,
   InputGroup,
   Input,
   SubmitButton,
   NavigationLink,
-} from '../styles'
+} from './styles'
 
 export const SignInForm = () => {
   const { fetchUser, clearFormFields } = useAuth()
@@ -35,7 +35,7 @@ export const SignInForm = () => {
   return (
     <>
       <Toaster />
-      <Subtitle>Authentication</Subtitle>
+      <Title>Authentication</Title>
       <Form onSubmit={handleUserLogin}>
         <InputGroup>
           <Input type='email' placeholder='Email' name='email' />

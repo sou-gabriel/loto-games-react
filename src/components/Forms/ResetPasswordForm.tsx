@@ -1,18 +1,18 @@
 import { AiOutlineArrowRight, AiOutlineArrowLeft } from 'react-icons/ai'
 
 import {
-  Subtitle,
+  Title,
   Form,
   InputGroup,
   Input,
   SubmitButton,
   NavigationLink,
-} from '../styles'
+} from './styles'
 
 export const ResetPasswordForm = () => {
   return (
     <>
-      <Subtitle>Reset password</Subtitle>
+      <Title>Reset password</Title>
       <Form>
         <InputGroup>
           <Input type='email' placeholder='Email' />

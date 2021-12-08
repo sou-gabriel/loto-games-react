@@ -1,4 +1,4 @@
-export interface IAvailableGame {
+export interface IGameOption {
   id: number
   type: string
   description: string
@@ -8,12 +8,14 @@ export interface IAvailableGame {
   color: string
 }
 
-export interface IAvailableGames {
+export interface IGameOptions {
   min_cart_value: number
-  types: IAvailableGame[]
+  types: IGameOption[]
 }
 
 export interface IAction {
   type: string
-  payload: IAvailableGames
+  payload: {
+    gameOptions: IGameOption[]
+  }
 }

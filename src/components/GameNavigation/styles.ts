@@ -8,19 +8,19 @@ export const Container = styled.div`
 `
 
 interface INavLink {
-  themeColor: string
+  color: string
 }
 
 export const NavigationLink = styled(NavLink)<INavLink>`
   flex-shrink: 0;
   padding: 0.5625rem 1.6875rem;
-  border: 2px solid ${({ themeColor }) => themeColor};
+  border: 2px solid ${({ color }) => color};
   border-radius: 999px;
   font-weight: bold;
   font-style: italic;
   font-size: 0.875rem;
   text-align: center;
   white-space: nowrap;
-  color: ${({ themeColor }) => themeColor};
+  color: ${({ color }) => color};
   background-color: transparent;
 `

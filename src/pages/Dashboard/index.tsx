@@ -1,19 +1,27 @@
 import { useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
-import axios from 'axios'
 import { useDispatch } from 'react-redux'
+import axios from 'axios'
 
-import { IAvailableGames } from 'store/modules/availableGames/types'
+import { NewBet } from 'components/NewBet'
 import { Header } from 'components/Header'
 import { MainContent } from 'components/MainContent'
-import { NewBet } from './NewBet'
-import { GameCart } from './GameGart'
-import { addAvailableGames } from 'store/modules/availableGames/action'
-import * as S from './styles'
+import { BettingCart } from 'components/BettingCart'
+import { createActionToSetGameOptions } from 'store/modules/gameOptions/action'
+import { createActionToSetMinimumCartValue } from 'store/modules/minCartValue/actions'
+import { IGameOptions} from 'store/modules/gameOptions/types'
+import { Container } from './styles'
 
 export const Dashboard = () => {
   const navigate = useNavigate()
   const dispatch = useDispatch()
+
+  const storeGameOptions = (gameOptions: IGameOptions) => {
+    console.log(gameOptions.types)
+
+    dispatch(createActionToSetMinimumCartValue(gameOptions.min_cart_value))
+    dispatch(createActionToSetGameOptions(gameOptions.types))
+  }
 
   useEffect(() => {
     const userToken = localStorage.getItem('token')
@@ -24,21 +32,34 @@ export const Dashboard = () => {
   }, [navigate])
 
   useEffect(() => {
-    axios.get<IAvailableGames>('http://127.0.0.1:3333/cart_games')
-      .then(response => {
-        const availableGames = response.data
-        dispatch(addAvailableGames(availableGames))
-      })
+    const fetchGameOptions = async () => {
+      try {
+        const response = await
+          axios.get<IGameOptions>('http://127.0.0.1:3333/cart_games')
+
+        if (response.status !== 200) {
+          throw new Error('Um erro de conexão ocorreu. Tente novamente!')
+        }
+
+        const gameOptions = response.data
+
+        storeGameOptions(gameOptions)
+      } catch (error) {
+        console.log(error)
+      }
+    }
+
+    fetchGameOptions()
   }, [dispatch])
 
   return (
     <>
       <Header />
       <MainContent>
-        <S.Container>
+        <Container>
           <NewBet />
-          <GameCart />
-        </S.Container>
+          <BettingCart />
+        </Container>
       </MainContent>
     </>
   )

@@ -4,15 +4,22 @@ import { useSelector } from 'react-redux'
 import { RootState } from 'store/modules/rootReducer'
 
 export const GameNavigation = () => {
-  const availableGames = useSelector(
-    (state: RootState) => state.availableGames.types,
-  )
+  const gameOptions = useSelector((state: RootState) =>
+    state.gameOptions.types)
+
+  if (!gameOptions) {
+    return <p>Loading...</p>
+  }
 
   return (
     <Container>
-      {availableGames.map((game) => (
-        <NavigationLink key={game.id} to='/' themeColor={game.color}>
-          {game.type}
+      {gameOptions.map(({ id, type, color }) => (
+        <NavigationLink
+          key={id}
+          to={`/dashboard/${id}`}
+          color={color}
+        >
+          {type}
         </NavigationLink>
       ))}
     </Container>
