@@ -3,28 +3,26 @@ import { Routes, Route } from 'react-router-dom'
 import { SignInForm } from './SignInForm'
 import { ResetPasswordForm } from './ResetPasswordForm'
 import { SignUpForm } from './SignUpForm'
-
 import { MainContent } from 'components/MainContent'
-
-import * as S from './styles'
+import { Container, Title, AuthContainer } from './styles'
 
 export const UserAuthPage = () => {
   return (
     <MainContent>
-      <S.Section>
-        <S.H1>
+      <Container>
+        <Title>
           The <br /> Greatest <br /> App <br /> <span>for</span> <br />{' '}
           <span>lottery</span>
-        </S.H1>
-        <S.AuthContainer>
+        </Title>
+        <AuthContainer>
           <Routes>
             <Route path='/' element={<SignInForm />} />
             <Route path='/login' element={<SignInForm />} />
             <Route path='/reset-password' element={<ResetPasswordForm />} />
             <Route path='/sign-up' element={<SignUpForm />} />
           </Routes>
-        </S.AuthContainer>
-      </S.Section>
+        </AuthContainer>
+      </Container>
     </MainContent>
   )
 }

@@ -5,10 +5,14 @@ import toast, { Toaster } from 'react-hot-toast'
 import { useNavigate } from 'react-router-dom'
 import { v4 as uuidv4 } from 'uuid'
 
+import { Spinner } from 'components/Spinner'
 import { addGameToCart } from 'store/modules/cartGames/actions'
 import { IAvailableGame } from 'store/modules/availableGames/types'
 import { RootState } from 'store/modules/rootReducer'
 import * as S from './styles'
+
+import { GameNavigation } from 'components/GameNavigation'
+import { Wrapper } from './styles'
 
 export const NewBet = () => {
   const [isLoadingAvailableGames, setIsLoadingAvailableGames] = useState(true)
@@ -25,7 +29,7 @@ export const NewBet = () => {
 
         setIsLoadingAvailableGames(false)
         setSelectedGame(defaultGame)
-      }, 500)
+      }, 200)
     }
   }, [availableGames, navigate])
 
@@ -121,18 +125,23 @@ export const NewBet = () => {
   }
 
   if (isLoadingAvailableGames) {
-    return <p>Loading...</p>
+    return (
+      <Wrapper>
+        <Spinner />
+      </Wrapper>
+    )
   }
 
   return (
-    <section>
+    <Wrapper>
       <Toaster />
       <S.Title>
         New Bet <span>for {selectedGame?.type}</span>
       </S.Title>
       <S.GameChoiseContainer>
         <S.Subtitle>Choose a game</S.Subtitle>
-        <S.NavigationContainer>
+        <GameNavigation />
+        {/* <S.NavigationContainer>
           {availableGames.types.map((availableGame: IAvailableGame) => (
             <S.NavigationLink
               key={availableGame.id}
@@ -152,7 +161,7 @@ export const NewBet = () => {
               {availableGame.type}
             </S.NavigationLink>
           ))}
-        </S.NavigationContainer>
+        </S.NavigationContainer> */}
       </S.GameChoiseContainer>
       <S.Subtitle>Fill your bet</S.Subtitle>
       <S.GameDescription>{selectedGame?.description}</S.GameDescription>
@@ -179,6 +188,6 @@ export const NewBet = () => {
           Add to Cart
         </S.Button>
       </S.GameActionsContainer>
-    </section>
+    </Wrapper>
   )
 }

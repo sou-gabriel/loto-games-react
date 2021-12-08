@@ -33,7 +33,7 @@ export const Dashboard = () => {
 
   return (
     <>
-      <Header isItToDisplayTheHomeLink={false} />
+      <Header />
       <MainContent>
         <S.Container>
           <NewBet />

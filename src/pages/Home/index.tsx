@@ -4,8 +4,17 @@ import { AiOutlineArrowRight } from 'react-icons/ai'
 
 import { Header } from 'components/Header'
 import { MainContent } from 'components/MainContent'
-import { RecentGames } from 'pages/Home/RecentGames'
-import * as S from './styles'
+import { GameNavigation } from 'components/GameNavigation'
+import { RecentGamesList } from './RecentGamesList'
+import {
+  Container,
+  NavigationLink,
+  Section,
+  Heading,
+  Title,
+  FiltersContainer,
+  Subtitle,
+} from './styles'
 
 export const Home = () => {
   const navigate = useNavigate()
@@ -20,15 +29,24 @@ export const Home = () => {
 
   return (
     <>
-      <Header isItToDisplayTheHomeLink />
+      <Header />
       <MainContent>
-        <S.Container>
-          <RecentGames />
-          <S.NavigationButton to='/dashboard'>
-            New Bet
-            <AiOutlineArrowRight />
-          </S.NavigationButton>
-        </S.Container>
+        <Container>
+          <Section>
+            <Heading>
+              <Title>Recent games</Title>
+              <FiltersContainer>
+                <Subtitle>Filters</Subtitle>
+                <GameNavigation />
+              </FiltersContainer>
+            </Heading>
+            <RecentGamesList />
+          </Section>
+
+          <NavigationLink to='/dashboard'>
+            New Bet <AiOutlineArrowRight />
+          </NavigationLink>
+        </Container>
       </MainContent>
     </>
   )

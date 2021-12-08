@@ -1,6 +1,6 @@
 import styled from 'styled-components'
 
-import { Link } from 'react-router-dom'
+import { Link, NavLink } from 'react-router-dom'
 
 export const Container = styled.div`
   display: flex;
@@ -15,7 +15,7 @@ export const Container = styled.div`
   }
 `
 
-export const NavigationButton = styled(Link)`
+export const NavigationLink = styled(Link)`
   font-weight: bold;
   font-style: italic;
   font-size: 1.75rem;
@@ -29,4 +29,44 @@ export const NavigationButton = styled(Link)`
   @media (max-width: 588px) {
     align-self: center;
   }
+`
+
+export const Section = styled.section`
+  flex-grow: 0.5;
+`
+
+export const Heading = styled.header`
+  margin-bottom: 2.1875rem;
+  display: flex;
+  align-items: center;
+  gap: 2.8125rem;
+
+  @media (max-width: 876px) {
+    flex-direction: column;
+    gap: 1rem;
+  }
+`
+
+export const FiltersContainer = styled.div`
+  display: flex;
+  align-items: center;
+  gap: 0.9375rem;
+
+  @media (max-width: 876px) {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+`
+
+export const Title = styled.h2`
+  font-size: 1.5rem;
+  font-style: italic;
+  color: #707070;
+  text-transform: uppercase;
+`
+
+export const Subtitle = styled.h3`
+  font-size: 1.0625rem;
+  font-style: italic;
+  color: #868686;
 `

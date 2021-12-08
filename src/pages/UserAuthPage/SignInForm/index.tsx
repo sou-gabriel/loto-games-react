@@ -1,65 +1,55 @@
-import { FormEvent, useEffect } from 'react'
-import { useNavigate } from 'react-router-dom'
+import { FormEvent } from 'react'
 import { AiOutlineArrowRight } from 'react-icons/ai'
-import axios from 'axios'
-import toast, { Toaster } from 'react-hot-toast'
+import { Toaster } from 'react-hot-toast'
 
-import * as S from '../styles'
+import { useAuth } from 'hooks/useAuth'
+
+import {
+  Subtitle,
+  Form,
+  InputGroup,
+  Input,
+  SubmitButton,
+  NavigationLink,
+} from '../styles'
 
 export const SignInForm = () => {
-  const navigate = useNavigate()
-
-  useEffect(() => {
-    localStorage.removeItem('token')
-    localStorage.removeItem('userData')
-  }, [])
+  const { fetchUser, clearFormFields } = useAuth()
 
   const handleUserLogin = (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault()
 
     const form = event.target as HTMLFormElement
 
-    axios
-      .post('http://127.0.0.1:3333/login', {
-        email: form.email.value.trim(),
-        password: form.password.value.trim(),
-      })
-      .then(({ data }) => {
-        localStorage.setItem('userData', JSON.stringify(data.user))
-        localStorage.setItem('token', data.token.token)
+    fetchUser('http://127.0.0.1:3333/login', {
+      email: form.email.value.trim(),
+      password: form.password.value.trim(),
+    })
 
-        navigate('/home')
-      })
-      .catch(({ response }) => {
-        toast.error(response.data.message)
-      })
-
-    form.email.value = ''
-    form.password.value = ''
+    clearFormFields([
+      form.email,
+      form.password,
+    ])
   }
 
   return (
     <>
       <Toaster />
-      <S.H2>Authentication</S.H2>
-      <S.Form onSubmit={handleUserLogin}>
-        <S.InputGroup>
-          <S.Input type='email' placeholder='Email' name='email' />
-          {true && <S.ErrorMessage>...</S.ErrorMessage>}
-        </S.InputGroup>
-        <S.InputGroup>
-          <S.Input type='password' placeholder='Password' name='password' />
-          {false && <S.ErrorMessage>...</S.ErrorMessage>}
-        </S.InputGroup>
-        <S.SubmitButton type='submit'>
-          Login
-          <AiOutlineArrowRight />
-        </S.SubmitButton>
-      </S.Form>
-      <S.NavigationButton to='/sign-up'>
-        Sign Up
-        <AiOutlineArrowRight />
-      </S.NavigationButton>
+      <Subtitle>Authentication</Subtitle>
+      <Form onSubmit={handleUserLogin}>
+        <InputGroup>
+          <Input type='email' placeholder='Email' name='email' />
+        </InputGroup>
+        <InputGroup>
+          <Input type='password' placeholder='Password' name='password' />
+        </InputGroup>
+        <SubmitButton type='submit'>
+          Login <AiOutlineArrowRight />
+        </SubmitButton>
+      </Form>
+      <NavigationLink to='/sign-up'>
+        Sign Up <AiOutlineArrowRight />
+      </NavigationLink>
     </>
   )
 }

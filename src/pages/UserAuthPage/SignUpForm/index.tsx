@@ -1,71 +1,64 @@
-import axios from 'axios'
 import { FormEvent } from 'react'
+import { Toaster } from 'react-hot-toast'
 import { AiOutlineArrowRight, AiOutlineArrowLeft } from 'react-icons/ai'
-import toast, { Toaster } from 'react-hot-toast'
-import { useNavigate } from 'react-router'
 
-import * as S from '../styles'
+import { useAuth } from 'hooks/useAuth'
+import {
+  Subtitle,
+  Form,
+  InputGroup,
+  Input,
+  SubmitButton,
+  NavigationLink,
+} from '../styles'
 
 export const SignUpForm = () => {
-  const navigate = useNavigate()
+  const { fetchUser, clearFormFields } = useAuth()
 
   const handleUserRegistration = (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault()
 
     const form = event.target as HTMLFormElement
 
-    axios
-      .post('http://127.0.0.1:3333/user/create', {
-        name: form.username.value,
-        email: form.email.value,
-        password: form.password.value,
-      })
-      .then(({ data }) => {
-        localStorage.setItem('token', data.token.token)
-        localStorage.setItem('userData', JSON.stringify(data.user))
+    fetchUser('http://127.0.0.1:3333/user/create', {
+      name: form.username.value.trim(),
+      email: form.email.value.trim(),
+      password: form.password.value.trim(),
+    })
 
-        navigate('/home', { replace: true })
-      })
-      .catch(({ response }) => {
-        toast.error(response.data.error.message)
-      })
-
-    form.username.value = ''
-    form.email.value = ''
-    form.password.value = ''
+    clearFormFields([
+      form.username,
+      form.email,
+      form.password,
+    ])
   }
 
   return (
     <>
       <Toaster />
-      <S.H2>Registration</S.H2>
-      <S.Form onSubmit={handleUserRegistration}>
-        <S.InputGroup>
-          <S.Input type='text' placeholder='Name' name='username' required />
-          {true && <S.ErrorMessage>...</S.ErrorMessage>}
-        </S.InputGroup>
-        <S.InputGroup>
-          <S.Input type='email' placeholder='Email' name='email' required />
-          {true && <S.ErrorMessage>...</S.ErrorMessage>}
-        </S.InputGroup>
-        <S.InputGroup>
-          <S.Input
+      <Subtitle>Registration</Subtitle>
+      <Form onSubmit={handleUserRegistration}>
+        <InputGroup>
+          <Input type='text' placeholder='Name' name='username' required />
+        </InputGroup>
+        <InputGroup>
+          <Input type='email' placeholder='Email' name='email' required />
+        </InputGroup>
+        <InputGroup>
+          <Input
             type='password'
             placeholder='Password'
             name='password'
             required
           />
-          {false && <S.ErrorMessage>...</S.ErrorMessage>}
-        </S.InputGroup>
-        <S.SubmitButton type='submit'>
-          Register
-          <AiOutlineArrowRight />
-        </S.SubmitButton>
-      </S.Form>
-      <S.NavigationButton to='/'>
-        <AiOutlineArrowLeft />
-        Back
-      </S.NavigationButton>
+        </InputGroup>
+        <SubmitButton type='submit'>
+          Register <AiOutlineArrowRight />
+        </SubmitButton>
+      </Form>
+      <NavigationLink to='/'>
+        <AiOutlineArrowLeft /> Back
+      </NavigationLink>
     </>
   )
 }

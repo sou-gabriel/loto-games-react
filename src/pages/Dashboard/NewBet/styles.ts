@@ -2,6 +2,11 @@ import styled from 'styled-components'
 
 import { NavLink } from 'react-router-dom'
 
+export const Wrapper = styled.section`
+  width: 37.6875rem;
+  position: relative;
+`
+
 export const Title = styled.h2`
   margin-bottom: 2.0625rem;
 
@@ -29,36 +34,8 @@ export const Subtitle = styled.h3`
   color: #868686;
 `
 
-export const NavigationContainer = styled.div`
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(117px, 1fr));
-  gap: 1rem 1.5625rem;
-`
-
-interface INavLink {
-  theme: string
-}
-
-export const NavigationLink = styled(NavLink)<INavLink>`
-  flex-shrink: 0;
-
-  padding: 0.5625rem 1.6875rem;
-  border: 2px solid ${(props) => props.theme};
-  border-radius: 999px;
-
-  font-weight: bold;
-  font-style: italic;
-  font-size: 0.875rem;
-  text-align: center;
-  white-space: nowrap;
-  color: ${(props) => props.theme};
-
-  background-color: transparent;
-`
-
 export const GameDescription = styled.p`
   margin-bottom: 1.6875rem;
-
   font-size: 1.0625rem;
   font-style: italic;
   color: #868686;
@@ -67,7 +44,6 @@ export const GameDescription = styled.p`
 
 export const GameOptionsContainer = styled.div`
   margin-bottom: 2.75rem;
-
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(50px, 1fr));
   gap: 0.75rem;
@@ -82,9 +58,8 @@ export const GameNumber = styled.button<GameNumberProps>`
   width: 3.9375rem;
   height: 4.0625rem;
   border-radius: 50%;
-
-  background-color: ${(props) => props.isActive ? props.buttonColor : '#adc0c4'};
-
+  background-color: ${({ isActive, buttonColor }) =>
+    isActive ? buttonColor : '#adc0c4'};
   font-size: 1.25rem;
   color: #fff;
 `

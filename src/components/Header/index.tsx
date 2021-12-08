@@ -1,36 +1,42 @@
 import { AiOutlineArrowRight } from 'react-icons/ai'
+import { useMatch } from 'react-router-dom'
 
-import * as S from './styles'
+import {
+  Container,
+  InnerContainer,
+  Title,
+  Nav,
+  ListOfLinks,
+  ListItem,
+  NavigationLink,
+} from './styles'
 
-interface HeaderProps {
-  isItToDisplayTheHomeLink: boolean
-}
+export const Header = () => {
+  const match = useMatch('/home')
+  const isTheHomePage = Boolean(match)
 
-export const Header = ({ isItToDisplayTheHomeLink }: HeaderProps) => {
   return (
-    <S.Container>
-      <S.Row>
-        <S.Logo>TGL</S.Logo>
-
-        <S.Navigation>
-          <S.List>
-            {isItToDisplayTheHomeLink && (
-              <S.ListItem isIsolated>
-                <S.NavigationLink to='/'>Home</S.NavigationLink>
-              </S.ListItem>
+    <Container>
+      <InnerContainer>
+        <Title>TGL</Title>
+        <Nav>
+          <ListOfLinks>
+            {!isTheHomePage && (
+              <ListItem isTheHomeLink={!isTheHomePage}>
+                <NavigationLink to='/home'>Home</NavigationLink>
+              </ListItem>
             )}
-            <S.ListItem>
-              <S.NavigationLink to='/'>Account</S.NavigationLink>
-            </S.ListItem>
-            <S.ListItem>
-              <S.NavigationLink to='/'>
-                Exit
-                <AiOutlineArrowRight />
-              </S.NavigationLink>
-            </S.ListItem>
-          </S.List>
-        </S.Navigation>
-      </S.Row>
-    </S.Container>
+            <ListItem>
+              <NavigationLink to='/account'>Account</NavigationLink>
+            </ListItem>
+            <ListItem>
+              <NavigationLink to='/login'>
+                Logout <AiOutlineArrowRight />
+              </NavigationLink>
+            </ListItem>
+          </ListOfLinks>
+        </Nav>
+      </InnerContainer>
+    </Container>
   )
 }
