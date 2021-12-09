@@ -1,5 +1,5 @@
 export interface IGame {
-  id: string
+  id: number
   name: string
   numbers: number[]
   price: number
@@ -10,6 +10,6 @@ export interface IAction {
   type: string
   payload: {
     game?: IGame
-    id?: string
+    id?: number
   }
 }

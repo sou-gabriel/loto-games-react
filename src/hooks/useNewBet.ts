@@ -1,6 +1,5 @@
 import { useState, useEffect, useCallback, MouseEvent } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
-import { v4 as uuidv4 } from 'uuid'
 
 import { showFeedbackMessage } from 'utils/functions'
 import { createActionToAddGameToCart } from 'store/modules/userGamesCart/actions'
@@ -72,6 +71,11 @@ export const useNewBet = (): IUseNewBet => {
     return randomNumbers
   }, [currentGame])
 
+  const clearChosenNumbers = useCallback(
+    () => setChosenNumbers([]),
+    [setChosenNumbers],
+  )
+
   const handleClickGameNumber = (event: MouseEvent<HTMLButtonElement>) => {
     const newChosenNumber = Number((event.target as HTMLFormElement).value)
     const isANumberAlreadyChosen = chosenNumbers.includes(newChosenNumber)
@@ -111,7 +115,7 @@ export const useNewBet = (): IUseNewBet => {
     const isAValidAmountOfChosenNumbers =
       chosenNumbers.length === currentGame?.max_number
 
-    setChosenNumbers([])
+    clearChosenNumbers()
 
     if (isAValidAmountOfChosenNumbers) {
       showFeedbackMessage({
@@ -127,7 +131,7 @@ export const useNewBet = (): IUseNewBet => {
 
     if (isANumberOfChosenNumbersValid) {
       const newGame = {
-        id: uuidv4(),
+        id: currentGame?.id,
         name: currentGame?.type || '',
         numbers: chosenNumbers,
         price: currentGame?.price || 0,
@@ -135,6 +139,7 @@ export const useNewBet = (): IUseNewBet => {
       }
 
       dispatch(createActionToAddGameToCart(newGame))
+      clearChosenNumbers()
       showFeedbackMessage({
         type: 'success',
         message: 'Jogo adicionado ao carrinho!',

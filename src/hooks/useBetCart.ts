@@ -2,11 +2,15 @@ import { useCallback, MouseEvent } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
 import axios from 'axios'
 
+import {
+  createActionToRemoveGameFromCart,
+  createActionToRemoveAllGames,
+} from 'store/modules/userGamesCart/actions'
 import { RootState } from 'store/modules/rootReducer'
 import { showFeedbackMessage, getErrorMessage } from 'utils/functions'
 
 interface IUserGamesCart {
-  id: string
+  id: number
   color: string
   name: string
   numbers: number[]
@@ -15,32 +19,31 @@ interface IUserGamesCart {
 
 interface IUseBetCart {
   userGamesCart: IUserGamesCart[]
-  getTotalPrice: () => number,
-  getTotalCalculatedPrice: () => string,
-  handleClickToRemoveBet: (event: MouseEvent<SVGElement>) => void,
+  calculateTotalPriceOfCartGames: () => number
+  getTotalCalculatedPrice: () => string
+  handleClickToRemoveBet: (event: MouseEvent<SVGElement>) => void
   handleClickToSaveUserBets: () => void
 }
 
-const DUMMY_VALUE = {
-  games: [
-    {
-      id: 3,
-      numbers: [1, 2, 3, 4, 5],
-    },
-    {
-      id: 3,
-      numbers: [1, 2, 3, 4, 5],
-    },
-    {
-      id: 3,
-      numbers: [1, 2, 3, 4, 5],
-    },
-  ],
+interface ITransformedGame {
+  id: number
+  numbers: number[]
+}
+
+interface IData {
+  games: ITransformedGame[]
+}
+
+interface IConfig {
+  headers: {
+    Authorization: string
+  }
 }
 
 export const useBetCart = (): IUseBetCart => {
-  const userGamesCart: IUserGamesCart[] =
-    useSelector((state: RootState) => state.userGamesCart)
+  const userGamesCart: IUserGamesCart[] = useSelector(
+    (state: RootState) => state.userGamesCart,
+  )
   const minCartValue = useSelector((state: RootState) => state.minCartValue)
   const dispatch = useDispatch()
 
@@ -51,30 +54,84 @@ export const useBetCart = (): IUseBetCart => {
     }).format(gamePrice)
   }, [])
 
-  const getTotalPrice = useCallback(() =>
-    userGamesCart.reduce((acc, game) => acc + game.price, 0), [userGamesCart])
+  const calculateTotalPriceOfCartGames = useCallback(
+    () => userGamesCart.reduce((acc, game) => acc + game.price, 0),
+    [userGamesCart],
+  )
 
   const getTotalCalculatedPrice = useCallback(() => {
-    const totalPrice = getTotalPrice()
+    const totalPrice = calculateTotalPriceOfCartGames()
     return getFormattedGamePrice(totalPrice)
-  }, [getTotalPrice, getFormattedGamePrice])
+  }, [calculateTotalPriceOfCartGames, getFormattedGamePrice])
+
+  const getUserToken = useCallback(() => {
+    return localStorage.getItem('token')
+  }, [])
+
+  const getTransformedCartGames = useCallback(
+    () => userGamesCart.map(({ id, numbers }) => ({ id, numbers })),
+    [userGamesCart],
+  )
+
+  const registerGames = async (data: IData, config: IConfig) => {
+    try {
+      const response = await axios.post(
+        'http://127.0.0.1:3333/bet/new-bet',
+        data,
+        config,
+      )
+
+      if (response.status !== 200) {
+        throw new Error('Um erro de conexão ocorreu. Tente novamente!')
+      }
+
+      dispatch(createActionToRemoveAllGames())
+      showFeedbackMessage({
+        type: 'success',
+        message: 'Jogos salvos com sucesso!',
+      })
+    } catch (error) {
+      console.log('Opa?')
+      const message = getErrorMessage(error)
+
+      showFeedbackMessage({
+        type: 'error',
+        message,
+      })
+    }
+  }
 
   const handleClickToRemoveBet = (event: MouseEvent<SVGElement>) => {
-    const idDataValue = (event.target as SVGElement).dataset.id || ''
+    const idDataValue = Number((event.target as SVGElement).dataset.id) || 0
     dispatch(createActionToRemoveGameFromCart(idDataValue))
   }
 
   const handleClickToSaveUserBets = () => {
-    const totalPrice = getTotalPrice()
+    const totalPriceOfCartBets = calculateTotalPriceOfCartGames()
+    const transformedUserGamesCart = getTransformedCartGames()
+    const userToken = getUserToken()
 
-    if (totalPrice >= minCartValue) {
-      axios.post('http://127.0.0.1:3333/bet/new-bet', DUMMY_VALUE)
+    if (totalPriceOfCartBets >= minCartValue) {
+      const data = { games: transformedUserGamesCart }
+      const config = {
+        headers: {
+          Authorization: `Bearer ${userToken}`,
+        },
+      }
+
+      registerGames(data, config)
+      return
     }
+
+    showFeedbackMessage({
+      type: 'error',
+      message: `É necessário ter no carrinho pelo menos ${getFormattedGamePrice(minCartValue)} em jogos.`,
+    })
   }
 
   return {
     userGamesCart,
-    getTotalPrice,
+    calculateTotalPriceOfCartGames,
     getTotalCalculatedPrice,
     handleClickToRemoveBet,
     handleClickToSaveUserBets,

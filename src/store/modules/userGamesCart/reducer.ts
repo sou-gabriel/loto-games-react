@@ -6,6 +6,8 @@ export const userGamesCartReducer = (state: IGame[] = [], action: IAction) => {
       return [...state, action.payload.game]
     case 'REMOVE_GAME_FROM_CART':
       return state.filter(game => game.id !== action.payload.id)
+    case 'REMOVE_ALL_GAMES':
+      return []
     default:
       return state
   }

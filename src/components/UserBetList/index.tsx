@@ -1,3 +1,5 @@
+import { v4 as uuidv4 } from 'uuid'
+
 import { useBetCart } from 'hooks/useBetCart'
 import {
   Container,
@@ -17,7 +19,7 @@ export const UserBetList = () => {
   return (
     <Container>
       {userGamesCart.map((userGame) => (
-        <UserGameItem key={userGame.id} theme={userGame.color}>
+        <UserGameItem key={uuidv4()} theme={userGame.color}>
           <TrashIcon
             onClick={handleClickToRemoveBet}
             data-id={userGame.id}

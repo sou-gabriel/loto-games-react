@@ -9,11 +9,17 @@ export const createActionToAddGameToCart = (game: IGame) => {
   }
 }
 
-export const createActionToRemoveGameFromCart = (id: string) => {
+export const createActionToRemoveGameFromCart = (id: number) => {
   return {
     type: 'REMOVE_GAME_FROM_CART',
     payload: {
       id,
     },
+  }
+}
+
+export const createActionToRemoveAllGames = () => {
+  return {
+    type: 'REMOVE_ALL_GAMES',
   }
 }
