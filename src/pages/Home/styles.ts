@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom'
 
 export const Container = styled.div`
   padding-top: 4.59375rem;
-  height: calc(100vh - 94px - 81.5px)
+  height: calc(100vh - 94px - 81.5px);
 `
 
 export const InnerContainer = styled.div`
@@ -36,6 +36,8 @@ export const NavigationLink = styled(Link)`
 
 export const Section = styled.section`
   flex-grow: 0.5;
+  min-height: 450px;
+  position: relative;
 `
 
 export const Heading = styled.header`
@@ -47,6 +49,10 @@ export const Heading = styled.header`
   @media (max-width: 876px) {
     flex-direction: column;
     gap: 1rem;
+  }
+
+  & + div {
+    margin-top: 100px;
   }
 `
 
