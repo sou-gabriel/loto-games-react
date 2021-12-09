@@ -1,5 +1,4 @@
 import styled from 'styled-components'
-import { IoTrashOutline } from 'react-icons/io5'
 
 export const Container = styled.aside`
   align-self: flex-start;
@@ -40,7 +39,7 @@ export const TotalPrice = styled.p`
   }
 `
 
-export const SaveGameButton = styled.button`
+export const Button = styled.button`
   width: 100%;
   height: 6rem;
   background-color: #f4f4f4 ;
@@ -54,70 +53,8 @@ export const SaveGameButton = styled.button`
   gap: 1.125rem;
 `
 
-export const NumbersList = styled.ul`
-  max-height: 20.125rem;
-  display: flex;
-  flex-direction: column;
-  gap: 2rem;
-  overflow: auto;
-`
-
-interface ListProps {
-  themeColor: string
-}
-
-export const ListItem = styled.li<ListProps>`
-  display: flex;
-  height: 5.375rem;
-
-  color: ${props => props.themeColor};
-  border-color: ${props => props.themeColor};
-
-  > span {
-    display: inline-block;
-    width: 7px;
-    height: 100%;
-    border-radius: 100px 0 0 100px;
-    background-color: ${props => props.themeColor};
-  }
-
-  > div {
-    width: 100%;
-    padding: 0.75rem;
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-
-    > strong:first-of-type {
-      font-style: italic;
-      color: #868686;
-    }
-
-    > strong:last-of-type {
-      display: block;
-      margin-bottom: 0.375rem;
-      font-size: 0.9375rem;
-      font-style: italic;
-      line-height: 1.25rem;
-      color: #868686;
-    }
-
-    > p {
-      font-size: 1rem;
-      color: ${props => props.themeColor};
-      display: flex;
-      gap: 0.875rem;
-
-      > span {
-        color: #868686;
-      }
-    }
-  }
-`
-
-export const TrashIcon = styled(IoTrashOutline)`
-  align-self: center;
-  margin-right: 0.9rem;
-  cursor: pointer;
-  font-size: 2.5rem;
+export const EmptyCartImage = styled.img`
+  width: 5rem;
+  height: 5rem;
+  opacity: 0.4;
 `
