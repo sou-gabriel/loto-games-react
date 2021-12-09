@@ -21,13 +21,12 @@ import {
 export const NewBet = () => {
   const {
     isLoading,
-    currentGame,
+    activeGameOption,
     chosenNumbers,
     gameOptions,
     createGameNumbers,
     handleClearGameButtonClick,
     handleClickAddGameToCartButton,
-    handleClickChoiseGameButton,
     handleClickGameNumber,
     handleCompleteGameButtonClick,
   } = useNewBet()
@@ -44,7 +43,7 @@ export const NewBet = () => {
     <Container>
       <Toaster />
       <Title>
-        New Bet <span>for {currentGame?.type}</span>
+        New Bet <span>for {activeGameOption?.type}</span>
       </Title>
       <GameChoiceContainer>
         <Subtitle>Choose a game</Subtitle>
@@ -53,9 +52,8 @@ export const NewBet = () => {
             <GameChoiceButton
               key={gameOption.id}
               value={gameOption.id}
-              handleClickChoiseGameButton={handleClickChoiseGameButton}
               theme={gameOption.color}
-              isActive={currentGame?.id === gameOption.id}
+              isActive={activeGameOption?.id === gameOption.id}
             >
               {gameOption.type}
             </GameChoiceButton>
@@ -63,7 +61,7 @@ export const NewBet = () => {
         </GameChoiceButtonContainer>
       </GameChoiceContainer>
       <Subtitle>Fill your bet</Subtitle>
-      <Description>{currentGame?.description}</Description>
+      <Description>{activeGameOption?.description}</Description>
       <GameNumberList>
         {createGameNumbers().map((gameNumber) => (
           <GameNumber
@@ -71,7 +69,7 @@ export const NewBet = () => {
             value={gameNumber}
             onClick={handleClickGameNumber}
             isActive={chosenNumbers.includes(gameNumber)}
-            buttonColor={currentGame?.color || '#ccc'}
+            buttonColor={activeGameOption?.color || '#ccc'}
           >
             {gameNumber}
           </GameNumber>

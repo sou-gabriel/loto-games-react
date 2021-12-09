@@ -36,7 +36,6 @@ export const Home = () => {
               <Title>Recent games</Title>
               <FiltersContainer>
                 <Subtitle>Filters</Subtitle>
-
               </FiltersContainer>
             </Heading>
             <RecentGamesList />

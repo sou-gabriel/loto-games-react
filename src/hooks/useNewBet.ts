@@ -5,10 +5,11 @@ import { showFeedbackMessage } from 'utils/functions'
 import { createActionToAddGameToCart } from 'store/modules/userGamesCart/actions'
 import { IGameOption } from 'store/modules/gameOptions/types'
 import { RootState } from 'store/modules/rootReducer'
+import { createActionToSetActiveGameOption } from 'store/modules/activeGameOption/actions'
 
 interface IUseNewBet {
   isLoading: boolean
-  currentGame: IGameOption | null
+  activeGameOption: IGameOption | null
   chosenNumbers: number[]
   gameOptions: IGameOption[]
   createGameNumbers: () => number[]
@@ -16,14 +17,13 @@ interface IUseNewBet {
   handleCompleteGameButtonClick: () => void
   handleClearGameButtonClick: () => void
   handleClickAddGameToCartButton: () => void
-  handleClickChoiseGameButton: (event: MouseEvent<HTMLButtonElement>) => void
 }
 
 export const useNewBet = (): IUseNewBet => {
   const [isLoading, setIsLoading] = useState(true)
-  const [currentGame, setCurrentGame] = useState<IGameOption | null>(null)
   const [chosenNumbers, setChosenNumbers] = useState<number[]>([])
   const gameOptions = useSelector((state: RootState) => state.gameOptions)
+  const activeGameOption: IGameOption | null = useSelector((state: RootState) => state.activeGameOption)
   const dispatch = useDispatch()
 
   useEffect(() => {
@@ -35,16 +35,16 @@ export const useNewBet = (): IUseNewBet => {
 
       timerId = setTimeout(() => {
         setIsLoading(false)
-        setCurrentGame(defaultGame)
+        dispatch(createActionToSetActiveGameOption(defaultGame))
       }, 500)
     }
 
     return () => clearTimeout(timerId)
-  }, [gameOptions])
+  }, [gameOptions, dispatch])
 
   const createGameNumbers = useCallback(() => {
     const randomNumbers = []
-    const gameNumberRange = currentGame?.range || 0
+    const gameNumberRange = activeGameOption?.range || 0
 
     for (
       let gameNumber = 0;
@@ -55,21 +55,21 @@ export const useNewBet = (): IUseNewBet => {
     }
 
     return randomNumbers
-  }, [currentGame])
+  }, [activeGameOption])
 
   const createRandomNumbers = useCallback(() => {
     const randomNumbers: number[] = []
 
     do {
-      const randomNumber = Math.round(Math.random() * (currentGame?.range || 0))
+      const randomNumber = Math.round(Math.random() * (activeGameOption?.range || 0))
 
       if (!randomNumbers.includes(randomNumber)) {
         randomNumbers.push(randomNumber)
       }
-    } while (randomNumbers.length !== currentGame?.max_number)
+    } while (randomNumbers.length !== activeGameOption?.max_number)
 
     return randomNumbers
-  }, [currentGame])
+  }, [activeGameOption])
 
   const clearChosenNumbers = useCallback(
     () => setChosenNumbers([]),
@@ -90,7 +90,7 @@ export const useNewBet = (): IUseNewBet => {
         type: 'error',
         message: 'Número de jogo removido!',
       })
-    } else if (chosenNumbers.length <= (currentGame?.max_number || 0)) {
+    } else if (chosenNumbers.length <= (activeGameOption?.max_number || 0)) {
       setChosenNumbers((prevChosenNumbers) =>
         prevChosenNumbers.concat(newChosenNumber),
       )
@@ -113,7 +113,7 @@ export const useNewBet = (): IUseNewBet => {
 
   const handleClearGameButtonClick = () => {
     const isAValidAmountOfChosenNumbers =
-      chosenNumbers.length === currentGame?.max_number
+      chosenNumbers.length === activeGameOption?.max_number
 
     clearChosenNumbers()
 
@@ -127,15 +127,15 @@ export const useNewBet = (): IUseNewBet => {
 
   const handleClickAddGameToCartButton = () => {
     const isANumberOfChosenNumbersValid =
-      chosenNumbers.length === currentGame?.max_number
+      chosenNumbers.length === activeGameOption?.max_number
 
     if (isANumberOfChosenNumbersValid) {
       const newGame = {
-        id: currentGame?.id,
-        name: currentGame?.type || '',
+        id: activeGameOption?.id,
+        name: activeGameOption?.type || '',
         numbers: chosenNumbers,
-        price: currentGame?.price || 0,
-        color: currentGame?.color || '#000',
+        price: activeGameOption?.price || 0,
+        color: activeGameOption?.color || '#000',
       }
 
       dispatch(createActionToAddGameToCart(newGame))
@@ -153,20 +153,9 @@ export const useNewBet = (): IUseNewBet => {
     })
   }
 
-  const handleClickChoiseGameButton = (
-    event: MouseEvent<HTMLButtonElement>,
-  ) => {
-    const clickedButtonValue = +(event.target as HTMLButtonElement).value
-    const newCurrentGame =
-      gameOptions.find((gameOption) => gameOption.id === clickedButtonValue) ||
-      null
-
-    setCurrentGame(newCurrentGame)
-  }
-
   return {
     isLoading,
-    currentGame,
+    activeGameOption,
     chosenNumbers,
     gameOptions,
     createGameNumbers,
@@ -174,6 +163,5 @@ export const useNewBet = (): IUseNewBet => {
     handleCompleteGameButtonClick,
     handleClearGameButtonClick,
     handleClickAddGameToCartButton,
-    handleClickChoiseGameButton,
   }
 }
