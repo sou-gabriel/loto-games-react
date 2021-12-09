@@ -3,9 +3,8 @@ import styled from 'styled-components'
 export const Container = styled.aside`
   align-self: flex-start;
   flex-shrink: 0;
-
+  overflow: hidden;
   width: 19.8125rem;
-
   background-color: #fff;
   border: 1px solid #E2E2E2;
   border-radius: 10px;
