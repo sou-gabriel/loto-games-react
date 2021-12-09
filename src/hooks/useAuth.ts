@@ -45,7 +45,7 @@ export const useAuth = () => {
       const token = response.data.token.token
 
       storeUserData(token, userData)
-      redirectUser('/dashboard')
+      redirectUser('/home')
     } catch (error) {
       const message = getErrorMessage(error)
 

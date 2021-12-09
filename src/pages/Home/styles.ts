@@ -2,6 +2,11 @@ import styled from 'styled-components'
 import { Link } from 'react-router-dom'
 
 export const Container = styled.div`
+  padding-top: 4.59375rem;
+  height: calc(100vh - 94px - 81.5px)
+`
+
+export const InnerContainer = styled.div`
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -67,4 +72,9 @@ export const Subtitle = styled.h3`
   font-size: 1.0625rem;
   font-style: italic;
   color: #868686;
+`
+
+export const GameChoiceButtonContainer = styled.div`
+  display: flex;
+  gap: 1.5625rem;
 `

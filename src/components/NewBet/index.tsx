@@ -2,7 +2,6 @@ import { Toaster } from 'react-hot-toast'
 import { AiOutlineShoppingCart } from 'react-icons/ai'
 
 import { useNewBet } from 'hooks/useNewBet'
-import { Spinner } from 'components/Spinner'
 import { GameChoiceButton } from 'components/GameChoiceButton'
 import {
   Container,
@@ -20,7 +19,6 @@ import {
 
 export const NewBet = () => {
   const {
-    isLoading,
     activeGameOption,
     chosenNumbers,
     gameOptions,
@@ -30,14 +28,6 @@ export const NewBet = () => {
     handleClickGameNumber,
     handleCompleteGameButtonClick,
   } = useNewBet()
-
-  if (isLoading) {
-    return (
-      <Container>
-        <Spinner />
-      </Container>
-    )
-  }
 
   return (
     <Container>

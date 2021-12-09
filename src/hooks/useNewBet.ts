@@ -1,14 +1,12 @@
-import { useState, useEffect, useCallback, MouseEvent } from 'react'
+import { useState, useCallback, MouseEvent } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
 
 import { showFeedbackMessage } from 'utils/functions'
 import { createActionToAddGameToCart } from 'store/modules/userGamesCart/actions'
 import { IGameOption } from 'store/modules/gameOptions/types'
 import { RootState } from 'store/modules/rootReducer'
-import { createActionToSetActiveGameOption } from 'store/modules/activeGameOption/actions'
 
 interface IUseNewBet {
-  isLoading: boolean
   activeGameOption: IGameOption | null
   chosenNumbers: number[]
   gameOptions: IGameOption[]
@@ -20,27 +18,10 @@ interface IUseNewBet {
 }
 
 export const useNewBet = (): IUseNewBet => {
-  const [isLoading, setIsLoading] = useState(true)
   const [chosenNumbers, setChosenNumbers] = useState<number[]>([])
   const gameOptions = useSelector((state: RootState) => state.gameOptions)
   const activeGameOption: IGameOption | null = useSelector((state: RootState) => state.activeGameOption)
   const dispatch = useDispatch()
-
-  useEffect(() => {
-    const areGameOptionsAvailable = gameOptions
-    let timerId: ReturnType<typeof setTimeout>
-
-    if (areGameOptionsAvailable) {
-      const defaultGame = gameOptions[0]
-
-      timerId = setTimeout(() => {
-        setIsLoading(false)
-        dispatch(createActionToSetActiveGameOption(defaultGame))
-      }, 500)
-    }
-
-    return () => clearTimeout(timerId)
-  }, [gameOptions, dispatch])
 
   const createGameNumbers = useCallback(() => {
     const randomNumbers = []
@@ -154,7 +135,6 @@ export const useNewBet = (): IUseNewBet => {
   }
 
   return {
-    isLoading,
     activeGameOption,
     chosenNumbers,
     gameOptions,
