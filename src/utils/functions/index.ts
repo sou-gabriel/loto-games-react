@@ -15,3 +15,6 @@ export const showFeedbackMessage = ({ message, type }: Feedback) => {
 
   toast.error(message)
 }
+
+export const getErrorMessage = (error: unknown) =>
+  error instanceof Error ? error.message : 'Erro desconhecido'

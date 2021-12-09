@@ -3,7 +3,7 @@ import { useDispatch } from 'react-redux'
 import { useNavigate } from 'react-router-dom'
 import axios from 'axios'
 
-import { showFeedbackMessage } from 'utils/functions'
+import { showFeedbackMessage, getErrorMessage } from 'utils/functions'
 
 import {
   createNewUserAction,
@@ -47,8 +47,7 @@ export const useAuth = () => {
       storeUserData(token, userData)
       redirectUser('/dashboard')
     } catch (error) {
-      const message =
-        error instanceof Error ? error.message : 'Erro desconhecido'
+      const message = getErrorMessage(error)
 
       showFeedbackMessage({
         type: 'error',

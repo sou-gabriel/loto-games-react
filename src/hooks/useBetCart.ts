@@ -3,7 +3,7 @@ import { useSelector, useDispatch } from 'react-redux'
 import axios from 'axios'
 
 import { RootState } from 'store/modules/rootReducer'
-import { createActionToRemoveGameFromCart } from 'store/modules/userGamesCart/actions'
+import { showFeedbackMessage, getErrorMessage } from 'utils/functions'
 
 interface IUserGamesCart {
   id: string
