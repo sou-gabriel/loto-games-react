@@ -8,7 +8,7 @@ import { Header } from 'components/Header'
 import { Spinner } from 'components/Spinner'
 import { MainContent } from 'components/MainContent'
 import { GameChoiceButton } from 'components/GameChoiceButton'
-import { RecentGamesList } from 'components/RecentGamesList'
+import { ListOfSavedGames } from 'components/ListOfSavedGames'
 import { RootState } from 'store/modules/rootReducer'
 import { createActionToSetGameOptions } from 'store/modules/gameOptions/action'
 import { createActionToSetMinimumCartValue } from 'store/modules/minCartValue/actions'
@@ -34,8 +34,6 @@ export const Home = () => {
   const activeGameOption = useSelector(
     (state: RootState) => state.activeGameOption,
   )
-
-  console.log(gameOptions)
 
   const storeGameOptions = useCallback(
     (gameOptions: IGameOptions) => {
@@ -118,9 +116,8 @@ export const Home = () => {
                     </GameChoiceButtonContainer>
                   </FiltersContainer>
                 </Heading>
-                <RecentGamesList />
+                <ListOfSavedGames />
               </Section>
-
               <NavigationLink to='/dashboard'>
                 New Bet <AiOutlineArrowRight />
               </NavigationLink>

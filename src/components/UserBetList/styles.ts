@@ -7,6 +7,20 @@ export const Container = styled.ul`
   flex-direction: column;
   gap: 2rem;
   overflow: auto;
+
+  ::-webkit-scrollbar {
+    width: 0.7rem; /* width of the entire scrollbar */
+  }
+
+  ::-webkit-scrollbar-track {
+    border-radius: 20px;
+    background: #E2E2E2; /* color of the tracking area */
+  }
+
+  ::-webkit-scrollbar-thumb {
+    background-color: #b5c401; /* color of the scroll thumb */
+    border-radius: 20px; /* roundness of the scroll thumb */
+  }
 `
 
 interface IUserGameItemProps {

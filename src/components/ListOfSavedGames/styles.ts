@@ -1,6 +1,10 @@
 import styled from 'styled-components'
 
-export const Container = styled.ul`
+interface ITheme {
+  theme: string
+}
+
+export const Container = styled.ul<ITheme>`
   max-height: 30rem;
   padding-right: 1rem;
   display: flex;
@@ -14,16 +18,17 @@ export const Container = styled.ul`
   }
 
   ::-webkit-scrollbar-track {
+    border-radius: 20px;
     background: #E2E2E2; /* color of the tracking area */
   }
 
   ::-webkit-scrollbar-thumb {
-    background-color: #7F3992; /* color of the scroll thumb */
+    background-color: ${({ theme }) => theme}; /* color of the scroll thumb */
     border-radius: 20px; /* roundness of the scroll thumb */
   }
 `
 
-export const ListItem = styled.li`
+export const ListItem = styled.li<ITheme>`
   height: 5.875rem;
   display: flex;
   gap: 0.9375rem;
@@ -34,7 +39,7 @@ export const ListItem = styled.li`
     width: 6px;
     height: 100%;
     border-radius: 999px;
-    background-color: #7f3992;
+    background-color: ${({ theme }) => theme};
   }
 `
 
@@ -52,9 +57,9 @@ export const PurchaseRecord = styled.p`
   color: #868686;
 `
 
-export const GameType = styled.p`
+export const GameType = styled.p<ITheme>`
   font-weight: bold;
   font-style: italic;
   font-size: 1.25rem;
-  color: #7f3992;
+  color: ${({ theme }) => theme};
 `

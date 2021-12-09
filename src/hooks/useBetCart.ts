@@ -7,7 +7,12 @@ import {
   createActionToRemoveAllGames,
 } from 'store/modules/userGamesCart/actions'
 import { RootState } from 'store/modules/rootReducer'
-import { showFeedbackMessage, getErrorMessage } from 'utils/functions'
+import {
+  showFeedbackMessage,
+  getErrorMessage,
+  getUserToken,
+  getFormattedGamePrice,
+} from 'utils/functions'
 
 interface IUserGamesCart {
   id: number
@@ -47,13 +52,6 @@ export const useBetCart = (): IUseBetCart => {
   const minCartValue = useSelector((state: RootState) => state.minCartValue)
   const dispatch = useDispatch()
 
-  const getFormattedGamePrice = useCallback((gamePrice: number) => {
-    return new Intl.NumberFormat('pt-br', {
-      style: 'currency',
-      currency: 'BRL',
-    }).format(gamePrice)
-  }, [])
-
   const calculateTotalPriceOfCartGames = useCallback(
     () => userGamesCart.reduce((acc, game) => acc + game.price, 0),
     [userGamesCart],
@@ -62,11 +60,7 @@ export const useBetCart = (): IUseBetCart => {
   const getTotalCalculatedPrice = useCallback(() => {
     const totalPrice = calculateTotalPriceOfCartGames()
     return getFormattedGamePrice(totalPrice)
-  }, [calculateTotalPriceOfCartGames, getFormattedGamePrice])
-
-  const getUserToken = useCallback(() => {
-    return localStorage.getItem('token')
-  }, [])
+  }, [calculateTotalPriceOfCartGames])
 
   const getTransformedCartGames = useCallback(
     () => userGamesCart.map(({ id, numbers }) => ({ id, numbers })),
@@ -125,7 +119,9 @@ export const useBetCart = (): IUseBetCart => {
 
     showFeedbackMessage({
       type: 'error',
-      message: `É necessário ter no carrinho pelo menos ${getFormattedGamePrice(minCartValue)} em jogos.`,
+      message: `É necessário ter no carrinho pelo menos ${getFormattedGamePrice(
+        minCartValue,
+      )} em jogos.`,
     })
   }
 

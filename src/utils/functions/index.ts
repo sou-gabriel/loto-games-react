@@ -18,3 +18,14 @@ export const showFeedbackMessage = ({ message, type }: Feedback) => {
 
 export const getErrorMessage = (error: unknown) =>
   error instanceof Error ? error.message : 'Erro desconhecido'
+
+export const getUserToken = () => {
+  return localStorage.getItem('token')
+}
+
+export const getFormattedGamePrice = (gamePrice: number) => {
+  return new Intl.NumberFormat('pt-br', {
+    style: 'currency',
+    currency: 'BRL',
+  }).format(gamePrice)
+}
