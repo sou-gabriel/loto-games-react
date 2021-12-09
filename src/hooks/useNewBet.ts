@@ -3,7 +3,7 @@ import { useSelector, useDispatch } from 'react-redux'
 import { v4 as uuidv4 } from 'uuid'
 
 import { showFeedbackMessage } from 'utils/functions'
-import { createActionToAddGameToCart } from 'store/modules/userGameCart/actions'
+import { createActionToAddGameToCart } from 'store/modules/userGamesCart/actions'
 import { IGameOption } from 'store/modules/gameOptions/types'
 import { RootState } from 'store/modules/rootReducer'
 
@@ -13,11 +13,11 @@ interface IUseNewBet {
   chosenNumbers: number[]
   gameOptions: IGameOption[]
   createGameNumbers: () => number[]
-  onClickGameNumber: (event: MouseEvent<HTMLButtonElement>) => void
-  onCompleteGameButtonClick: () => void
-  onClearGameButtonClick: () => void
-  onClickAddGameToCartButton: () => void
-  onClickChoiseGameButton: (event: MouseEvent<HTMLButtonElement>) => void
+  handleClickGameNumber: (event: MouseEvent<HTMLButtonElement>) => void
+  handleCompleteGameButtonClick: () => void
+  handleClearGameButtonClick: () => void
+  handleClickAddGameToCartButton: () => void
+  handleClickChoiseGameButton: (event: MouseEvent<HTMLButtonElement>) => void
 }
 
 export const useNewBet = (): IUseNewBet => {
@@ -79,8 +79,8 @@ export const useNewBet = (): IUseNewBet => {
     if (isANumberAlreadyChosen) {
       setChosenNumbers((prevChosenNumbers) =>
         prevChosenNumbers.filter(
-          (prevChosenNumber) => prevChosenNumber !== newChosenNumber
-        )
+          (prevChosenNumber) => prevChosenNumber !== newChosenNumber,
+        ),
       )
       showFeedbackMessage({
         type: 'error',
@@ -88,7 +88,7 @@ export const useNewBet = (): IUseNewBet => {
       })
     } else if (chosenNumbers.length <= (currentGame?.max_number || 0)) {
       setChosenNumbers((prevChosenNumbers) =>
-        prevChosenNumbers.concat(newChosenNumber)
+        prevChosenNumbers.concat(newChosenNumber),
       )
       showFeedbackMessage({
         type: 'success',
@@ -149,7 +149,7 @@ export const useNewBet = (): IUseNewBet => {
   }
 
   const handleClickChoiseGameButton = (
-    event: MouseEvent<HTMLButtonElement>
+    event: MouseEvent<HTMLButtonElement>,
   ) => {
     const clickedButtonValue = +(event.target as HTMLButtonElement).value
     const newCurrentGame =
@@ -165,10 +165,10 @@ export const useNewBet = (): IUseNewBet => {
     chosenNumbers,
     gameOptions,
     createGameNumbers,
-    onClickGameNumber: handleClickGameNumber,
-    onCompleteGameButtonClick: handleCompleteGameButtonClick,
-    onClearGameButtonClick: handleClearGameButtonClick,
-    onClickAddGameToCartButton: handleClickAddGameToCartButton,
-    onClickChoiseGameButton: handleClickChoiseGameButton,
+    handleClickGameNumber,
+    handleCompleteGameButtonClick,
+    handleClearGameButtonClick,
+    handleClickAddGameToCartButton,
+    handleClickChoiseGameButton,
   }
 }

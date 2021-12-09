@@ -25,11 +25,11 @@ export const NewBet = () => {
     chosenNumbers,
     gameOptions,
     createGameNumbers,
-    onClearGameButtonClick,
-    onClickAddGameToCartButton,
-    onClickChoiseGameButton,
-    onClickGameNumber,
-    onCompleteGameButtonClick,
+    handleClearGameButtonClick,
+    handleClickAddGameToCartButton,
+    handleClickChoiseGameButton,
+    handleClickGameNumber,
+    handleCompleteGameButtonClick,
   } = useNewBet()
 
   if (isLoading) {
@@ -53,7 +53,7 @@ export const NewBet = () => {
             <GameChoiceButton
               key={gameOption.id}
               value={gameOption.id}
-              handleClickChoiseGameButton={onClickChoiseGameButton}
+              handleClickChoiseGameButton={handleClickChoiseGameButton}
               theme={gameOption.color}
               isActive={currentGame?.id === gameOption.id}
             >
@@ -69,7 +69,7 @@ export const NewBet = () => {
           <GameNumber
             key={gameNumber}
             value={gameNumber}
-            onClick={onClickGameNumber}
+            onClick={handleClickGameNumber}
             isActive={chosenNumbers.includes(gameNumber)}
             buttonColor={currentGame?.color || '#ccc'}
           >
@@ -79,14 +79,14 @@ export const NewBet = () => {
       </GameNumberList>
       <ActionsContainer>
         <InnerActionsContainer>
-          <Button primary onClick={onCompleteGameButtonClick}>
+          <Button primary onClick={handleCompleteGameButtonClick}>
             Complete Game
           </Button>
-          <Button primary onClick={onClearGameButtonClick}>
+          <Button primary onClick={handleClearGameButtonClick}>
             Clear Game
           </Button>
         </InnerActionsContainer>
-        <Button onClick={onClickAddGameToCartButton}>
+        <Button onClick={handleClickAddGameToCartButton}>
           <AiOutlineShoppingCart /> Add to Cart
         </Button>
       </ActionsContainer>
