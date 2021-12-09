@@ -101,6 +101,13 @@ export const Button = styled.button<ButtonProps>`
   display: flex;
   align-items: center;
   gap: 1.80375rem;
+  transition: all 50ms ease-in-out;
+
+  &:hover {
+    transform: scale(1.08);
+    background-color: ${({ primary }) => (primary ? '#27c383' : '#fff')};
+    color: ${({ primary }) => (primary ? '#fff' : '#27c383')};
+  }
 
   @media (max-width: 876px) {
     align-self: baseline;
