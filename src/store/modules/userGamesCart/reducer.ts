@@ -1,6 +1,6 @@
 import { IAction, IGame } from './types'
 
-export const userGameCartReducer = (state: IGame[] = [], action: IAction) => {
+export const userGamesCartReducer = (state: IGame[] = [], action: IAction) => {
   switch (action.type) {
     case 'ADD_GAME_TO_CART':
       return [...state, action.payload.game]
