@@ -8,7 +8,7 @@ export const GlobalStyle = createGlobalStyle`
   }
 
   html, body, div#root {
-    height: 100vh;
+    min-height: 100%;
   }
 
   @media (max-width: 1080px) {
@@ -29,8 +29,6 @@ export const GlobalStyle = createGlobalStyle`
   }
 
   div#root {
-    height: 100%;
-
     display: flex;
     flex-direction: column;
   }

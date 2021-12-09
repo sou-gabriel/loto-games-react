@@ -1,12 +1,16 @@
 import styled from 'styled-components/macro'
 
+export const Container = styled.div`
+  height: calc(100vh - 81.5px);
+`
+
 export const AuthContainer = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
 `
 
-export const Container = styled.section`
+export const Section = styled.section`
   height: 100%;
   display: flex;
   justify-content: space-between;
