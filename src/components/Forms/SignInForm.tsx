@@ -9,6 +9,7 @@ import {
   Form,
   InputGroup,
   Input,
+  LinkForgotPassword,
   SubmitButton,
   NavigationLink,
 } from './styles'
@@ -26,10 +27,7 @@ export const SignInForm = () => {
       password: form.password.value.trim(),
     })
 
-    clearFormFields([
-      form.email,
-      form.password,
-    ])
+    clearFormFields([form.email, form.password])
   }
 
   return (
@@ -43,6 +41,9 @@ export const SignInForm = () => {
         <InputGroup>
           <Input type='password' placeholder='Password' name='password' />
         </InputGroup>
+        <LinkForgotPassword to='/forgot'>
+          I forgot my password
+        </LinkForgotPassword>
         <SubmitButton type='submit'>
           Login <AiOutlineArrowRight />
         </SubmitButton>

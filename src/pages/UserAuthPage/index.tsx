@@ -1,12 +1,19 @@
 import { Routes, Route } from 'react-router-dom'
+import { Toaster } from 'react-hot-toast'
 
-import { SignInForm, SignUpForm, ResetPasswordForm } from 'components/Forms'
+import {
+  SignInForm,
+  SignUpForm,
+  ForgotPasswordForm,
+  ResetPasswordForm,
+} from 'components/Forms'
 import { MainContent } from 'components/MainContent'
 import { Container, Section, Title, AuthContainer } from './styles'
 
 export const UserAuthPage = () => {
   return (
     <Container>
+      <Toaster />
       <MainContent>
         <Section>
           <Title>
@@ -17,7 +24,8 @@ export const UserAuthPage = () => {
             <Routes>
               <Route path='/' element={<SignInForm />} />
               <Route path='/login' element={<SignInForm />} />
-              <Route path='/reset-password' element={<ResetPasswordForm />} />
+              <Route path='/forgot' element={<ForgotPasswordForm />} />
+              <Route path='/reset/:token' element={<ResetPasswordForm />} />
               <Route path='/sign-up' element={<SignUpForm />} />
             </Routes>
           </AuthContainer>
