@@ -2,6 +2,7 @@ import { useState, useEffect, useCallback } from 'react'
 import { useSelector } from 'react-redux'
 import axios from 'axios'
 
+import { EmptyCart } from 'components/EmptyCart'
 import { RootState } from 'store/modules/rootReducer'
 import {
   getErrorMessage,
@@ -9,7 +10,14 @@ import {
   getUserToken,
   getFormattedGamePrice,
 } from 'utils/functions'
-import * as S from './styles'
+
+import {
+  Container,
+  ListItem,
+  ChoosenNumbers,
+  PurchaseRecord,
+  GameType,
+} from './styles'
 
 interface ISavedGame {
   choosen_numbers: string
@@ -68,19 +76,23 @@ export const ListOfSavedGames = () => {
     fetchSavedBets()
   }, [activeGameOption, getUrl])
 
+  if (!savedGames.length) {
+    return <EmptyCart message='Não há jogos salvos.' />
+  }
+
   return (
-    <S.Container theme={activeGameOption.color}>
+    <Container theme={activeGameOption.color}>
       {savedGames.map(({ choosen_numbers, created_at, price, type, id }) => (
-        <S.ListItem theme={activeGameOption.color} key={id}>
+        <ListItem theme={activeGameOption.color} key={id}>
           <div>
-            <S.ChoosenNumbers>{choosen_numbers}</S.ChoosenNumbers>
-            <S.PurchaseRecord>
+            <ChoosenNumbers>{choosen_numbers}</ChoosenNumbers>
+            <PurchaseRecord>
               {getFormattedDate(created_at)} - ({getFormattedGamePrice(price)})
-            </S.PurchaseRecord>
-            <S.GameType theme={activeGameOption.color}>{type.type}</S.GameType>
+            </PurchaseRecord>
+            <GameType theme={activeGameOption.color}>{type.type}</GameType>
           </div>
-        </S.ListItem>
+        </ListItem>
       ))}
-    </S.Container>
+    </Container>
   )
 }
