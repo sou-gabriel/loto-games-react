@@ -15,10 +15,10 @@ export const UserAuthPage = () => {
           </Title>
           <AuthContainer>
             <Routes>
-              <Route path="/" element={<SignInForm />} />
-              <Route path="/login" element={<SignInForm />} />
-              <Route path="/reset-password" element={<ResetPasswordForm />} />
-              <Route path="/sign-up" element={<SignUpForm />} />
+              <Route path='/' element={<SignInForm />} />
+              <Route path='/login' element={<SignInForm />} />
+              <Route path='/reset-password' element={<ResetPasswordForm />} />
+              <Route path='/sign-up' element={<SignUpForm />} />
             </Routes>
           </AuthContainer>
         </Section>
