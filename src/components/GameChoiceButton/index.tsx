@@ -33,6 +33,7 @@ export const GameChoiceButton = (props: GameChoiceButtonProps) => {
       value={value}
       theme={theme}
       isActive={isActive}
+      disabled={isDisabled}
     >
       {children}
     </Container>

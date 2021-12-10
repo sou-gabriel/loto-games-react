@@ -25,6 +25,20 @@ import {
   Subtitle,
   GameChoiceButtonContainer,
 } from './styles'
+import { getUserToken } from 'shared/utils/functions'
+
+interface IUserSavedGame {
+  choosen_numbers: string
+  created_at: string
+  game_id: number
+  id: number
+  price: number
+  type: {
+    id: number
+    type: 'Quina'
+  }
+  user_id: number
+}
 
 export const Home = () => {
   const [isLoading, setIsLoading] = useState(true)
@@ -42,6 +56,15 @@ export const Home = () => {
     },
     [dispatch],
   )
+  const [gameOptionsWithSavedBets, setGameOptionsWithSavedBets] = useState<
+    number[]
+  >([])
+
+  const getIdOfGamesWithBets = useCallback((userSavedGames: IUserSavedGame[]) => {
+    return userSavedGames
+      .map((userSavedGame) => userSavedGame.game_id)
+      .filter((gameId, index, array) => array.indexOf(gameId) === index)
+  }, [])
 
   useEffect(() => {
     const userToken = localStorage.getItem('token')
@@ -89,6 +112,21 @@ export const Home = () => {
     return () => clearTimeout(timerId)
   }, [gameOptions, dispatch])
 
+  useEffect(() => {
+    axios
+      .get('http://127.0.0.1:3333/bet/all-bets', {
+        headers: {
+          Authorization: `Bearer ${getUserToken()}`,
+        },
+      })
+      .then((response) => {
+        const userSavedGames: IUserSavedGame[] = response.data
+        const idOfGamesOfBets = getIdOfGamesWithBets(userSavedGames)
+
+        setGameOptionsWithSavedBets(idOfGamesOfBets)
+      })
+  }, [])
+
   return (
     <>
       <Header />
@@ -109,6 +147,9 @@ export const Home = () => {
                           value={gameOption.id}
                           theme={gameOption.color}
                           isActive={activeGameOption?.id === gameOption.id}
+                        isDisabled={
+                          !gameOptionsWithSavedBets.includes(gameOption.id)
+                        }
                         >
                           {gameOption.type}
                         </GameChoiceButton>
