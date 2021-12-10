@@ -71,13 +71,18 @@ export const useNewBet = (): IUseNewBet => {
         type: 'error',
         message: 'Número de jogo removido!',
       })
-    } else if (chosenNumbers.length <= (activeGameOption?.max_number || 0)) {
+    } else if (chosenNumbers.length < (activeGameOption?.max_number || 0)) {
       setChosenNumbers((prevChosenNumbers) =>
         prevChosenNumbers.concat(newChosenNumber),
       )
       showFeedbackMessage({
         type: 'success',
         message: 'Número de jogo adicionado!',
+      })
+    } else {
+      showFeedbackMessage({
+        type: 'error',
+        message: `Você não pode selecionar mais números ao jogo.`
       })
     }
   }
