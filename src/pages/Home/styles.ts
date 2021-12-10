@@ -1,11 +1,6 @@
 import styled from 'styled-components'
 import { Link } from 'react-router-dom'
 
-export const Container = styled.div`
-  padding-top: 4.59375rem;
-  height: calc(100vh - 94px - 81.5px);
-`
-
 export const InnerContainer = styled.div`
   display: flex;
   justify-content: space-between;
@@ -28,6 +23,7 @@ export const NavigationLink = styled(Link)`
   align-items: center;
   gap: 0.6875rem;
   align-self: flex-start;
+  white-space: nowrap;
 
   @media (max-width: 588px) {
     align-self: center;
@@ -38,6 +34,7 @@ export const Section = styled.section`
   flex-grow: 0.5;
   min-height: 450px;
   position: relative;
+  width: 100%;
 `
 
 export const Heading = styled.header`
@@ -61,6 +58,8 @@ export const FiltersContainer = styled.div`
   align-items: center;
   gap: 0.9375rem;
 
+  width: 100%;
+
   @media (max-width: 876px) {
     flex-direction: column;
     align-items: flex-start;
@@ -81,6 +80,8 @@ export const Subtitle = styled.h3`
 `
 
 export const GameChoiceButtonContainer = styled.div`
-  display: flex;
-  gap: 1.5625rem;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+  gap: 1.5625rem 1rem;
+  width: 100%;
 `

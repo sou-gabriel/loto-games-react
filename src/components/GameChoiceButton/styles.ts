@@ -6,8 +6,10 @@ interface ContainerProps {
 }
 
 export const Container = styled.button<ContainerProps>`
-  flex-shrink: 0;
-  padding: 0.5625rem 1.6875rem;
+  flex: 1;
+  min-width: fit-content;
+  height: fit-content;
+  padding: 0.5625rem 0.3rem;
   border: 2px solid ${({ theme }) => theme};
   border-radius: 999px;
   font-weight: bold;

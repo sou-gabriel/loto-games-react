@@ -83,7 +83,8 @@ export const ListOfSavedGames = () => {
   return (
     <Container theme={activeGameOption.color}>
       {savedGames.map(({ choosen_numbers, created_at, price, type, id }) => (
-        <ListItem theme={activeGameOption.color} key={id}>
+        <ListItem key={id}>
+          <VerticalLine theme={activeGameOption.color} />
           <div>
             <ChoosenNumbers>{choosen_numbers}</ChoosenNumbers>
             <PurchaseRecord>

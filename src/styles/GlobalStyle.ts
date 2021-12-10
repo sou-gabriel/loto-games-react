@@ -8,7 +8,7 @@ export const GlobalStyle = createGlobalStyle`
   }
 
   html, body, div#root {
-    min-height: 100%;
+    min-height: 100vh;
   }
 
   @media (max-width: 1080px) {

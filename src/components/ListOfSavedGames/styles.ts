@@ -28,19 +28,17 @@ export const Container = styled.ul<ITheme>`
   }
 `
 
-export const ListItem = styled.li<ITheme>`
-  height: 5.875rem;
+export const ListItem = styled.li`
   display: flex;
   gap: 0.9375rem;
+`
 
-  &:before {
-    content: '';
-    display: inline-block;
-    width: 6px;
-    height: 100%;
-    border-radius: 999px;
-    background-color: ${({ theme }) => theme};
-  }
+export const VerticalLine = styled.span<ITheme>`
+  display: inline-block;
+  width: 6px;
+  min-height: 100%;
+  border-radius: 999px;
+  background-color: ${({ theme }) => theme};
 `
 
 export const ChoosenNumbers = styled.strong`
@@ -49,6 +47,7 @@ export const ChoosenNumbers = styled.strong`
   font-style: italic;
   font-size: 1.25rem;
   color: #868686;
+  word-break: break-all;
 `
 
 export const PurchaseRecord = styled.p`

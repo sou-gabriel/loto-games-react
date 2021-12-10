@@ -2,6 +2,7 @@ import styled from 'styled-components'
 
 export const Container = styled.section`
   position: relative;
+  flex-grow: 1;
 `
 
 export const Title = styled.h1`
@@ -40,8 +41,9 @@ export const Description = styled.p`
 
 export const GameChoiceButtonContainer = styled.div`
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(117px, 1fr));
-  gap: 1rem 1.5625rem;
+  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+  gap: 1.5625rem 1rem;
+  width: 100%;
 `
 
 export const GameNumberList = styled.div`
@@ -98,6 +100,7 @@ export const Button = styled.button<ButtonProps>`
   font-size: 1rem;
   color: ${({ primary }) => (primary ? '#27c383' : '#fff')};
   display: flex;
+  justify-content: center;
   align-items: center;
   gap: 1.80375rem;
   transition: all 50ms ease-in-out;
@@ -109,6 +112,7 @@ export const Button = styled.button<ButtonProps>`
   }
 
   @media (max-width: 876px) {
+    width: 100%;
     align-self: baseline;
   }
 `
