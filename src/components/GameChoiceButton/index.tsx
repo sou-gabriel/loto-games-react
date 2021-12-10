@@ -10,10 +10,11 @@ interface GameChoiceButtonProps {
   value: number
   theme: string
   isActive: boolean
+  isDisabled?: boolean
 }
 
 export const GameChoiceButton = (props: GameChoiceButtonProps) => {
-  const { value, theme, isActive, children } = props
+  const { value, theme, isActive, children, isDisabled } = props
 
   const gameOptions = useSelector((state: RootState) => state.gameOptions)
   const dispatch = useDispatch()
