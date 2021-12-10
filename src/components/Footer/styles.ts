@@ -1,6 +1,7 @@
 import styled from 'styled-components'
 
 export const Container = styled.footer`
+  margin-top: 2rem;
   padding: 1.84375rem 0 2.0625rem;
   border-top: 2px solid #ebebeb;
 `
