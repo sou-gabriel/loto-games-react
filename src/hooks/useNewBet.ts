@@ -1,4 +1,4 @@
-import { useState, useCallback, MouseEvent } from 'react'
+import { useState, useCallback, MouseEvent, useEffect } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
 
 import { showFeedbackMessage } from 'utils/functions'
@@ -138,6 +138,8 @@ export const useNewBet = (): IUseNewBet => {
       message: 'É necessário preencher todos os números!',
     })
   }
+
+  useEffect(clearChosenNumbers, [activeGameOption, clearChosenNumbers])
 
   return {
     activeGameOption,
