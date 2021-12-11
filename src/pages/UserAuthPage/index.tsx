@@ -8,14 +8,14 @@ import {
   ResetPasswordForm,
 } from 'components/Forms'
 import { MainContent } from 'components/MainContent'
-import { Container, Section, Title, AuthContainer } from './styles'
+import { Container, Title, AuthContainer } from './styles'
 
 export const UserAuthPage = () => {
   return (
-    <Container>
+    <>
       <Toaster />
       <MainContent>
-        <Section>
+        <Container>
           <Title>
             The <br /> Greatest <br /> App <br /> <span>for</span> <br />{' '}
             <span>lottery</span>
@@ -29,8 +29,8 @@ export const UserAuthPage = () => {
               <Route path='/sign-up' element={<SignUpForm />} />
             </Routes>
           </AuthContainer>
-        </Section>
+        </Container>
       </MainContent>
-    </Container>
+    </>
   )
 }
