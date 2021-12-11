@@ -35,7 +35,7 @@ interface IUserSavedGame {
   price: number
   type: {
     id: number
-    type: 'Quina'
+    type: string
   }
   user_id: number
 }
