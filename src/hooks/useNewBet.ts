@@ -171,10 +171,41 @@ export const useNewBet = (): IUseNewBet => {
 
   useEffect(clearChosenNumbers, [activeGameOption, clearChosenNumbers])
 
+  // Estava trabalhando aqui... Toda vez que o usuário da um refresh na página
+  // estou obtendo o token dele armazenado na local storage e montando minha interfance
+  useEffect(() => {
+    axios.get('http://127.0.0.1:3333/cart_games', {
+      headers: {
+        Authorization: `Bearer ${getUserToken()}`
+      }
+    }).then(response => {
+      dispatch(createActionToSetGameOptions(response.data.types))
+    })
+  }, [])
+
+  useEffect(() => {
+    const areGameOptionsAvailable = gameOptions.length >= 1
+    let timerId: ReturnType<typeof setTimeout>
+
+    if (areGameOptionsAvailable) {
+      const defaultGame = gameOptions[0]
+
+      timerId = setTimeout(() => {
+        setIsLoading(false)
+        dispatch(createActionToSetActiveGameOption(defaultGame))
+      }, 500)
+    }
+
+    return () => clearTimeout(timerId)
+  }, [gameOptions, dispatch])
+  // essa lógica está repetida em alguns componentes. Seria uma boa separá-la em um hook, por exemplo
+  // ...
+
   return {
     activeGameOption,
     chosenNumbers,
     gameOptions,
+    isLoading,
     createGameNumbers,
     handleClickGameNumber,
     handleCompleteGameButtonClick,
