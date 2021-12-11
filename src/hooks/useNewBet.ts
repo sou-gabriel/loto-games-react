@@ -49,7 +49,7 @@ export const useNewBet = (): IUseNewBet => {
 
     do {
       const randomNumber = Math.round(
-        Math.random() * (activeGameOption?.range || 0)
+        Math.random() * (activeGameOption?.range || 0),
       )
 
       if (!randomNumbers.includes(randomNumber)) {
@@ -98,7 +98,7 @@ export const useNewBet = (): IUseNewBet => {
     } else {
       showFeedbackMessage({
         type: 'error',
-        message: `Você não pode selecionar mais números ao jogo.`
+        message: 'Você não pode selecionar mais números ao jogo.',
       })
     }
   }
@@ -181,8 +181,8 @@ export const useNewBet = (): IUseNewBet => {
   useEffect(() => {
     axios.get('http://127.0.0.1:3333/cart_games', {
       headers: {
-        Authorization: `Bearer ${getUserToken()}`
-      }
+        Authorization: `Bearer ${getUserToken()}`,
+      },
     }).then(response => {
       dispatch(createActionToSetGameOptions(response.data.types))
     })
