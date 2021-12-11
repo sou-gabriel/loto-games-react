@@ -14,6 +14,7 @@ import {
 import {
   Container,
   ListItem,
+  VerticalLine,
   ChoosenNumbers,
   PurchaseRecord,
   GameType,
