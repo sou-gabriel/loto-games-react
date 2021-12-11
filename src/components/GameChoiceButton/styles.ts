@@ -19,4 +19,9 @@ export const Container = styled.button<ContainerProps>`
   white-space: nowrap;
   color: ${({ theme, isActive }) => isActive ? '#fff' : theme};
   background-color: ${({ theme, isActive }) => isActive ? theme : 'transparent'};
+
+  &:disabled {
+    opacity: 0.4;
+    cursor: not-allowed;
+  }
 `
