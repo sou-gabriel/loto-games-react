@@ -16,7 +16,6 @@ import { IGameOptions } from 'store/modules/gameOptions/types'
 import { createActionToSetActiveGameOption } from 'store/modules/activeGameOption/actions'
 import {
   Container,
-  InnerContainer,
   NavigationLink,
   Section,
   Heading,
@@ -60,11 +59,14 @@ export const Home = () => {
     number[]
   >([])
 
-  const getIdOfGamesWithBets = useCallback((userSavedGames: IUserSavedGame[]) => {
-    return userSavedGames
-      .map((userSavedGame) => userSavedGame.game_id)
-      .filter((gameId, index, array) => array.indexOf(gameId) === index)
-  }, [])
+  const getIdOfGamesWithBets = useCallback(
+    (userSavedGames: IUserSavedGame[]) => {
+      return userSavedGames
+        .map((userSavedGame) => userSavedGame.game_id)
+        .filter((gameId, index, array) => array.indexOf(gameId) === index)
+    },
+    [],
+  )
 
   useEffect(() => {
     const userToken = localStorage.getItem('token')
@@ -130,42 +132,40 @@ export const Home = () => {
   return (
     <>
       <Header />
-      <Container>
+      <MainContent>
         {isLoading && <Spinner />}
         {!isLoading && (
-          <MainContent>
-            <InnerContainer>
-              <Section>
-                <Heading>
-                  <Title>Recent games</Title>
-                  <FiltersContainer>
-                    <Subtitle>Filters</Subtitle>
-                    <GameChoiceButtonContainer>
-                      {gameOptions.map((gameOption) => (
-                        <GameChoiceButton
-                          key={gameOption.id}
-                          value={gameOption.id}
-                          theme={gameOption.color}
-                          isActive={activeGameOption?.id === gameOption.id}
+          <Container>
+            <Section>
+              <Heading>
+                <Title>Recent games</Title>
+                <FiltersContainer>
+                  <Subtitle>Filters</Subtitle>
+                  <GameChoiceButtonContainer>
+                    {gameOptions.map((gameOption) => (
+                      <GameChoiceButton
+                        key={gameOption.id}
+                        value={gameOption.id}
+                        theme={gameOption.color}
+                        isActive={activeGameOption?.id === gameOption.id}
                         isDisabled={
                           !gameOptionsWithSavedBets.includes(gameOption.id)
                         }
-                        >
-                          {gameOption.type}
-                        </GameChoiceButton>
-                      ))}
-                    </GameChoiceButtonContainer>
-                  </FiltersContainer>
-                </Heading>
-                <ListOfSavedGames />
-              </Section>
-              <NavigationLink to='/dashboard'>
-                New Bet <AiOutlineArrowRight />
-              </NavigationLink>
-            </InnerContainer>
-          </MainContent>
+                      >
+                        {gameOption.type}
+                      </GameChoiceButton>
+                    ))}
+                  </GameChoiceButtonContainer>
+                </FiltersContainer>
+              </Heading>
+              <ListOfSavedGames />
+            </Section>
+            <NavigationLink to='/dashboard'>
+              New Bet <AiOutlineArrowRight />
+            </NavigationLink>
+          </Container>
         )}
-      </Container>
+      </MainContent>
     </>
   )
 }
