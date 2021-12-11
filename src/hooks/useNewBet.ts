@@ -22,6 +22,7 @@ export const useNewBet = (): IUseNewBet => {
   const gameOptions = useSelector((state: RootState) => state.gameOptions)
   const activeGameOption: IGameOption | null = useSelector((state: RootState) => state.activeGameOption)
   const dispatch = useDispatch()
+  const userGamesCart = useSelector((state: RootState) => state.userGamesCart)
 
   const createGameNumbers = useCallback(() => {
     const randomNumbers = []
@@ -42,7 +43,9 @@ export const useNewBet = (): IUseNewBet => {
     const randomNumbers: number[] = []
 
     do {
-      const randomNumber = Math.round(Math.random() * (activeGameOption?.range || 0))
+      const randomNumber = Math.round(
+        Math.random() * (activeGameOption?.range || 0)
+      )
 
       if (!randomNumbers.includes(randomNumber)) {
         randomNumbers.push(randomNumber)
@@ -55,6 +58,14 @@ export const useNewBet = (): IUseNewBet => {
   const clearChosenNumbers = useCallback(
     () => setChosenNumbers([]),
     [setChosenNumbers],
+  )
+
+  const compareChosenNumbersWithCartNumbers = useCallback(
+    (cartGameNumbers: number[]) =>
+      cartGameNumbers.every(
+        (cartGameNumber, index) => cartGameNumber === chosenNumbers[index],
+      ),
+    [chosenNumbers],
   )
 
   const handleClickGameNumber = (event: MouseEvent<HTMLButtonElement>) => {
@@ -114,6 +125,25 @@ export const useNewBet = (): IUseNewBet => {
   const handleClickAddGameToCartButton = () => {
     const isANumberOfChosenNumbersValid =
       chosenNumbers.length === activeGameOption?.max_number
+
+    const isItARepeatGame = userGamesCart.some((game) => {
+      const doTheNumbersChosenAlreadyExistInTheCart =
+        compareChosenNumbersWithCartNumbers(game.numbers)
+      const isThereAlreadySuchAGameOnTheCart = activeGameOption.id === game.id
+
+      return (
+        doTheNumbersChosenAlreadyExistInTheCart ===
+        isThereAlreadySuchAGameOnTheCart
+      )
+    })
+
+    if (isItARepeatGame) {
+      showFeedbackMessage({
+        type: 'error',
+        message: 'Já existe um jogo semelhante a este no carrinho.',
+      })
+      return
+    }
 
     if (isANumberOfChosenNumbersValid) {
       const newGame = {
