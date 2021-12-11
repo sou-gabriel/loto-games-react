@@ -8,7 +8,7 @@ import {
   Nav,
   ListOfLinks,
   ListItem,
-  NavigationLink,
+  NavigationLink
 } from './styles'
 
 export const Header = () => {

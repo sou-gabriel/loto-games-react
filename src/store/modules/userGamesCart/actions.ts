@@ -4,8 +4,8 @@ export const createActionToAddGameToCart = (game: IGame) => {
   return {
     type: 'ADD_GAME_TO_CART',
     payload: {
-      game,
-    },
+      game
+    }
   }
 }
 
@@ -13,13 +13,13 @@ export const createActionToRemoveGameFromCart = (id: number) => {
   return {
     type: 'REMOVE_GAME_FROM_CART',
     payload: {
-      id,
-    },
+      id
+    }
   }
 }
 
 export const createActionToRemoveAllGames = () => {
   return {
-    type: 'REMOVE_ALL_GAMES',
+    type: 'REMOVE_ALL_GAMES'
   }
 }

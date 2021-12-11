@@ -13,5 +13,5 @@ ReactDOM.render(
       <GlobalStyle />
     </BrowserRouter>
   </Provider>,
-  document.querySelector('#root'),
+  document.querySelector('#root')
 )

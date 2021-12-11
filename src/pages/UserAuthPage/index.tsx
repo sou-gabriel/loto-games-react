@@ -5,7 +5,7 @@ import {
   SignInForm,
   SignUpForm,
   ForgotPasswordForm,
-  ResetPasswordForm,
+  ResetPasswordForm
 } from 'components/Forms'
 import { MainContent } from 'components/MainContent'
 import { Container, Title, AuthContainer } from './styles'

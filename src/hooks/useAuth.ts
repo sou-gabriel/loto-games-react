@@ -7,7 +7,7 @@ import { showFeedbackMessage, getErrorMessage } from 'utils/functions'
 
 import {
   createNewUserAction,
-  createRemoveUserOption,
+  createRemoveUserOption
 } from 'store/modules/userData/actions'
 
 interface UserData {
@@ -51,7 +51,7 @@ export const useAuth = () => {
 
       showFeedbackMessage({
         type: 'error',
-        message,
+        message
       })
     }
   }
@@ -64,6 +64,6 @@ export const useAuth = () => {
 
   return {
     fetchUser,
-    clearFormFields,
+    clearFormFields
   }
 }

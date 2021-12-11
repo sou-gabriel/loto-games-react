@@ -10,7 +10,7 @@ import {
   InputGroup,
   Input,
   SubmitButton,
-  NavigationLink,
+  NavigationLink
 } from './styles'
 
 export const ForgotPasswordForm = () => {
@@ -20,7 +20,7 @@ export const ForgotPasswordForm = () => {
     event.preventDefault()
 
     const userData = {
-      email: (event.target as HTMLFormElement).email.value.trim(),
+      email: (event.target as HTMLFormElement).email.value.trim()
     }
 
     axios.post('http://127.0.0.1:3333/reset', userData)
@@ -31,7 +31,7 @@ export const ForgotPasswordForm = () => {
       .catch(({ response }) => {
         showFeedbackMessage({
           type: 'error',
-          message: response.data.message,
+          message: response.data.message
         })
       })
   }

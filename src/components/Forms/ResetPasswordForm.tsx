@@ -9,7 +9,7 @@ import {
   InputGroup,
   Input,
   SubmitButton,
-  NavigationLink,
+  NavigationLink
 } from './styles'
 
 export const ResetPasswordForm = () => {
@@ -17,12 +17,12 @@ export const ResetPasswordForm = () => {
   const { token } = useParams()
 
   const handleSubmissionOfChangePasswordForm = (
-    event: FormEvent<HTMLFormElement>,
+    event: FormEvent<HTMLFormElement>
   ) => {
     event.preventDefault()
 
     const userData = {
-      password: (event.target as HTMLFormElement).password.value.trim(),
+      password: (event.target as HTMLFormElement).password.value.trim()
     }
 
     axios

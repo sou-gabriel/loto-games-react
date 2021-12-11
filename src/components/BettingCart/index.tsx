@@ -8,7 +8,7 @@ import {
   InnerContainer,
   Title,
   TotalPrice,
-  Button,
+  Button
 } from './styles'
 
 export const BettingCart = () => {

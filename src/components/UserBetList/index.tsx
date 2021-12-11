@@ -9,7 +9,7 @@ import {
   Heading,
   BetNumbers,
   BetDice,
-  GameName,
+  GameName
 } from './styles'
 
 export const UserBetList = () => {

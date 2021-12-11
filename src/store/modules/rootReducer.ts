@@ -14,7 +14,7 @@ export const rootReducer = combineReducers({
   gameOptions: gameOptionsReducer,
   userGamesCart: userGamesCartReducer,
   minCartValue: minCartValueReducer,
-  activeGameOption: activeGameOptionReducer,
+  activeGameOption: activeGameOptionReducer
 })
 
 export type RootState = {

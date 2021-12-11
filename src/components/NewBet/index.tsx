@@ -15,7 +15,7 @@ import {
   GameNumber,
   ActionsContainer,
   InnerActionsContainer,
-  Button,
+  Button
 } from './styles'
 
 export const NewBet = () => {
@@ -28,7 +28,7 @@ export const NewBet = () => {
     handleClearGameButtonClick,
     handleClickAddGameToCartButton,
     handleClickGameNumber,
-    handleCompleteGameButtonClick,
+    handleCompleteGameButtonClick
   } = useNewBet()
 
   return (

@@ -9,7 +9,7 @@ import {
   InputGroup,
   Input,
   SubmitButton,
-  NavigationLink,
+  NavigationLink
 } from './styles'
 
 export const SignUpForm = () => {
@@ -23,13 +23,13 @@ export const SignUpForm = () => {
     fetchUser('http://127.0.0.1:3333/user/create', {
       name: form.username.value.trim(),
       email: form.email.value.trim(),
-      password: form.password.value.trim(),
+      password: form.password.value.trim()
     })
 
     clearFormFields([
       form.username,
       form.email,
-      form.password,
+      form.password
     ])
   }
 

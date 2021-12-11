@@ -11,7 +11,7 @@ import {
   Input,
   LinkForgotPassword,
   SubmitButton,
-  NavigationLink,
+  NavigationLink
 } from './styles'
 
 export const SignInForm = () => {
@@ -24,7 +24,7 @@ export const SignInForm = () => {
 
     fetchUser('http://127.0.0.1:3333/login', {
       email: form.email.value.trim(),
-      password: form.password.value.trim(),
+      password: form.password.value.trim()
     })
 
     clearFormFields([form.email, form.password])

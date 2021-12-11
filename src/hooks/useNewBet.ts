@@ -49,7 +49,7 @@ export const useNewBet = (): IUseNewBet => {
 
     do {
       const randomNumber = Math.round(
-        Math.random() * (activeGameOption?.range || 0),
+        Math.random() * (activeGameOption?.range || 0)
       )
 
       if (!randomNumbers.includes(randomNumber)) {
@@ -62,15 +62,15 @@ export const useNewBet = (): IUseNewBet => {
 
   const clearChosenNumbers = useCallback(
     () => setChosenNumbers([]),
-    [setChosenNumbers],
+    [setChosenNumbers]
   )
 
   const compareChosenNumbersWithCartNumbers = useCallback(
     (cartGameNumbers: number[]) =>
       cartGameNumbers.every(
-        (cartGameNumber, index) => cartGameNumber === chosenNumbers[index],
+        (cartGameNumber, index) => cartGameNumber === chosenNumbers[index]
       ),
-    [chosenNumbers],
+    [chosenNumbers]
   )
 
   const handleClickGameNumber = (event: MouseEvent<HTMLButtonElement>) => {
@@ -80,25 +80,25 @@ export const useNewBet = (): IUseNewBet => {
     if (isANumberAlreadyChosen) {
       setChosenNumbers((prevChosenNumbers) =>
         prevChosenNumbers.filter(
-          (prevChosenNumber) => prevChosenNumber !== newChosenNumber,
-        ),
+          (prevChosenNumber) => prevChosenNumber !== newChosenNumber
+        )
       )
       showFeedbackMessage({
         type: 'error',
-        message: 'Número de jogo removido!',
+        message: 'Número de jogo removido!'
       })
     } else if (chosenNumbers.length < (activeGameOption?.max_number || 0)) {
       setChosenNumbers((prevChosenNumbers) =>
-        prevChosenNumbers.concat(newChosenNumber),
+        prevChosenNumbers.concat(newChosenNumber)
       )
       showFeedbackMessage({
         type: 'success',
-        message: 'Número de jogo adicionado!',
+        message: 'Número de jogo adicionado!'
       })
     } else {
       showFeedbackMessage({
         type: 'error',
-        message: 'Você não pode selecionar mais números ao jogo.',
+        message: 'Você não pode selecionar mais números ao jogo.'
       })
     }
   }
@@ -109,7 +109,7 @@ export const useNewBet = (): IUseNewBet => {
     setChosenNumbers(randomNumbers)
     showFeedbackMessage({
       type: 'success',
-      message: 'Números selecionados com sucesso!',
+      message: 'Números selecionados com sucesso!'
     })
   }
 
@@ -122,7 +122,7 @@ export const useNewBet = (): IUseNewBet => {
     if (isAValidAmountOfChosenNumbers) {
       showFeedbackMessage({
         type: 'error',
-        message: 'Todos os números foram limpos!',
+        message: 'Todos os números foram limpos!'
       })
     }
   }
@@ -145,7 +145,7 @@ export const useNewBet = (): IUseNewBet => {
     if (isItARepeatGame) {
       showFeedbackMessage({
         type: 'error',
-        message: 'Já existe um jogo semelhante a este no carrinho.',
+        message: 'Já existe um jogo semelhante a este no carrinho.'
       })
       return
     }
@@ -156,21 +156,21 @@ export const useNewBet = (): IUseNewBet => {
         name: activeGameOption?.type || '',
         numbers: chosenNumbers,
         price: activeGameOption?.price || 0,
-        color: activeGameOption?.color || '#000',
+        color: activeGameOption?.color || '#000'
       }
 
       dispatch(createActionToAddGameToCart(newGame))
       clearChosenNumbers()
       showFeedbackMessage({
         type: 'success',
-        message: 'Jogo adicionado ao carrinho!',
+        message: 'Jogo adicionado ao carrinho!'
       })
       return
     }
 
     showFeedbackMessage({
       type: 'error',
-      message: 'É necessário preencher todos os números!',
+      message: 'É necessário preencher todos os números!'
     })
   }
 
@@ -181,8 +181,8 @@ export const useNewBet = (): IUseNewBet => {
   useEffect(() => {
     axios.get('http://127.0.0.1:3333/cart_games', {
       headers: {
-        Authorization: `Bearer ${getUserToken()}`,
-      },
+        Authorization: `Bearer ${getUserToken()}`
+      }
     }).then(response => {
       dispatch(createActionToSetGameOptions(response.data.types))
     })
@@ -215,6 +215,6 @@ export const useNewBet = (): IUseNewBet => {
     handleClickGameNumber,
     handleCompleteGameButtonClick,
     handleClearGameButtonClick,
-    handleClickAddGameToCartButton,
+    handleClickAddGameToCartButton
   }
 }

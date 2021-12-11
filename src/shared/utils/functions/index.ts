@@ -26,6 +26,6 @@ export const getUserToken = () => {
 export const getFormattedGamePrice = (gamePrice: number) => {
   return new Intl.NumberFormat('pt-br', {
     style: 'currency',
-    currency: 'BRL',
+    currency: 'BRL'
   }).format(gamePrice)
 }

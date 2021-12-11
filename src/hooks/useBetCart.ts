@@ -4,14 +4,14 @@ import axios from 'axios'
 
 import {
   createActionToRemoveGameFromCart,
-  createActionToRemoveAllGames,
+  createActionToRemoveAllGames
 } from 'store/modules/userGamesCart/actions'
 import { RootState } from 'store/modules/rootReducer'
 import {
   showFeedbackMessage,
   getErrorMessage,
   getUserToken,
-  getFormattedGamePrice,
+  getFormattedGamePrice
 } from 'utils/functions'
 
 interface IUserGamesCart {
@@ -47,14 +47,14 @@ interface IConfig {
 
 export const useBetCart = (): IUseBetCart => {
   const userGamesCart: IUserGamesCart[] = useSelector(
-    (state: RootState) => state.userGamesCart,
+    (state: RootState) => state.userGamesCart
   )
   const minCartValue = useSelector((state: RootState) => state.minCartValue)
   const dispatch = useDispatch()
 
   const calculateTotalPriceOfCartGames = useCallback(
     () => userGamesCart.reduce((acc, game) => acc + game.price, 0),
-    [userGamesCart],
+    [userGamesCart]
   )
 
   const getTotalCalculatedPrice = useCallback(() => {
@@ -64,7 +64,7 @@ export const useBetCart = (): IUseBetCart => {
 
   const getTransformedCartGames = useCallback(
     () => userGamesCart.map(({ id, numbers }) => ({ id, numbers })),
-    [userGamesCart],
+    [userGamesCart]
   )
 
   const registerGames = async (data: IData, config: IConfig) => {
@@ -72,7 +72,7 @@ export const useBetCart = (): IUseBetCart => {
       const response = await axios.post(
         'http://127.0.0.1:3333/bet/new-bet',
         data,
-        config,
+        config
       )
 
       if (response.status !== 200) {
@@ -82,7 +82,7 @@ export const useBetCart = (): IUseBetCart => {
       dispatch(createActionToRemoveAllGames())
       showFeedbackMessage({
         type: 'success',
-        message: 'Jogos salvos com sucesso!',
+        message: 'Jogos salvos com sucesso!'
       })
     } catch (error) {
       console.log('Opa?')
@@ -90,7 +90,7 @@ export const useBetCart = (): IUseBetCart => {
 
       showFeedbackMessage({
         type: 'error',
-        message,
+        message
       })
     }
   }
@@ -109,8 +109,8 @@ export const useBetCart = (): IUseBetCart => {
       const data = { games: transformedUserGamesCart }
       const config = {
         headers: {
-          Authorization: `Bearer ${userToken}`,
-        },
+          Authorization: `Bearer ${userToken}`
+        }
       }
 
       registerGames(data, config)
@@ -120,8 +120,8 @@ export const useBetCart = (): IUseBetCart => {
     showFeedbackMessage({
       type: 'error',
       message: `É necessário ter no carrinho pelo menos ${getFormattedGamePrice(
-        minCartValue,
-      )} em jogos.`,
+        minCartValue
+      )} em jogos.`
     })
   }
 
@@ -130,6 +130,6 @@ export const useBetCart = (): IUseBetCart => {
     calculateTotalPriceOfCartGames,
     getTotalCalculatedPrice,
     handleClickToRemoveBet,
-    handleClickToSaveUserBets,
+    handleClickToSaveUserBets
   }
 }

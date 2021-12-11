@@ -8,7 +8,7 @@ import {
   getErrorMessage,
   showFeedbackMessage,
   getUserToken,
-  getFormattedGamePrice,
+  getFormattedGamePrice
 } from 'utils/functions'
 
 import {
@@ -17,7 +17,7 @@ import {
   VerticalLine,
   ChoosenNumbers,
   PurchaseRecord,
-  GameType,
+  GameType
 } from './styles'
 
 interface ISavedGame {
@@ -36,7 +36,7 @@ interface ISavedGame {
 export const ListOfSavedGames = () => {
   const [savedGames, setSavedGames] = useState<ISavedGame[]>([])
   const activeGameOption = useSelector(
-    (state: RootState) => state.activeGameOption,
+    (state: RootState) => state.activeGameOption
   )
 
   const getUrl = useCallback(() => {
@@ -57,8 +57,8 @@ export const ListOfSavedGames = () => {
       try {
         const response = await axios.get(getUrl(), {
           headers: {
-            Authorization: `Bearer ${userToken}`,
-          },
+            Authorization: `Bearer ${userToken}`
+          }
         })
 
         const savedGames = response.data
@@ -69,7 +69,7 @@ export const ListOfSavedGames = () => {
 
         showFeedbackMessage({
           type: 'error',
-          message,
+          message
         })
       }
     }
