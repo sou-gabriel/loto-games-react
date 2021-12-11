@@ -1,15 +1,19 @@
 import { useState, useCallback, MouseEvent, useEffect } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
 
-import { showFeedbackMessage } from 'utils/functions'
+import { getUserToken, showFeedbackMessage } from 'utils/functions'
 import { createActionToAddGameToCart } from 'store/modules/userGamesCart/actions'
 import { IGameOption } from 'store/modules/gameOptions/types'
 import { RootState } from 'store/modules/rootReducer'
+import { createActionToSetGameOptions } from 'store/modules/gameOptions/action'
+import { createActionToSetActiveGameOption } from 'store/modules/activeGameOption/actions'
+import axios from 'axios'
 
 interface IUseNewBet {
   activeGameOption: IGameOption | null
   chosenNumbers: number[]
   gameOptions: IGameOption[]
+  isLoading: boolean
   createGameNumbers: () => number[]
   handleClickGameNumber: (event: MouseEvent<HTMLButtonElement>) => void
   handleCompleteGameButtonClick: () => void
@@ -18,6 +22,7 @@ interface IUseNewBet {
 }
 
 export const useNewBet = (): IUseNewBet => {
+  const [isLoading, setIsLoading] = useState(true)
   const [chosenNumbers, setChosenNumbers] = useState<number[]>([])
   const gameOptions = useSelector((state: RootState) => state.gameOptions)
   const activeGameOption: IGameOption | null = useSelector((state: RootState) => state.activeGameOption)
