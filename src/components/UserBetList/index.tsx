@@ -13,12 +13,12 @@ import {
 } from './styles'
 
 export const UserBetList = () => {
-  const { userGamesCart, getTotalCalculatedPrice, handleClickToRemoveBet } =
+  const { bettingCart, getTotalCalculatedPrice, handleClickToRemoveBet } =
     useBetCart()
 
   return (
     <Container>
-      {userGamesCart.map((userGame) => (
+      {bettingCart.map((userGame) => (
         <UserGameItem key={uuidv4()} theme={userGame.color}>
           <TrashIcon
             onClick={handleClickToRemoveBet}

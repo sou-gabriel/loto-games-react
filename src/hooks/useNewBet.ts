@@ -2,7 +2,7 @@ import { useState, useCallback, MouseEvent, useEffect } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
 
 import { getUserToken, showFeedbackMessage } from 'utils/functions'
-import { createActionToAddGameToCart } from 'store/modules/userGamesCart/actions'
+import { createActionToAddNewBetToCart } from 'store/modules/bettingCart/actions'
 import { IGameOption } from 'store/modules/gameOptions/types'
 import { RootState } from 'store/modules/rootReducer'
 import { createActionToSetGameOptions } from 'store/modules/gameOptions/action'
@@ -27,7 +27,7 @@ export const useNewBet = (): IUseNewBet => {
   const gameOptions = useSelector((state: RootState) => state.gameOptions)
   const activeGameOption: IGameOption | null = useSelector((state: RootState) => state.activeGameOption)
   const dispatch = useDispatch()
-  const userGamesCart = useSelector((state: RootState) => state.userGamesCart)
+  const bettingCart = useSelector((state: RootState) => state.bettingCart)
 
   const createGameNumbers = useCallback(() => {
     const randomNumbers = []
@@ -131,7 +131,7 @@ export const useNewBet = (): IUseNewBet => {
     const isANumberOfChosenNumbersValid =
       chosenNumbers.length === activeGameOption?.max_number
 
-    const isItARepeatGame = userGamesCart.some((game) => {
+    const isItARepeatGame = bettingCart.some((game) => {
       const doTheNumbersChosenAlreadyExistInTheCart =
         compareChosenNumbersWithCartNumbers(game.numbers)
       const isThereAlreadySuchAGameOnTheCart = activeGameOption.id === game.id
@@ -159,7 +159,7 @@ export const useNewBet = (): IUseNewBet => {
         color: activeGameOption?.color || '#000',
       }
 
-      dispatch(createActionToAddGameToCart(newGame))
+      dispatch(createActionToAddNewBetToCart(newGame))
       clearChosenNumbers()
       showFeedbackMessage({
         type: 'success',

@@ -3,9 +3,9 @@ import { useSelector, useDispatch } from 'react-redux'
 import axios from 'axios'
 
 import {
-  createActionToRemoveGameFromCart,
-  createActionToRemoveAllGames,
-} from 'store/modules/userGamesCart/actions'
+  createActionToRemoveBetFromCart,
+  createActionToRemoveAllBets,
+} from 'store/modules/bettingCart/actions'
 import { RootState } from 'store/modules/rootReducer'
 import {
   showFeedbackMessage,
@@ -14,7 +14,7 @@ import {
   getFormattedGamePrice,
 } from 'utils/functions'
 
-interface IUserGamesCart {
+interface IbettingCart {
   id: number
   color: string
   name: string
@@ -23,7 +23,7 @@ interface IUserGamesCart {
 }
 
 interface IUseBetCart {
-  userGamesCart: IUserGamesCart[]
+  bettingCart: IbettingCart[]
   calculateTotalPriceOfCartGames: () => number
   getTotalCalculatedPrice: () => string
   handleClickToRemoveBet: (event: MouseEvent<SVGElement>) => void
@@ -46,15 +46,15 @@ interface IConfig {
 }
 
 export const useBetCart = (): IUseBetCart => {
-  const userGamesCart: IUserGamesCart[] = useSelector(
-    (state: RootState) => state.userGamesCart,
+  const bettingCart: IbettingCart[] = useSelector(
+    (state: RootState) => state.bettingCart,
   )
   const minCartValue = useSelector((state: RootState) => state.minCartValue)
   const dispatch = useDispatch()
 
   const calculateTotalPriceOfCartGames = useCallback(
-    () => userGamesCart.reduce((acc, game) => acc + game.price, 0),
-    [userGamesCart],
+    () => bettingCart.reduce((acc, game) => acc + game.price, 0),
+    [bettingCart],
   )
 
   const getTotalCalculatedPrice = useCallback(() => {
@@ -63,8 +63,8 @@ export const useBetCart = (): IUseBetCart => {
   }, [calculateTotalPriceOfCartGames])
 
   const getTransformedCartGames = useCallback(
-    () => userGamesCart.map(({ id, numbers }) => ({ id, numbers })),
-    [userGamesCart],
+    () => bettingCart.map(({ id, numbers }) => ({ id, numbers })),
+    [bettingCart],
   )
 
   const registerGames = async (data: IData, config: IConfig) => {
@@ -79,7 +79,7 @@ export const useBetCart = (): IUseBetCart => {
         throw new Error('Um erro de conexão ocorreu. Tente novamente!')
       }
 
-      dispatch(createActionToRemoveAllGames())
+      dispatch(createActionToRemoveAllBets())
       showFeedbackMessage({
         type: 'success',
         message: 'Jogos salvos com sucesso!',
@@ -96,16 +96,16 @@ export const useBetCart = (): IUseBetCart => {
 
   const handleClickToRemoveBet = (event: MouseEvent<SVGElement>) => {
     const idDataValue = Number((event.target as SVGElement).dataset.id) || 0
-    dispatch(createActionToRemoveGameFromCart(idDataValue))
+    dispatch(createActionToRemoveBetFromCart(idDataValue))
   }
 
   const handleClickToSaveUserBets = () => {
     const totalPriceOfCartBets = calculateTotalPriceOfCartGames()
-    const transformedUserGamesCart = getTransformedCartGames()
+    const transformedbettingCart = getTransformedCartGames()
     const userToken = getUserToken()
 
     if (totalPriceOfCartBets >= minCartValue) {
-      const data = { games: transformedUserGamesCart }
+      const data = { games: transformedbettingCart }
       const config = {
         headers: {
           Authorization: `Bearer ${userToken}`,
@@ -125,7 +125,7 @@ export const useBetCart = (): IUseBetCart => {
   }
 
   return {
-    userGamesCart,
+    bettingCart,
     calculateTotalPriceOfCartGames,
     getTotalCalculatedPrice,
     handleClickToRemoveBet,

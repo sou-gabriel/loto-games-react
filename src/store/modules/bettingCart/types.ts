@@ -1,4 +1,4 @@
-export interface IGame {
+export interface IBet {
   id: number
   name: string
   numbers: number[]
@@ -9,7 +9,7 @@ export interface IGame {
 export interface IAction {
   type: string
   payload: {
-    game?: IGame
+    bet?: IBet
     id?: number
   }
 }

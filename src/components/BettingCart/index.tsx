@@ -12,14 +12,14 @@ import {
 } from './styles'
 
 export const BettingCart = () => {
-  const { userGamesCart, getTotalCalculatedPrice, handleClickToSaveUserBets } =
+  const { bettingCart, getTotalCalculatedPrice, handleClickToSaveUserBets } =
     useBetCart()
 
   return (
     <Container>
       <InnerContainer>
         <Title>Cart</Title>
-        {userGamesCart.length ? <UserBetList /> : <EmptyCart message='Não há jogos no carrinho.' />}
+        {bettingCart.length ? <UserBetList /> : <EmptyCart message='Não há jogos no carrinho.' />}
         <TotalPrice>
           <strong>Cart</strong> total: {getTotalCalculatedPrice()}
         </TotalPrice>
