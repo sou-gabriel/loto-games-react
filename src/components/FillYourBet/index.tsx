@@ -1,5 +1,4 @@
 import { useState } from 'react'
-import { useNavigate } from 'react-router-dom'
 import { useSelector, useDispatch } from 'react-redux'
 import { AiOutlineShoppingCart } from 'react-icons/ai'
 import { v4 as uuidv4 } from 'uuid'
@@ -27,7 +26,6 @@ export const FillYourBet = () => {
   })
   const bettingCart = useSelector(({ bettingCart }: RootState) => bettingCart)
   const dispatch = useDispatch()
-  const navigate = useNavigate()
 
   const getRandomGameNumbers = () => {
     const randomNumbers: number[] = []
@@ -140,7 +138,6 @@ export const FillYourBet = () => {
     if (shouldYouAddTheNewBetToTheCart) {
       addNewBetToCart(newBet)
       clearChosenNumbers()
-      navigate('/home')
     }
   }
 

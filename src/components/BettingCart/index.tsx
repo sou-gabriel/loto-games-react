@@ -1,4 +1,5 @@
 import { useDispatch, useSelector } from 'react-redux'
+import { useNavigate } from 'react-router-dom'
 import { AiOutlineArrowRight } from 'react-icons/ai'
 import axios from 'axios'
 
@@ -18,6 +19,7 @@ export const BettingCart = () => {
     ({ minCartValue }: RootState) => minCartValue,
   )
   const dispatch = useDispatch()
+  const navigate = useNavigate()
 
   const totalPrice = bettingCart.reduce((acc, bet) => {
     return acc + bet.price
@@ -48,6 +50,8 @@ export const BettingCart = () => {
         Authorization: `Bearer ${getUserToken()}`,
       },
     })
+
+    navigate('/home')
   }
 
   const handleSaveButtonClick = () => {
