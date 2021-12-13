@@ -186,7 +186,7 @@ export const useNewBet = (): IUseNewBet => {
     }).then(response => {
       dispatch(createActionToSetGameOptions(response.data.types))
     })
-  }, [])
+  }, [dispatch])
 
   useEffect(() => {
     const areGameOptionsAvailable = gameOptions.length >= 1
