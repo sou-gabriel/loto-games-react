@@ -34,8 +34,8 @@ export const useNewBet = (): IUseNewBet => {
     const gameNumberRange = activeGameOption?.range || 0
 
     for (
-      let gameNumber = 0;
-      randomNumbers.length <= gameNumberRange;
+      let gameNumber = 1;
+      randomNumbers.length < gameNumberRange;
       gameNumber++
     ) {
       randomNumbers.push(gameNumber)

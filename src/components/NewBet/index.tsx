@@ -66,7 +66,7 @@ export const NewBet = () => {
                 isActive={chosenNumbers.includes(gameNumber)}
                 buttonColor={activeGameOption?.color || '#ccc'}
               >
-                {gameNumber}
+                {gameNumber < 10 ? `0${gameNumber}` : gameNumber}
               </GameNumber>
             ))}
           </GameNumberList>
