@@ -3,7 +3,7 @@ import { useDispatch } from 'react-redux'
 import { useNavigate } from 'react-router-dom'
 import axios from 'axios'
 
-import { showFeedbackMessage, getErrorMessage } from 'utils/functions'
+import { showFeedbackMessage, getErrorMessage } from 'shared/utils/functions'
 
 import {
   createNewUserAction,

@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom'
 import { AiOutlineArrowRight, AiOutlineArrowLeft } from 'react-icons/ai'
 import axios from 'axios'
 
-import { showFeedbackMessage } from 'utils/functions'
+import { showFeedbackMessage } from 'shared/utils/functions'
 import {
   Title,
   Form,

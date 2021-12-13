@@ -7,14 +7,14 @@ export const createActionToAddNewBetToCart = (bet: IBet) => {
   }
 }
 
-export const createActionToRemoveBetFromCart = (id: number) => {
+export const createActionToRemoveBetFromCart = (id: string) => {
   return {
     type: 'REMOVE_GAME_FROM_CART',
     payload: { id },
   }
 }
 
-export const createActionToRemoveAllBets = () => {
+export const createActionToRemoveAllBetsFromCart = () => {
   return {
     type: 'REMOVE_ALL_GAMES',
   }

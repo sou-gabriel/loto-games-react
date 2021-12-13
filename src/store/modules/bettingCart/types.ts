@@ -1,15 +1,16 @@
 export interface IBet {
-  id: number
-  name: string
-  numbers: number[]
-  price: number
+  id: string
+  gameId: number
+  type: string
   color: string
+  price: number
+  chosenNumbers: number[]
 }
 
 export interface IAction {
   type: string
   payload: {
     bet?: IBet
-    id?: number
+    id?: string
   }
 }

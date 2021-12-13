@@ -1,30 +1,99 @@
-import { useEffect } from 'react'
+import { useEffect, useState } from 'react'
+import { useDispatch, useSelector } from 'react-redux'
 import { useNavigate } from 'react-router-dom'
+import { Toaster } from 'react-hot-toast'
 
-import { NewBet } from 'components/NewBet'
-import { Header } from 'components/Header'
-import { MainContent } from 'components/MainContent'
-import { BettingCart } from 'components/BettingCart'
-import { Container } from './styles'
+import {
+  Header,
+  MainContent,
+  BettingCart,
+  GameChoiceButton,
+  FillYourBet,
+  Spinner,
+} from 'components'
+
+import { RootState } from 'store/modules/rootReducer'
+import { createActionToSetMinimumCartValue } from 'store/modules/minCartValue/actions'
+import { createActionToSetGameOptions } from 'store/modules/gameOptions/action'
+import { createActionToSetActiveGameOption } from 'store/modules/activeGameOption/actions'
+
+import {
+  Container,
+  Section,
+  Title,
+  Subtitle,
+  GameChoiceContainer,
+  GameChoiceButtonContainer,
+} from './styles'
+import axios from 'axios'
 
 export const Dashboard = () => {
+  const [isLoading, setIsLoading] = useState(true)
   const navigate = useNavigate()
+  const dispatch = useDispatch()
+  const activeGame = useSelector(({ activeGameOption }: RootState) => {
+    return activeGameOption
+  })
+  const gameOptions = useSelector(({ gameOptions }: RootState) => gameOptions)
 
   useEffect(() => {
     const userToken = localStorage.getItem('token')
 
     if (!userToken) {
       navigate('/login', { replace: true })
+      return
     }
-  }, [navigate])
+
+    axios
+      .get('http://127.0.0.1:3333/cart_games', {
+        headers: {
+          Authorization: `Bearer ${userToken}`,
+        },
+      })
+      .then((response) => {
+        dispatch(
+          createActionToSetMinimumCartValue(response.data.min_cart_value),
+        )
+        dispatch(createActionToSetGameOptions(response.data.types))
+        dispatch(createActionToSetActiveGameOption(response.data.types[0]))
+        setIsLoading(false)
+      })
+  }, [navigate, dispatch])
 
   return (
     <>
       <Header />
       <MainContent>
         <Container>
-          <NewBet />
-          <BettingCart />
+          {isLoading && <Spinner />}
+          {!isLoading && (
+            <>
+              <Section>
+                <Toaster />
+                <Title>
+                  New Bet <span>for {activeGame?.type}</span>
+                </Title>
+                <GameChoiceContainer>
+                  <Subtitle>Choose a game</Subtitle>
+                  <GameChoiceButtonContainer>
+                    {gameOptions.map((gameOption) => (
+                      <GameChoiceButton
+                        key={gameOption.id}
+                        value={gameOption.id}
+                        theme={gameOption.color}
+                        isActive={activeGame?.id === gameOption.id}
+                      >
+                        {gameOption.type}
+                      </GameChoiceButton>
+                    ))}
+                  </GameChoiceButtonContainer>
+                </GameChoiceContainer>
+
+                <FillYourBet />
+              </Section>
+              <BettingCart />
+            </>
+          )}
         </Container>
       </MainContent>
     </>

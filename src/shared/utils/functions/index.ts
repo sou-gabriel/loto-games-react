@@ -23,7 +23,7 @@ export const getUserToken = () => {
   return localStorage.getItem('token')
 }
 
-export const getFormattedGamePrice = (gamePrice: number) => {
+export const getFormattedPrice = (gamePrice: number) => {
   return new Intl.NumberFormat('pt-br', {
     style: 'currency',
     currency: 'BRL',

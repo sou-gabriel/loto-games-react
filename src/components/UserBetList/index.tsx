@@ -1,6 +1,10 @@
-import { v4 as uuidv4 } from 'uuid'
+import { useDispatch } from 'react-redux'
+import { createActionToRemoveBetFromCart } from 'store/modules/bettingCart/actions'
 
-import { useBetCart } from 'hooks/useBetCart'
+import { IBet } from 'store/modules/bettingCart/types'
+
+import { showFeedbackMessage, getFormattedPrice } from 'shared/utils/functions'
+
 import {
   Container,
   UserGameItem,
@@ -12,25 +16,34 @@ import {
   GameName,
 } from './styles'
 
-export const UserBetList = () => {
-  const { bettingCart, getTotalCalculatedPrice, handleClickToRemoveBet } =
-    useBetCart()
+interface IUserBetListProps {
+  bets: IBet[]
+}
+
+export const UserBetList = ({ bets }: IUserBetListProps) => {
+  const dispatch = useDispatch()
 
   return (
     <Container>
-      {bettingCart.map((userGame) => (
-        <UserGameItem key={uuidv4()} theme={userGame.color}>
+      {bets.map((bet) => (
+        <UserGameItem key={bet.id} theme={bet.color}>
           <TrashIcon
-            onClick={handleClickToRemoveBet}
-            data-id={userGame.id}
+            data-id={bet.id}
             color='#888'
+            onClick={() => {
+              dispatch(createActionToRemoveBetFromCart(bet.id))
+              showFeedbackMessage({
+                type: 'success',
+                message: 'Aposta deletada com sucesso do carrinho!',
+              })
+            }}
           />
-          <VerticalLine theme={userGame.color} />
+          <VerticalLine theme={bet.color} />
           <Heading>
-            <BetNumbers>{userGame.numbers.join(', ')}</BetNumbers>
+            <BetNumbers>{bet.chosenNumbers.join(', ')}</BetNumbers>
             <BetDice>
-              <GameName theme={userGame.color}>{userGame.name}</GameName>
-              <span>{getTotalCalculatedPrice()}</span>
+              <GameName theme={bet.color}>{bet.type}</GameName>
+              <span>{getFormattedPrice(bet.price)}</span>
             </BetDice>
           </Heading>
         </UserGameItem>

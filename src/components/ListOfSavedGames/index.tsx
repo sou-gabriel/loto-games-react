@@ -8,8 +8,8 @@ import {
   getErrorMessage,
   showFeedbackMessage,
   getUserToken,
-  getFormattedGamePrice,
-} from 'utils/functions'
+  getFormattedPrice,
+} from 'shared/utils/functions'
 
 import {
   Container,
@@ -87,7 +87,7 @@ export const ListOfSavedGames = () => {
           <div>
             <ChoosenNumbers>{choosen_numbers}</ChoosenNumbers>
             <PurchaseRecord>
-              {getFormattedDate(created_at)} - ({getFormattedGamePrice(price)})
+              {getFormattedDate(created_at)} - ({getFormattedPrice(price)})
             </PurchaseRecord>
             <GameType theme={activeGameOption.color}>{type.type}</GameType>
           </div>
