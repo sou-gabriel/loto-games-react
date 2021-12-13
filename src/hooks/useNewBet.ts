@@ -176,8 +176,6 @@ export const useNewBet = (): IUseNewBet => {
 
   useEffect(clearChosenNumbers, [activeGameOption, clearChosenNumbers])
 
-  // Estava trabalhando aqui... Toda vez que o usuário da um refresh na página
-  // estou obtendo o token dele armazenado na local storage e montando minha interfance
   useEffect(() => {
     axios.get('http://127.0.0.1:3333/cart_games', {
       headers: {
@@ -203,8 +201,6 @@ export const useNewBet = (): IUseNewBet => {
 
     return () => clearTimeout(timerId)
   }, [gameOptions, dispatch])
-  // essa lógica está repetida em alguns componentes. Seria uma boa separá-la em um hook, por exemplo
-  // ...
 
   return {
     activeGameOption,

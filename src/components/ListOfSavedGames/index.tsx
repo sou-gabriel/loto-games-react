@@ -44,8 +44,6 @@ export const ListOfSavedGames = () => {
     return `http://127.0.0.1:3333/bet/all-bets?type%5B%5D=${activeGameOptionName}`
   }, [activeGameOption])
 
-  console.log('savedGames', savedGames)
-
   const getFormattedDate = useCallback((date: string) => {
     return new Intl.DateTimeFormat('pt-br').format(new Date(date))
   }, [])

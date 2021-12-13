@@ -91,7 +91,7 @@ export const Home = () => {
 
         storeGameOptions(gameOptions)
       } catch (error) {
-        console.log(error)
+        alert(error)
       }
     }
 

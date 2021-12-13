@@ -85,7 +85,6 @@ export const useBetCart = (): IUseBetCart => {
         message: 'Jogos salvos com sucesso!',
       })
     } catch (error) {
-      console.log('Opa?')
       const message = getErrorMessage(error)
 
       showFeedbackMessage({
