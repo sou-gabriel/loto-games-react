@@ -15,6 +15,7 @@ import {
 import { createActionToSetGameOptions } from 'store/modules/gameOptions/action'
 import { createActionToSetMinimumCartValue } from 'store/modules/minCartValue/actions'
 import { IGameOptions } from 'store/modules/gameOptions/types'
+import { createActionToSetGameOptions, createActionToSetMinimumCartValue } from 'store'
 
 import {
   Container,

@@ -13,9 +13,12 @@ import {
 } from 'components'
 
 import { RootState } from 'store/modules/rootReducer'
-import { createActionToSetMinimumCartValue } from 'store/modules/minCartValue/actions'
-import { createActionToSetGameOptions } from 'store/modules/gameOptions/action'
-import { createActionToSetActiveGameOption } from 'store/modules/activeGameOption/actions'
+
+import {
+  createActionToSetMinimumCartValue,
+  createActionToSetGameOptions,
+  createActionToSetActiveGameOption,
+} from 'store'
 
 import {
   Container,
