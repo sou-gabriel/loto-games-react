@@ -29,3 +29,7 @@ export const getFormattedPrice = (gamePrice: number) => {
     currency: 'BRL',
   }).format(gamePrice)
 }
+
+export const getFormattedDate = (date: string) => {
+  return new Intl.DateTimeFormat('pt-br').format(new Date(date))
+}

@@ -49,9 +49,9 @@ export const BettingCart = () => {
       headers: {
         Authorization: `Bearer ${getUserToken()}`,
       },
+    }).then(() => {
+      navigate('/home')
     })
-
-    navigate('/home')
   }
 
   const handleSaveButtonClick = () => {

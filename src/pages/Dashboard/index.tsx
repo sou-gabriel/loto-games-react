@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react'
+import { useEffect, useState, MouseEvent } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { useNavigate } from 'react-router-dom'
 import { Toaster } from 'react-hot-toast'
@@ -82,6 +82,14 @@ export const Dashboard = () => {
                         value={gameOption.id}
                         theme={gameOption.color}
                         isActive={activeGame?.id === gameOption.id}
+                        onGameChoiceButtonClick={(event: MouseEvent<HTMLButtonElement>) => {
+                          const clickedButtonValue = +(event.target as HTMLButtonElement).value
+                          const newActiveGame =
+                            gameOptions.find((gameOption) => gameOption.id === clickedButtonValue) ||
+                            null
+
+                          dispatch(createActionToSetActiveGameOption(newActiveGame))
+                        }}
                       >
                         {gameOption.type}
                       </GameChoiceButton>

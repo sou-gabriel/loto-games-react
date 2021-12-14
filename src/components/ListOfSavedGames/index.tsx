@@ -1,15 +1,16 @@
-import { useState, useEffect, useCallback } from 'react'
+import { useState, useEffect } from 'react'
 import { useSelector } from 'react-redux'
 import axios from 'axios'
 
 import { EmptyCart } from 'components/EmptyCart'
-import { RootState } from 'store/modules/rootReducer'
+
 import {
-  getErrorMessage,
-  showFeedbackMessage,
   getUserToken,
   getFormattedPrice,
+  getFormattedDate,
 } from 'shared/utils/functions'
+
+import { RootState } from 'store/modules/rootReducer'
 
 import {
   Container,
@@ -20,7 +21,11 @@ import {
   GameType,
 } from './styles'
 
-interface ISavedGame {
+interface IListOfSavedGames {
+  activeBets: string[]
+}
+
+interface ISavedBet {
   choosen_numbers: string
   created_at: string
   game_id: number
@@ -33,63 +38,52 @@ interface ISavedGame {
   user_id: number
 }
 
-export const ListOfSavedGames = () => {
-  const [savedGames, setSavedGames] = useState<ISavedGame[]>([])
-  const activeGameOption = useSelector(
-    (state: RootState) => state.activeGameOption,
-  )
+export const ListOfSavedGames = ({ activeBets }: IListOfSavedGames) => {
+  const [savedBets, setSavedBets] = useState<ISavedBet[]>([])
+  const gameOptions = useSelector(({ gameOptions }: RootState) => gameOptions)
 
-  const getUrl = useCallback(() => {
-    const activeGameOptionName = activeGameOption.type
-    return `http://127.0.0.1:3333/bet/all-bets?type%5B%5D=${activeGameOptionName}`
-  }, [activeGameOption])
+  const createGameColors = () => {
+    return gameOptions.reduce((acc, { type, color }) => {
+      acc[type] = color
+      return acc
+    }, {} as any)
+  }
 
-  const getFormattedDate = useCallback((date: string) => {
-    return new Intl.DateTimeFormat('pt-br').format(new Date(date))
-  }, [])
+  const getGameColor = (type: string) => {
+    const gameColors = createGameColors()
+    return gameColors[type]
+  }
 
   useEffect(() => {
-    const fetchSavedBets = async () => {
-      const userToken = getUserToken()
-
-      try {
-        const response = await axios.get(getUrl(), {
+    axios
+      .get(
+        `http://127.0.0.1:3333/bet/all-bets?type%5B%5D=${activeBets.join(
+          '&type%5B%5D=',
+        )}`,
+        {
           headers: {
-            Authorization: `Bearer ${userToken}`,
+            Authorization: `Bearer ${getUserToken()}`,
           },
-        })
+        },
+      )
+      .then((response) => setSavedBets(response.data))
+  }, [activeBets])
 
-        const savedGames = response.data
-
-        setSavedGames(savedGames)
-      } catch (error) {
-        const message = getErrorMessage(error)
-
-        showFeedbackMessage({
-          type: 'error',
-          message,
-        })
-      }
-    }
-
-    fetchSavedBets()
-  }, [activeGameOption, getUrl])
-
-  if (!savedGames.length) {
+  if (!savedBets.length) {
     return <EmptyCart message='Não há jogos salvos.' />
   }
 
   return (
-    <Container theme={activeGameOption.color}>
-      {savedGames.map(({ choosen_numbers, created_at, price, type, id }) => (
-        <ListItem key={id}>
-          <VerticalLine theme={activeGameOption.color} />
+    <Container>
+      {savedBets.map(({ choosen_numbers, created_at, price, type, id }) => (
+        <ListItem key={id} color={getGameColor(type.type)}>
+          <VerticalLine color={getGameColor(type.type)} />
           <div>
             <ChoosenNumbers>{choosen_numbers}</ChoosenNumbers>
             <PurchaseRecord>
               {getFormattedDate(created_at)} - ({getFormattedPrice(price)})
             </PurchaseRecord>
-            <GameType theme={activeGameOption.color}>{type.type}</GameType>
+            <GameType color={getGameColor(type.type)}>{type.type}</GameType>
           </div>
         </ListItem>
       ))}
