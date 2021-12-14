@@ -1,8 +1,12 @@
-import { FormEvent } from 'react'
+import { FormEvent, useCallback } from 'react'
+import { useNavigate } from 'react-router-dom'
+import { useDispatch } from 'react-redux'
 import { AiOutlineArrowRight } from 'react-icons/ai'
 import { Toaster } from 'react-hot-toast'
 
-import { useAuth } from 'hooks/useAuth'
+import { createActionThatAddsNewUser } from 'store'
+
+import { login } from 'shared/services'
 
 import {
   Title,
@@ -14,20 +18,34 @@ import {
   NavigationLink,
 } from './styles'
 
-export const SignInForm = () => {
-  const { fetchUser, clearFormFields } = useAuth()
+interface IUserData {
+  email: string
+  password: string
+}
 
-  const handleUserLogin = (event: FormEvent<HTMLFormElement>) => {
+export const SignInForm = () => {
+  const dispatch = useDispatch()
+  const navigate = useNavigate()
+
+  const storeUserData = useCallback((token: string, userData: IUserData) => {
+    localStorage.setItem('token', token)
+    dispatch(createActionThatAddsNewUser(userData))
+  }, [dispatch])
+
+  const handleUserLogin = async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault()
 
     const form = event.target as HTMLFormElement
 
-    fetchUser('http://127.0.0.1:3333/login', {
+    const data = await login({
       email: form.email.value.trim(),
       password: form.password.value.trim(),
     })
 
-    clearFormFields([form.email, form.password])
+    if (data) {
+      storeUserData(data.token, data.data)
+      navigate('/home')
+    }
   }
 
   return (

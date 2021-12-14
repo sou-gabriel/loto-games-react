@@ -1,8 +1,14 @@
 import { FormEvent } from 'react'
+import { useNavigate } from 'react-router-dom'
+import { useDispatch } from 'react-redux'
 import { Toaster } from 'react-hot-toast'
 import { AiOutlineArrowRight, AiOutlineArrowLeft } from 'react-icons/ai'
 
-import { useAuth, useFormValidation } from 'hooks'
+import { useFormValidation } from 'hooks'
+
+import { registerUser } from 'shared/services'
+
+import { createActionThatAddsNewUser } from 'store'
 
 import {
   Title,
@@ -39,7 +45,6 @@ const validateSignup = (values: any) => {
 }
 
 export const SignUpForm = () => {
-  const { fetchUser, clearFormFields } = useAuth()
   const { errors, values, handleChange } = useFormValidation({
     initialValues: {
       username: 'john.doe',
@@ -48,6 +53,8 @@ export const SignUpForm = () => {
     },
     validate: validateSignup,
   })
+  const dispatch = useDispatch()
+  const navigate = useNavigate()
 
   const handleUserRegistration = (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault()
@@ -57,12 +64,17 @@ export const SignUpForm = () => {
       !errors.username || !errors.email || !errors.password
 
     if (isTheUserDataIncorrect) {
-      fetchUser('http://127.0.0.1:3333/user/create', {
+      registerUser({
         name: form.username.value.trim(),
         email: form.email.value.trim(),
         password: form.password.value.trim(),
+      }).then(data => {
+        if (data) {
+          localStorage.setItem('token', data.token)
+          dispatch(createActionThatAddsNewUser(data.userData))
+          navigate('/home')
+        }
       })
-      clearFormFields([form.username, form.email, form.password])
     }
   }
 

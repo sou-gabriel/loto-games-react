@@ -1,7 +1,6 @@
 import { useDispatch } from 'react-redux'
 import { AiOutlineArrowRight } from 'react-icons/ai'
-import { useMatch } from 'react-router-dom'
-import { useNavigate } from 'react-router-dom'
+import { useMatch, useNavigate } from 'react-router-dom'
 
 import { createActionToRemoveUser } from 'store'
 
@@ -15,7 +14,7 @@ import {
   ListOfLinks,
   ListItem,
   NavigationLink,
-  LogoutButton
+  LogoutButton,
 } from './styles'
 
 export const Header = () => {

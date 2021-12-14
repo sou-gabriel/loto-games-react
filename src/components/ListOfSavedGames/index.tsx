@@ -1,14 +1,13 @@
 import { useState, useEffect } from 'react'
 import { useSelector } from 'react-redux'
-import axios from 'axios'
 
 import { EmptyCart } from 'components'
 
 import {
-  getUserToken,
   getFormattedPrice,
   getFormattedDate,
 } from 'shared/utils/functions'
+import { fetchAllBets } from 'shared/services'
 
 import { RootState } from 'store/modules/rootReducer'
 
@@ -55,18 +54,14 @@ export const ListOfSavedGames = ({ activeBets }: IListOfSavedGames) => {
   }
 
   useEffect(() => {
-    axios
-      .get(
-        `http://127.0.0.1:3333/bet/all-bets?type%5B%5D=${activeBets.join(
-          '&type%5B%5D=',
-        )}`,
-        {
-          headers: {
-            Authorization: `Bearer ${getUserToken()}`,
-          },
-        },
-      )
-      .then((response) => setSavedBets(response.data))
+    const params = `type%5B%5D=${activeBets.join('&type%5B%5D=')}`
+
+    fetchAllBets(params)
+      .then(data => {
+        if (data) {
+          setSavedBets(data.allBets)
+        }
+      })
   }, [activeBets])
 
   if (!savedBets.length) {

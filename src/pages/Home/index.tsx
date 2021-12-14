@@ -1,8 +1,7 @@
-import { useState, useEffect, useCallback } from 'react'
+import { useState, useEffect } from 'react'
 import { useDispatch } from 'react-redux'
 import { useNavigate } from 'react-router-dom'
 import { AiOutlineArrowRight } from 'react-icons/ai'
-import axios from 'axios'
 
 import {
   Header,
@@ -12,9 +11,8 @@ import {
   EmptyCart,
 } from 'components'
 
-import { createActionToSetGameOptions } from 'store/modules/gameOptions/action'
-import { createActionToSetMinimumCartValue } from 'store/modules/minCartValue/actions'
-import { IGameOptions } from 'store/modules/gameOptions/types'
+import { fetchCartGames } from 'shared/services'
+
 import { createActionToSetGameOptions, createActionToSetMinimumCartValue } from 'store'
 
 import {
@@ -30,29 +28,22 @@ export const Home = () => {
   const navigate = useNavigate()
   const dispatch = useDispatch()
 
-  const storeGameOptions = useCallback((gameOptions: IGameOptions) => {
-    dispatch(createActionToSetMinimumCartValue(gameOptions.min_cart_value))
-    dispatch(createActionToSetGameOptions(gameOptions.types))
-  }, [dispatch])
-
-  const redirectUnauthenticatedUser = useCallback(() => {
+  useEffect(() => {
     const token = localStorage.getItem('token')
 
     if (!token) {
-      navigate('login')
+      navigate('/login')
+      return
     }
-  }, [navigate])
 
-  const searchBettingOptions = useCallback(() => {
-    axios
-      .get<IGameOptions>('http://127.0.0.1:3333/cart_games')
-      .then(({ data }) => storeGameOptions(data))
-  }, [storeGameOptions])
-
-  useEffect(() => {
-    redirectUnauthenticatedUser()
-    searchBettingOptions()
-  }, [redirectUnauthenticatedUser, searchBettingOptions])
+    fetchCartGames()
+      .then((data) => {
+        if (data) {
+          dispatch(createActionToSetMinimumCartValue(data.minCartValue))
+          dispatch(createActionToSetGameOptions(data.games))
+        }
+      })
+  }, [navigate, dispatch])
 
   return (
     <>

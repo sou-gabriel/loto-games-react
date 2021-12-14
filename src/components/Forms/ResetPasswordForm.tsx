@@ -1,7 +1,8 @@
 import { FormEvent } from 'react'
 import { useNavigate, useParams } from 'react-router-dom'
 import { AiOutlineArrowLeft } from 'react-icons/ai'
-import axios from 'axios'
+
+import { changePassword } from 'shared/services'
 
 import {
   Title,
@@ -16,20 +17,17 @@ export const ResetPasswordForm = () => {
   const navigate = useNavigate()
   const { token } = useParams()
 
-  const handleSubmissionOfChangePasswordForm = (
+  const handleSubmissionOfChangePasswordForm = async (
     event: FormEvent<HTMLFormElement>,
   ) => {
     event.preventDefault()
 
-    const userData = {
-      password: (event.target as HTMLFormElement).password.value.trim(),
-    }
+    const form = event.target as HTMLFormElement
 
-    axios
-      .post(`http://127.0.0.1:3333/reset/${token}`, userData)
-      .then(() => {
-        navigate('/login')
-      })
+    await changePassword(token || null, {
+      password: form.password.value.trim(),
+    })
+    navigate('/login')
   }
 
   return (

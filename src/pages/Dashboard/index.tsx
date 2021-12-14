@@ -12,8 +12,9 @@ import {
   Spinner,
 } from 'components'
 
-import { RootState } from 'store/modules/rootReducer'
+import { fetchCartGames } from 'shared/services'
 
+import { RootState } from 'store/modules/rootReducer'
 import {
   createActionToSetMinimumCartValue,
   createActionToSetGameOptions,
@@ -28,7 +29,6 @@ import {
   GameChoiceContainer,
   GameChoiceButtonContainer,
 } from './styles'
-import axios from 'axios'
 
 export const Dashboard = () => {
   const [isLoading, setIsLoading] = useState(true)
@@ -47,19 +47,14 @@ export const Dashboard = () => {
       return
     }
 
-    axios
-      .get('http://127.0.0.1:3333/cart_games', {
-        headers: {
-          Authorization: `Bearer ${userToken}`,
-        },
-      })
-      .then((response) => {
-        dispatch(
-          createActionToSetMinimumCartValue(response.data.min_cart_value),
-        )
-        dispatch(createActionToSetGameOptions(response.data.types))
-        dispatch(createActionToSetActiveGameOption(response.data.types[0]))
-        setIsLoading(false)
+    fetchCartGames()
+      .then(data => {
+        if (data) {
+          dispatch(createActionToSetMinimumCartValue(data.minCartValue))
+          dispatch(createActionToSetGameOptions(data.games))
+          dispatch(createActionToSetActiveGameOption(data.games[0]))
+          setIsLoading(false)
+        }
       })
   }, [navigate, dispatch])
 
@@ -85,13 +80,21 @@ export const Dashboard = () => {
                         value={gameOption.id}
                         theme={gameOption.color}
                         isActive={activeGame?.id === gameOption.id}
-                        onGameChoiceButtonClick={(event: MouseEvent<HTMLButtonElement>) => {
-                          const clickedButtonValue = +(event.target as HTMLButtonElement).value
+                        onGameChoiceButtonClick={(
+                          event: MouseEvent<HTMLButtonElement>,
+                        ) => {
+                          const clickedButtonValue = +(
+                            event.target as HTMLButtonElement
+                          ).value
                           const newActiveGame =
-                            gameOptions.find((gameOption) => gameOption.id === clickedButtonValue) ||
-                            null
+                            gameOptions.find(
+                              (gameOption) =>
+                                gameOption.id === clickedButtonValue,
+                            ) || null
 
-                          dispatch(createActionToSetActiveGameOption(newActiveGame))
+                          dispatch(
+                            createActionToSetActiveGameOption(newActiveGame),
+                          )
                         }}
                       >
                         {gameOption.type}

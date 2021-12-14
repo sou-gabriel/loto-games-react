@@ -15,6 +15,6 @@ export { createActionToSetGameOptions } from './modules/gameOptions/action'
 export { gameOptionsReducer } from './modules/gameOptions/reducer'
 export { createActionToSetMinimumCartValue } from './modules/minCartValue/actions'
 export {
-  createNewUserAction,
-  createRemoveUserOption,
+  createActionThatAddsNewUser,
+  createActionToRemoveUser,
 } from './modules/userData/actions'

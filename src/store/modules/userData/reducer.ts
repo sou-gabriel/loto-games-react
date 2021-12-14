@@ -5,7 +5,7 @@ export const userDataReducer = (state = {}, action: IAction) => {
     case 'REGISTER_USER':
       return { userData: action.payload.userData }
     case 'REMOVE_USER':
-      return { userData: null }
+      return { }
     default:
       return state
   }
