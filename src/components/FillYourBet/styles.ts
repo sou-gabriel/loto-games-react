@@ -82,5 +82,9 @@ export const Button = styled.button<ButtonProps>`
   @media (max-width: 876px) {
     width: 100%;
     align-self: baseline;
+
+    &:hover {
+      transform: scale(1);
+    }
   }
 `
