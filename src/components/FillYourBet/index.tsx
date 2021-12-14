@@ -3,7 +3,7 @@ import { useSelector, useDispatch } from 'react-redux'
 import { AiOutlineShoppingCart } from 'react-icons/ai'
 import { v4 as uuidv4 } from 'uuid'
 
-import { GameNumbersList } from 'components/GameNumbersList'
+import { GameNumbersList } from 'components'
 
 import { showFeedbackMessage } from 'shared/utils/functions'
 

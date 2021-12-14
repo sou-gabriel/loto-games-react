@@ -3,15 +3,14 @@ import { useNavigate } from 'react-router-dom'
 import { AiOutlineArrowRight } from 'react-icons/ai'
 import axios from 'axios'
 
-import { UserBetList } from 'components/UserBetList'
-import { EmptyCart } from 'components/EmptyCart'
+import { UserBetList, EmptyCart } from 'components'
 
 import { RootState } from 'store/modules/rootReducer'
+import { createActionToRemoveAllBetsFromCart } from 'store'
 
 import { getFormattedPrice, getUserToken, showFeedbackMessage } from 'shared/utils/functions'
 
 import { Container, InnerContainer, Title, TotalPrice, Button } from './styles'
-import { createActionToRemoveAllBetsFromCart } from 'store/modules/bettingCart/actions'
 
 export const BettingCart = () => {
   const bettingCart = useSelector(({ bettingCart }: RootState) => bettingCart)
