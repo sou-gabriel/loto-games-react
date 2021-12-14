@@ -1,5 +1,7 @@
 import { api } from './api'
 
+import { showErrorMessage } from 'shared/utils/functions'
+
 interface IBet {
   choosen_numbers: string
   created_at: string
@@ -29,7 +31,7 @@ export const fetchAllBets = async (params = '') => {
       allBets: response.data,
     }
   } catch (error) {
-    alert(error)
+    showErrorMessage(error)
   }
 }
 
@@ -37,6 +39,6 @@ export const createNewBets = async (newBets: INewBets) => {
   try {
     api.post('/bet/new-bet', newBets)
   } catch (error) {
-    alert(error)
+    showErrorMessage(error)
   }
 }

@@ -1,5 +1,7 @@
 import { api } from './api'
 
+import { showErrorMessage } from 'shared/utils/functions'
+
 interface IUserData {
   email?: string
   password?: string
@@ -17,7 +19,7 @@ export const login = async (userData: IUserData) => {
       data,
     }
   } catch (error) {
-    alert(error)
+    showErrorMessage(error)
   }
 }
 
@@ -25,7 +27,7 @@ export const changePassword = async (token: string | null, userData: IUserData) 
   try {
     api.post(`/reset/${token}`, userData)
   } catch (error) {
-    alert(error)
+    showErrorMessage(error)
   }
 }
 
@@ -36,6 +38,6 @@ export const resetPassword = async (userData: IUserData) => {
       token: response.data.token,
     }
   } catch (error) {
-    alert(error)
+    showErrorMessage(error)
   }
 }

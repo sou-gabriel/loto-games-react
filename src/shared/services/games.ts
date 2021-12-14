@@ -1,5 +1,7 @@
 import { api } from './api'
 
+import { showErrorMessage } from 'shared/utils/functions'
+
 interface ICartGame {
   id: number
   type: string
@@ -24,6 +26,6 @@ export const fetchCartGames = async () => {
       games: response.data.types,
     }
   } catch (error) {
-    alert(error)
+    showErrorMessage(error)
   }
 }

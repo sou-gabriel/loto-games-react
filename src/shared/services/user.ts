@@ -1,5 +1,7 @@
 import { api } from './api'
 
+import { showErrorMessage } from 'shared/utils/functions'
+
 interface IUserData {
   name: string
   email: string
@@ -14,6 +16,6 @@ export const registerUser = async (userData: IUserData) => {
       userData: response.data.user,
     }
   } catch (error) {
-    alert(error)
+    showErrorMessage(error)
   }
 }
