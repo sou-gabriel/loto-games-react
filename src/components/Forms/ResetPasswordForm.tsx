@@ -4,6 +4,8 @@ import { AiOutlineArrowLeft } from 'react-icons/ai'
 
 import { changePassword } from 'shared/services'
 
+import { useFormValidation } from 'hooks'
+
 import {
   Title,
   Form,
@@ -11,11 +13,34 @@ import {
   Input,
   SubmitButton,
   NavigationLink,
+  ErrorMessage,
 } from './styles'
+
+interface IValues {
+  username?: string
+  email?: string
+  password?: string
+}
+
+const validateUserPassword = (values: any) => {
+  const errors: IValues = {}
+
+  if (values.password.length < 8) {
+    errors.password = 'Please, insert a valid password'
+  }
+
+  return errors
+}
 
 export const ResetPasswordForm = () => {
   const navigate = useNavigate()
   const { token } = useParams()
+  const { values, handleChange, errors } = useFormValidation({
+    initialValues: {
+      password: '123456789',
+    },
+    validate: validateUserPassword,
+  })
 
   const handleSubmissionOfChangePasswordForm = async (
     event: FormEvent<HTMLFormElement>,
@@ -35,7 +60,14 @@ export const ResetPasswordForm = () => {
       <Title>Reset password</Title>
       <Form onSubmit={handleSubmissionOfChangePasswordForm}>
         <InputGroup>
-          <Input type='password' placeholder='Password' name='password' />
+          <Input
+            type='password'
+            placeholder='Password'
+            name='password'
+            value={values.password}
+            onChange={handleChange}
+          />
+          {errors.password && <ErrorMessage>{errors.password}</ErrorMessage>}
         </InputGroup>
         <SubmitButton type='submit'>
           Reset Password
