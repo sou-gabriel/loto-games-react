@@ -23,7 +23,9 @@ export const ForgotPasswordForm = () => {
     const data = await resetPassword({ email: form.email.value.trim() })
 
     if (data) {
-      const token = data
+      const token = data.token
+
+      localStorage.setItem('token', token)
       navigate(`/reset/${token}`)
     }
   }
