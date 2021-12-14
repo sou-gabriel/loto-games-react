@@ -1,9 +1,9 @@
 import { FormEvent } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { AiOutlineArrowRight, AiOutlineArrowLeft } from 'react-icons/ai'
-import axios from 'axios'
 
-import { showFeedbackMessage } from 'utils/functions'
+import { resetPassword } from 'shared/services'
+
 import {
   Title,
   Form,
@@ -16,24 +16,18 @@ import {
 export const ForgotPasswordForm = () => {
   const navigate = useNavigate()
 
-  const handlePasswordResetFormSubmission = (event: FormEvent<HTMLFormElement>) => {
+  const handlePasswordResetFormSubmission = async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault()
 
-    const userData = {
-      email: (event.target as HTMLFormElement).email.value.trim(),
-    }
+    const form = event.target as HTMLFormElement
+    const data = await resetPassword({ email: form.email.value.trim() })
 
-    axios.post('http://127.0.0.1:3333/reset', userData)
-      .then((response) => {
-        const token = response.data.token
-        navigate(`/reset/${token}`)
-      })
-      .catch(({ response }) => {
-        showFeedbackMessage({
-          type: 'error',
-          message: response.data.message,
-        })
-      })
+    if (data) {
+      const token = data.token
+
+      localStorage.setItem('token', token)
+      navigate(`/reset/${token}`)
+    }
   }
 
   return (

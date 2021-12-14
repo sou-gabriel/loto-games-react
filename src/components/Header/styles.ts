@@ -83,3 +83,16 @@ export const NavigationLink = styled(Link)`
   align-items: center;
   gap: 0.625rem;
 `
+
+export const LogoutButton = styled.button`
+  display: flex;
+  align-items: center;
+  gap: 0.625rem;
+
+  list-style: none;
+  font-weight: bold;
+  font-style: italic;
+  font-size: 1.25rem;
+  color: #707070;
+  background: transparent;
+`

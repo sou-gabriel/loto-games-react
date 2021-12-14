@@ -1,10 +1,10 @@
 import styled from 'styled-components'
 
-interface ITheme {
-  theme: string
+interface IColor {
+  color: string
 }
 
-export const Container = styled.ul<ITheme>`
+export const Container = styled.ul`
   max-height: 30rem;
   padding-right: 1rem;
   display: flex;
@@ -23,7 +23,7 @@ export const Container = styled.ul<ITheme>`
   }
 
   ::-webkit-scrollbar-thumb {
-    background-color: ${({ theme }) => theme}; /* color of the scroll thumb */
+    background-color: #b5c401; /* color of the scroll thumb */
     border-radius: 20px; /* roundness of the scroll thumb */
   }
 `
@@ -33,12 +33,12 @@ export const ListItem = styled.li`
   gap: 0.9375rem;
 `
 
-export const VerticalLine = styled.span<ITheme>`
+export const VerticalLine = styled.span<IColor>`
   display: inline-block;
   width: 6px;
   min-height: 100%;
   border-radius: 999px;
-  background-color: ${({ theme }) => theme};
+  background-color: ${({ color }) => color};
 `
 
 export const ChoosenNumbers = styled.strong`
@@ -56,9 +56,9 @@ export const PurchaseRecord = styled.p`
   color: #868686;
 `
 
-export const GameType = styled.p<ITheme>`
+export const GameType = styled.p<IColor>`
   font-weight: bold;
   font-style: italic;
   font-size: 1.25rem;
-  color: ${({ theme }) => theme};
+  color: ${({ color }) => color};
 `

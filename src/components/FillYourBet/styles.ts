@@ -1,31 +1,15 @@
 import styled from 'styled-components'
 
-export const Container = styled.section`
-  position: relative;
-  flex-grow: 1;
-`
+interface IGameNumberItemProps {
+  color: string
+  isAChosenNumber: boolean
+}
 
-export const Title = styled.h1`
-  margin-bottom: 2.0625rem;
+interface ButtonProps {
+  primary?: boolean
+}
 
-  font-style: italic;
-  font-size: 1.5rem;
-  color: #707070;
-  text-transform: uppercase;
-
-  > span {
-    font-weight: lighter;
-  }
-`
-
-export const GameChoiceContainer = styled.div`
-  margin-bottom: 1.75rem;
-  display: flex;
-  flex-direction: column;
-  gap: 1.25rem;
-`
-
-export const Subtitle = styled.h2`
+export const Title = styled.h2`
   font-style: italic;
   font-size: 1.0625rem;
   color: #868686;
@@ -39,33 +23,21 @@ export const Description = styled.p`
   line-height: 1.5rem;
 `
 
-export const GameChoiceButtonContainer = styled.div`
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
-  gap: 1.5625rem 1rem;
-  width: 100%;
-`
-
-export const GameNumberList = styled.div`
+export const GameNumbersList = styled.div`
   margin-bottom: 2.75rem;
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(50px, 1fr));
   gap: 0.75rem;
 `
 
-interface GameNumberProps {
-  isActive: boolean
-  buttonColor: string
-}
-
-export const GameNumber = styled.button<GameNumberProps>`
+export const GameNumberItem = styled.button<IGameNumberItemProps>`
   width: 3.9375rem;
   height: 4.0625rem;
   border-radius: 50%;
-  background-color: ${({ isActive, buttonColor }) =>
-    isActive ? buttonColor : '#adc0c4'};
   font-size: 1.25rem;
   color: #fff;
+  background-color: ${({ isAChosenNumber, color }) =>
+    isAChosenNumber ? color : '#adc0c4'};
 `
 
 export const ActionsContainer = styled.div`
@@ -86,10 +58,6 @@ export const InnerActionsContainer = styled(ActionsContainer)`
     justify-content: initial;
   }
 `
-
-interface ButtonProps {
-  primary?: boolean
-}
 
 export const Button = styled.button<ButtonProps>`
   height: 3.25rem;

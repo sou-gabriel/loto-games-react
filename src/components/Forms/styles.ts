@@ -75,3 +75,15 @@ export const NavigationLink = styled(Link)`
   align-items: center;
   gap: 0.98rem;
 `
+
+export const ErrorMessage = styled.span`
+  position: absolute;
+  top: 0;
+  color: red;
+  z-index: 1;
+  text-transform: italic;
+  font-style: italic;
+  left: 30px;
+  top: 52px;
+  font-size: 12px;
+`

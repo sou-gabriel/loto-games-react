@@ -1,5 +1,6 @@
 
 import emptyCartIconPath from 'assets/icons/empty-cart.png'
+
 import { Container, EmptyCartImage, FeedbackMessage } from './styles'
 
 interface IEmptyCartProps {

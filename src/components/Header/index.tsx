@@ -1,5 +1,10 @@
+import { useDispatch } from 'react-redux'
 import { AiOutlineArrowRight } from 'react-icons/ai'
-import { useMatch } from 'react-router-dom'
+import { useMatch, useNavigate } from 'react-router-dom'
+
+import { createActionToRemoveUser } from 'store'
+
+import { getUserToken } from 'shared/utils/functions'
 
 import {
   Container,
@@ -9,11 +14,22 @@ import {
   ListOfLinks,
   ListItem,
   NavigationLink,
+  LogoutButton,
 } from './styles'
 
 export const Header = () => {
   const match = useMatch('/home')
   const isTheHomePage = Boolean(match)
+  const navigate = useNavigate()
+  const dispatch = useDispatch()
+
+  const handleLogoutButtonClick = () => {
+    const token = getUserToken() || ''
+
+    dispatch(createActionToRemoveUser(token))
+    localStorage.removeItem('token')
+    navigate('/login')
+  }
 
   return (
     <Container>
@@ -30,9 +46,9 @@ export const Header = () => {
               <NavigationLink to='/account'>Account</NavigationLink>
             </ListItem>
             <ListItem>
-              <NavigationLink to='/login'>
+              <LogoutButton onClick={handleLogoutButtonClick}>
                 Logout <AiOutlineArrowRight />
-              </NavigationLink>
+              </LogoutButton>
             </ListItem>
           </ListOfLinks>
         </Nav>

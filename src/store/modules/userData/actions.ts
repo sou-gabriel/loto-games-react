@@ -1,6 +1,6 @@
 import { UserData } from './types'
 
-export const createNewUserAction = (userData: UserData) => {
+export const createActionThatAddsNewUser = (userData: UserData) => {
   return {
     type: 'REGISTER_NEW_USER',
     payload: {
@@ -9,11 +9,11 @@ export const createNewUserAction = (userData: UserData) => {
   }
 }
 
-export const createRemoveUserOption = (userData: null) => {
+export const createActionToRemoveUser = (token: string) => {
   return {
     type: 'REMOVE_USER',
     payload: {
-      userData,
+      token,
     },
   }
 }

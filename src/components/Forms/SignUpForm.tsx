@@ -1,8 +1,15 @@
 import { FormEvent } from 'react'
+import { useNavigate } from 'react-router-dom'
+import { useDispatch } from 'react-redux'
 import { Toaster } from 'react-hot-toast'
 import { AiOutlineArrowRight, AiOutlineArrowLeft } from 'react-icons/ai'
 
-import { useAuth } from 'hooks/useAuth'
+import { useFormValidation } from 'hooks'
+
+import { registerUser } from 'shared/services'
+
+import { createActionThatAddsNewUser } from 'store'
+
 import {
   Title,
   Form,
@@ -10,27 +17,65 @@ import {
   Input,
   SubmitButton,
   NavigationLink,
+  ErrorMessage,
 } from './styles'
 
+interface IValues {
+  username?: string
+  email?: string
+  password?: string
+}
+
+const validateSignup = (values: any) => {
+  const errors: IValues = {}
+
+  if (values.username.length < 5) {
+    errors.username = 'Please, insert a valid username'
+  }
+
+  if (!values.email.includes('@')) {
+    errors.email = 'Please, insert a valid email'
+  }
+
+  if (values.password.length < 8) {
+    errors.password = 'Please, insert a valid password'
+  }
+
+  return errors
+}
+
 export const SignUpForm = () => {
-  const { fetchUser, clearFormFields } = useAuth()
+  const { errors, values, handleChange } = useFormValidation({
+    initialValues: {
+      username: 'john.doe',
+      email: 'email@email.com',
+      password: '123456789',
+    },
+    validate: validateSignup,
+  })
+  const dispatch = useDispatch()
+  const navigate = useNavigate()
 
   const handleUserRegistration = (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault()
 
     const form = event.target as HTMLFormElement
+    const isTheUserDataIncorrect =
+      !errors.username || !errors.email || !errors.password
 
-    fetchUser('http://127.0.0.1:3333/user/create', {
-      name: form.username.value.trim(),
-      email: form.email.value.trim(),
-      password: form.password.value.trim(),
-    })
-
-    clearFormFields([
-      form.username,
-      form.email,
-      form.password,
-    ])
+    if (isTheUserDataIncorrect) {
+      registerUser({
+        name: form.username.value.trim(),
+        email: form.email.value.trim(),
+        password: form.password.value.trim(),
+      }).then(data => {
+        if (data) {
+          localStorage.setItem('token', data.token)
+          dispatch(createActionThatAddsNewUser(data.userData))
+          navigate('/home')
+        }
+      })
+    }
   }
 
   return (
@@ -39,18 +84,34 @@ export const SignUpForm = () => {
       <Title>Registration</Title>
       <Form onSubmit={handleUserRegistration}>
         <InputGroup>
-          <Input type='text' placeholder='Name' name='username' required />
+          <Input
+            type='text'
+            placeholder='Name'
+            name='username'
+            value={values.username}
+            onChange={handleChange}
+          />
+          {errors.username && <ErrorMessage>{errors.username}</ErrorMessage>}
         </InputGroup>
         <InputGroup>
-          <Input type='email' placeholder='Email' name='email' required />
+          <Input
+            type='email'
+            placeholder='Email'
+            name='email'
+            value={values.email}
+            onChange={handleChange}
+          />
+          {errors.email && <ErrorMessage>{errors.email}</ErrorMessage>}
         </InputGroup>
         <InputGroup>
           <Input
             type='password'
             placeholder='Password'
             name='password'
-            required
+            value={values.password}
+            onChange={handleChange}
           />
+          {errors.password && <ErrorMessage>{errors.password}</ErrorMessage>}
         </InputGroup>
         <SubmitButton type='submit'>
           Register <AiOutlineArrowRight />
