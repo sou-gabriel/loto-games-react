@@ -1,10 +1,8 @@
-import { FormEvent } from 'react'
+import { useState, FormEvent, ChangeEvent } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { useDispatch } from 'react-redux'
 import { Toaster } from 'react-hot-toast'
 import { AiOutlineArrowRight, AiOutlineArrowLeft } from 'react-icons/ai'
-
-import { useFormValidation } from 'hooks'
 
 import { registerUser } from 'shared/services'
 
@@ -20,39 +18,17 @@ import {
   ErrorMessage,
 } from './styles'
 
-interface IValues {
+interface IErrors {
   username?: string
   email?: string
   password?: string
 }
 
-const validateSignup = (values: any) => {
-  const errors: IValues = {}
-
-  if (values.username.length < 5) {
-    errors.username = 'Please, insert a valid username'
-  }
-
-  if (!values.email.includes('@')) {
-    errors.email = 'Please, insert a valid email'
-  }
-
-  if (values.password.length < 8) {
-    errors.password = 'Please, insert a valid password'
-  }
-
-  return errors
-}
-
 export const SignUpForm = () => {
-  const { errors, values, handleChange } = useFormValidation({
-    initialValues: {
-      username: 'john.doe',
-      email: 'email@email.com',
-      password: '123456789',
-    },
-    validate: validateSignup,
-  })
+  const [username, setUsername] = useState('')
+  const [email, setEmail] = useState('')
+  const [password, setPassword] = useState('')
+  const [errors, setErrors] = useState<IErrors>({} as IErrors)
   const dispatch = useDispatch()
   const navigate = useNavigate()
 
@@ -60,22 +36,85 @@ export const SignUpForm = () => {
     event.preventDefault()
 
     const form = event.target as HTMLFormElement
-    const isTheUserDataIncorrect =
-      !errors.username || !errors.email || !errors.password
 
-    if (isTheUserDataIncorrect) {
-      registerUser({
-        name: form.username.value.trim(),
-        email: form.email.value.trim(),
-        password: form.password.value.trim(),
-      }).then(data => {
-        if (data) {
-          localStorage.setItem('token', data.token)
-          dispatch(createActionThatAddsNewUser(data.userData))
-          navigate('/home')
-        }
-      })
+    registerUser({
+      name: form.username.value.trim(),
+      email: form.email.value.trim(),
+      password: form.password.value.trim(),
+    }).then((data) => {
+      if (data) {
+        localStorage.setItem('token', data.token)
+        dispatch(createActionThatAddsNewUser(data.userData))
+        navigate('/home')
+      }
+    })
+  }
+
+  const handleUsernameChange = (event: ChangeEvent<HTMLInputElement>) => {
+    const usernameInputValue = (event.target as HTMLInputElement).value
+
+    setUsername(usernameInputValue)
+
+    if (usernameInputValue.length === 0) {
+      setErrors((oldErrors) => ({
+        ...oldErrors,
+        username: 'O nome do usuário não pode estar vazio',
+      }))
+      return
     }
+
+    if (usernameInputValue.length < 3) {
+      setErrors((oldErrors) => ({
+        ...oldErrors,
+        username: 'O nome precisa de pelo menos 3 caracteres',
+      }))
+      return
+    }
+
+    setErrors((oldErrors) => ({
+      ...oldErrors,
+      username: '',
+    }))
+  }
+
+  const handleEmailChange = (event: ChangeEvent<HTMLInputElement>) => {
+    const emailInputValue = (event.target as HTMLInputElement).value.trim()
+
+    setEmail(emailInputValue)
+
+    if (emailInputValue.length === 0) {
+      setErrors((oldErrors) => ({
+        ...oldErrors,
+        email: 'O e-mail não pode ficar vazio',
+      }))
+    }
+  }
+
+  const handlePasswordChange = (event: ChangeEvent<HTMLInputElement>) => {
+    const passwordInputValue = (event.target as HTMLInputElement).value.trim()
+
+    setPassword(passwordInputValue)
+
+    if (passwordInputValue.length === 0) {
+      setErrors((oldErrors) => ({
+        ...oldErrors,
+        password: 'Você precisa informar uma senha',
+      }))
+      return
+    }
+
+    if (passwordInputValue.length < 3) {
+      setErrors((oldErrors) => ({
+        ...oldErrors,
+        password: 'Sua senha deve possuir mais de 3 caracteres',
+      }))
+      return
+    }
+
+    setErrors((oldErrors) => ({
+      ...oldErrors,
+      password: '',
+    }))
   }
 
   return (
@@ -88,8 +127,8 @@ export const SignUpForm = () => {
             type='text'
             placeholder='Name'
             name='username'
-            value={values.username}
-            onChange={handleChange}
+            value={username}
+            onChange={handleUsernameChange}
           />
           {errors.username && <ErrorMessage>{errors.username}</ErrorMessage>}
         </InputGroup>
@@ -98,8 +137,8 @@ export const SignUpForm = () => {
             type='email'
             placeholder='Email'
             name='email'
-            value={values.email}
-            onChange={handleChange}
+            value={email}
+            onChange={handleEmailChange}
           />
           {errors.email && <ErrorMessage>{errors.email}</ErrorMessage>}
         </InputGroup>
@@ -108,8 +147,8 @@ export const SignUpForm = () => {
             type='password'
             placeholder='Password'
             name='password'
-            value={values.password}
-            onChange={handleChange}
+            value={password}
+            onChange={handlePasswordChange}
           />
           {errors.password && <ErrorMessage>{errors.password}</ErrorMessage>}
         </InputGroup>

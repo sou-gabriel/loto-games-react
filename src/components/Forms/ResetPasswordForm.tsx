@@ -1,10 +1,8 @@
-import { FormEvent } from 'react'
+import { useState, FormEvent, ChangeEvent } from 'react'
 import { useNavigate, useParams } from 'react-router-dom'
 import { AiOutlineArrowLeft } from 'react-icons/ai'
 
 import { changePassword } from 'shared/services'
-
-import { useFormValidation } from 'hooks'
 
 import {
   Title,
@@ -16,31 +14,42 @@ import {
   ErrorMessage,
 } from './styles'
 
-interface IValues {
-  username?: string
-  email?: string
-  password?: string
-}
-
-const validateUserPassword = (values: any) => {
-  const errors: IValues = {}
-
-  if (values.password.length < 8) {
-    errors.password = 'Please, insert a valid password'
-  }
-
-  return errors
+interface IError {
+  password: string
 }
 
 export const ResetPasswordForm = () => {
+  const [errors, setErrors] = useState<IError>({} as IError)
+  const [password, setPassword] = useState('')
   const navigate = useNavigate()
   const { token } = useParams()
-  const { values, handleChange, errors } = useFormValidation({
-    initialValues: {
-      password: '123456789',
-    },
-    validate: validateUserPassword,
-  })
+
+  const handlePasswordChange = (event: ChangeEvent<HTMLInputElement>) => {
+    const passwordInputValue = (event.target as HTMLInputElement).value.trim()
+
+    setPassword(passwordInputValue)
+
+    if (passwordInputValue.length === 0) {
+      setErrors(oldErrors => ({
+        ...oldErrors,
+        password: 'Você precisa informar uma senha',
+      }))
+      return
+    }
+
+    if (passwordInputValue.length < 3) {
+      setErrors(oldErrors => ({
+        ...oldErrors,
+        password: 'Sua senha deve possuir mais de 3 caracteres',
+      }))
+      return
+    }
+
+    setErrors(oldErrors => ({
+      ...oldErrors,
+      password: '',
+    }))
+  }
 
   const handleSubmissionOfChangePasswordForm = async (
     event: FormEvent<HTMLFormElement>,
@@ -64,8 +73,8 @@ export const ResetPasswordForm = () => {
             type='password'
             placeholder='Password'
             name='password'
-            value={values.password}
-            onChange={handleChange}
+            value={password}
+            onChange={handlePasswordChange}
           />
           {errors.password && <ErrorMessage>{errors.password}</ErrorMessage>}
         </InputGroup>
