@@ -87,7 +87,13 @@ export const SignUpForm = () => {
         ...oldErrors,
         email: 'O e-mail não pode ficar vazio',
       }))
+      return
     }
+
+    setErrors(oldErrors => ({
+      ...oldErrors,
+      email: ''
+    }))
   }
 
   const handlePassword = (event: ChangeEvent<HTMLInputElement>) => {
