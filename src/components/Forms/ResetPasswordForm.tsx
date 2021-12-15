@@ -24,7 +24,7 @@ export const ResetPasswordForm = () => {
   const navigate = useNavigate()
   const { token } = useParams()
 
-  const handlePasswordChange = (event: ChangeEvent<HTMLInputElement>) => {
+  const handlePassword = (event: ChangeEvent<HTMLInputElement>) => {
     const passwordInputValue = (event.target as HTMLInputElement).value.trim()
 
     setPassword(passwordInputValue)
@@ -74,7 +74,8 @@ export const ResetPasswordForm = () => {
             placeholder='Password'
             name='password'
             value={password}
-            onChange={handlePasswordChange}
+            onChange={handlePassword}
+            onFocus={handlePassword}
           />
           {errors.password && <ErrorMessage>{errors.password}</ErrorMessage>}
         </InputGroup>

@@ -50,7 +50,7 @@ export const SignUpForm = () => {
     })
   }
 
-  const handleUsernameChange = (event: ChangeEvent<HTMLInputElement>) => {
+  const handleUsername = (event: ChangeEvent<HTMLInputElement>) => {
     const usernameInputValue = (event.target as HTMLInputElement).value
 
     setUsername(usernameInputValue)
@@ -77,7 +77,7 @@ export const SignUpForm = () => {
     }))
   }
 
-  const handleEmailChange = (event: ChangeEvent<HTMLInputElement>) => {
+  const handleEmail = (event: ChangeEvent<HTMLInputElement>) => {
     const emailInputValue = (event.target as HTMLInputElement).value.trim()
 
     setEmail(emailInputValue)
@@ -90,7 +90,7 @@ export const SignUpForm = () => {
     }
   }
 
-  const handlePasswordChange = (event: ChangeEvent<HTMLInputElement>) => {
+  const handlePassword = (event: ChangeEvent<HTMLInputElement>) => {
     const passwordInputValue = (event.target as HTMLInputElement).value.trim()
 
     setPassword(passwordInputValue)
@@ -128,7 +128,8 @@ export const SignUpForm = () => {
             placeholder='Name'
             name='username'
             value={username}
-            onChange={handleUsernameChange}
+            onChange={handleUsername}
+            onFocus={handleUsername}
           />
           {errors.username && <ErrorMessage>{errors.username}</ErrorMessage>}
         </InputGroup>
@@ -138,7 +139,8 @@ export const SignUpForm = () => {
             placeholder='Email'
             name='email'
             value={email}
-            onChange={handleEmailChange}
+            onChange={handleEmail}
+            onFocus={handleEmail}
           />
           {errors.email && <ErrorMessage>{errors.email}</ErrorMessage>}
         </InputGroup>
@@ -148,7 +150,8 @@ export const SignUpForm = () => {
             placeholder='Password'
             name='password'
             value={password}
-            onChange={handlePasswordChange}
+            onChange={handlePassword}
+            onFocus={handlePassword}
           />
           {errors.password && <ErrorMessage>{errors.password}</ErrorMessage>}
         </InputGroup>
